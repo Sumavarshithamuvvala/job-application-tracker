@@ -1,0 +1,645 @@
+/* ===========================
+   Google Font & Reset
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:linear-gradient(135deg,#eef5ff,#ffffff);
+
+    overflow:hidden;
+
+    position:relative;
+
+}
+
+/* ===========================
+   Animated Background Blobs
+=========================== */
+
+.blob{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    filter:blur(90px);
+
+    animation:float 8s ease-in-out infinite alternate;
+
+    z-index:-1;
+
+}
+
+.blob1{
+
+    width:320px;
+
+    height:320px;
+
+    background:#73b5ff;
+
+    top:-100px;
+
+    left:-80px;
+
+}
+
+.blob2{
+
+    width:300px;
+
+    height:300px;
+
+    background:#7c5cff;
+
+    right:-100px;
+
+    bottom:-120px;
+
+}
+
+.blob3{
+
+    width:220px;
+
+    height:220px;
+
+    background:#90d2ff;
+
+    left:45%;
+
+    top:55%;
+
+}
+
+@keyframes float{
+
+from{
+
+transform:translateY(0);
+
+}
+
+to{
+
+transform:translateY(-35px);
+
+}
+
+}
+
+/* ===========================
+   Back Button
+=========================== */
+
+.backBtn{
+
+position:absolute;
+
+top:30px;
+
+left:35px;
+
+text-decoration:none;
+
+background:white;
+
+padding:12px 22px;
+
+border-radius:40px;
+
+color:#2563eb;
+
+font-weight:600;
+
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+transition:.3s;
+
+}
+
+.backBtn:hover{
+
+transform:translateY(-4px);
+
+}
+
+.backBtn i{
+
+margin-right:8px;
+
+}
+
+/* ===========================
+   Main Container
+=========================== */
+
+.container{
+
+width:1100px;
+
+max-width:95%;
+
+display:flex;
+
+background:rgba(255,255,255,.55);
+
+backdrop-filter:blur(18px);
+
+border-radius:30px;
+
+overflow:hidden;
+
+box-shadow:0 20px 50px rgba(0,0,0,.08);
+
+}
+
+/* ===========================
+   Left Panel
+=========================== */
+
+.left{
+
+width:45%;
+
+background:linear-gradient(135deg,#2563eb,#4f46e5);
+
+color:white;
+
+padding:60px 45px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+text-align:center;
+
+}
+
+.left h1{
+
+font-size:42px;
+
+margin-bottom:20px;
+
+}
+
+.left p{
+
+font-size:17px;
+
+line-height:1.8;
+
+margin-bottom:35px;
+
+opacity:.95;
+
+}
+
+.left img{
+
+width:80%;
+
+max-width:340px;
+
+animation:updown 3s ease-in-out infinite alternate;
+
+}
+
+@keyframes updown{
+
+from{
+
+transform:translateY(0);
+
+}
+
+to{
+
+transform:translateY(-12px);
+
+}
+
+}
+
+/* ===========================
+   Right Panel
+=========================== */
+
+.right{
+
+width:55%;
+
+padding:60px 50px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+}
+
+/* ===========================
+   Toggle Buttons
+=========================== */
+
+.toggle{
+
+display:flex;
+
+background:#eef3ff;
+
+border-radius:50px;
+
+padding:6px;
+
+margin-bottom:35px;
+
+}
+
+.toggle button{
+
+flex:1;
+
+padding:14px;
+
+border:none;
+
+border-radius:40px;
+
+background:none;
+
+cursor:pointer;
+
+font-size:16px;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.toggle button.active{
+
+background:linear-gradient(135deg,#2563eb,#4f46e5);
+
+color:white;
+
+box-shadow:0 10px 20px rgba(37,99,235,.25);
+
+}/* ===========================
+   Form Headings
+=========================== */
+
+#loginForm h2,
+#signupForm h2{
+
+    font-size:32px;
+
+    color:#1f2937;
+
+    margin-bottom:30px;
+
+    text-align:center;
+
+}
+
+/* ===========================
+   Input Box
+=========================== */
+
+.inputBox{
+
+    position:relative;
+
+    margin-bottom:22px;
+
+}
+
+.inputBox input{
+
+    width:100%;
+
+    padding:16px 50px 16px 50px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:50px;
+
+    background:#f5f7ff;
+
+    font-size:15px;
+
+    color:#333;
+
+    transition:.3s;
+
+    border:2px solid transparent;
+
+}
+
+.inputBox input:focus{
+
+    border:2px solid #2563eb;
+
+    background:white;
+
+    box-shadow:0 10px 20px rgba(37,99,235,.12);
+
+}
+
+.inputBox i:first-child{
+
+    position:absolute;
+
+    left:18px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#2563eb;
+
+    font-size:16px;
+
+}
+
+.togglePassword{
+
+    position:absolute;
+
+    right:18px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    cursor:pointer;
+
+    color:#777;
+
+    transition:.3s;
+
+}
+
+.togglePassword:hover{
+
+    color:#2563eb;
+
+}
+
+/* ===========================
+   Remember Section
+=========================== */
+
+.remember{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:28px;
+
+    font-size:14px;
+
+    color:#555;
+
+}
+
+.remember label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.remember a{
+
+    text-decoration:none;
+
+    color:#2563eb;
+
+    font-weight:500;
+
+}
+
+.remember a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* ===========================
+   Submit Button
+=========================== */
+
+.submitBtn{
+
+    width:100%;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:linear-gradient(135deg,#2563eb,#4f46e5);
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    margin-top:10px;
+
+}
+
+.submitBtn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 15px 25px rgba(37,99,235,.30);
+
+}
+
+/* ===========================
+   Form Animation
+=========================== */
+
+#loginForm,
+#signupForm{
+
+    animation:fade .4s ease;
+
+}
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ===========================
+   Placeholder
+=========================== */
+
+input::placeholder{
+
+    color:#999;
+
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:950px){
+
+.container{
+
+flex-direction:column;
+
+}
+
+.left{
+
+width:100%;
+
+padding:50px 30px;
+
+}
+
+.right{
+
+width:100%;
+
+padding:45px 30px;
+
+}
+
+.left img{
+
+width:260px;
+
+margin-top:20px;
+
+}
+
+}
+
+@media(max-width:600px){
+
+body{
+
+padding:20px;
+
+}
+
+.left h1{
+
+font-size:32px;
+
+}
+
+.left p{
+
+font-size:15px;
+
+}
+
+#loginForm h2,
+#signupForm h2{
+
+font-size:26px;
+
+}
+
+.inputBox input{
+
+padding:15px 48px;
+
+font-size:14px;
+
+}
+
+.toggle{
+
+margin-bottom:25px;
+
+}
+
+.toggle button{
+
+font-size:15px;
+
+padding:12px;
+
+}
+
+.submitBtn{
+
+padding:15px;
+
+font-size:16px;
+
+}
+
+.backBtn{
+
+left:20px;
+
+top:20px;
+
+padding:10px 18px;
+
+font-size:14px;
+
+}
+
+}

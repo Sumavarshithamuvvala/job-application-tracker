@@ -1,0 +1,376 @@
+/* Google Font */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#eef5ff,#f8fbff,#ffffff);
+    overflow-x:hidden;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:50px 20px;
+}
+
+/* Background Blobs */
+
+.blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(90px);
+    z-index:-1;
+    animation:float 8s ease-in-out infinite alternate;
+}
+
+.blob1{
+    width:320px;
+    height:320px;
+    background:#7db6ff;
+    top:-120px;
+    left:-100px;
+}
+
+.blob2{
+    width:280px;
+    height:280px;
+    background:#8d74ff;
+    bottom:-120px;
+    right:-80px;
+}
+
+.blob3{
+    width:220px;
+    height:220px;
+    background:#8fd4ff;
+    top:45%;
+    left:45%;
+}
+
+/* Back Button */
+
+.backBtn{
+    position:absolute;
+    top:30px;
+    left:40px;
+    text-decoration:none;
+    color:#2563eb;
+    background:white;
+    padding:12px 22px;
+    border-radius:30px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    font-weight:500;
+    transition:.3s;
+}
+
+.backBtn:hover{
+    transform:translateY(-4px);
+}
+
+.backBtn i{
+    margin-right:8px;
+}
+
+/* Main Container */
+
+.container{
+    width:100%;
+    max-width:1200px;
+}
+
+/* Heading */
+
+.title{
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.title h1{
+    font-size:48px;
+    color:#1f2937;
+    margin-bottom:15px;
+}
+
+.title p{
+    font-size:18px;
+    color:#555;
+    max-width:700px;
+    margin:auto;
+    line-height:1.8;
+}
+
+/* Cards */
+
+.loginContainer{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    flex-wrap:wrap;
+}
+
+/* Card */
+
+.loginCard{
+
+    width:430px;
+
+    background:rgba(255,255,255,.65);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.4);
+
+    border-radius:25px;
+
+    padding:40px;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.08);
+
+    transition:.4s;
+}
+
+.loginCard:hover{
+
+    transform:translateY(-12px);
+
+    box-shadow:0 25px 55px rgba(37,99,235,.18);
+
+}
+
+/* Icon */
+
+.icon{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:auto;
+
+    background:linear-gradient(135deg,#2563eb,#4f46e5);
+
+    color:white;
+
+    font-size:38px;
+
+    margin-bottom:25px;
+
+}
+
+.admin{
+
+    background:linear-gradient(135deg,#6d28d9,#9333ea);
+
+}
+
+.loginCard h2{
+
+    text-align:center;
+
+    margin-bottom:18px;
+
+    color:#1f2937;
+
+    font-size:30px;
+
+}
+
+.loginCard p{
+
+    text-align:center;
+
+    color:#666;
+
+    line-height:1.8;
+
+    margin-bottom:25px;
+
+}
+
+/* Features */
+
+.features{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    justify-content:center;
+
+    margin-bottom:30px;
+
+}
+
+.features span{
+
+    background:#eef4ff;
+
+    color:#2563eb;
+
+    padding:10px 18px;
+
+    border-radius:30px;
+
+    font-size:14px;
+
+    font-weight:500;
+
+}
+
+/* Button */
+
+.loginCard button{
+
+    width:100%;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:linear-gradient(135deg,#2563eb,#4f46e5);
+
+    color:white;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.loginCard button:hover{
+
+    transform:scale(1.03);
+
+    box-shadow:0 12px 25px rgba(37,99,235,.35);
+
+}
+
+/* Bottom */
+
+.bottom{
+
+    margin-top:50px;
+
+    text-align:center;
+
+}
+
+.bottom p{
+
+    color:#666;
+
+    font-size:16px;
+
+}
+
+.bottom a{
+
+    color:#2563eb;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.bottom a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* Animation */
+
+@keyframes float{
+
+    from{
+
+        transform:translateY(0px);
+
+    }
+
+    to{
+
+        transform:translateY(-30px);
+
+    }
+
+}
+
+/* Responsive */
+
+@media(max-width:950px){
+
+    .loginContainer{
+
+        flex-direction:column;
+
+        align-items:center;
+
+    }
+
+    .loginCard{
+
+        width:100%;
+
+        max-width:450px;
+
+    }
+
+    .title h1{
+
+        font-size:38px;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .backBtn{
+
+        left:20px;
+
+        top:20px;
+
+        padding:10px 18px;
+
+    }
+
+    .title h1{
+
+        font-size:30px;
+
+    }
+
+    .title p{
+
+        font-size:16px;
+
+    }
+
+    .loginCard{
+
+        padding:30px 22px;
+
+    }
+
+}

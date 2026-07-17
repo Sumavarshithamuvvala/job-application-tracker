@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Authentication | Job Preparation Tracker</title>
+
+    <link rel="stylesheet" href="auth.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- Background -->
+
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+
+    <!-- Back Button -->
+
+    <a href="module.html" class="backBtn">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back
+
+    </a>
+
+    <!-- Main Container -->
+
+    <div class="container">
+
+        <!-- Left Side -->
+
+        <div class="left">
+
+            <h1 id="welcomeTitle">
+
+                Welcome Student
+
+            </h1>
+
+            <p id="welcomeText">
+
+                Continue your placement preparation journey by logging in to your account.
+
+            </p>
+
+            <img src="https://undraw.co/api/illustrations/education.svg" alt="Illustration">
+
+        </div>
+
+        <!-- Right Side -->
+
+        <div class="right">
+
+            <!-- Toggle -->
+
+            <div class="toggle">
+
+                <button id="loginTab" class="active">
+
+                    Login
+
+                </button>
+
+                <button id="signupTab">
+
+                    Sign Up
+
+                </button>
+
+            </div>
+
+            <!-- Login Form -->
+
+            <form id="loginForm">
+
+                <h2 id="loginHeading">
+
+                    Student Login
+
+                </h2>
+
+                <div class="inputBox">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <input
+                        type="email"
+                        placeholder="Email Address"
+                        required>
+
+                </div>
+
+                <div class="inputBox">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Password"
+                        required>
+
+                    <i class="fa-solid fa-eye togglePassword"
+                        data-target="loginPassword"></i>
+
+                </div>
+
+                <div class="remember">
+
+                    <label>
+
+                        <input type="checkbox">
+
+                        Remember Me
+
+                    </label>
+
+                    <a href="#">
+
+                        Forgot Password?
+
+                    </a>
+
+                </div>
+
+                <button type="submit" class="submitBtn">
+
+                    Login
+
+                </button>
+
+            </form>
+
+            <!-- Signup Form -->
+
+            <form id="signupForm" style="display:none;">
+
+                <h2 id="signupHeading">
+
+                    Student Registration
+
+                </h2>
+
+                <div class="inputBox">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    <input
+                        type="text"
+                        placeholder="Full Name"
+                        required>
+
+                </div>
+
+                <div class="inputBox">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <input
+                        type="email"
+                        placeholder="Email Address"
+                        required>
+
+                </div>
+
+                <div class="inputBox">
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                    <input
+                        type="text"
+                        id="roleField"
+                        placeholder="Roll Number"
+                        required>
+
+                </div>
+
+                <div class="inputBox">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        id="signupPassword"
+                        placeholder="Create Password"
+                        required>
+
+                    <i class="fa-solid fa-eye togglePassword"
+                        data-target="signupPassword"></i>
+
+                </div>
+
+                <button type="submit" class="submitBtn">
+
+                    Create Account
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="auth.js"></script>
+
+</body>
+
+</html>
