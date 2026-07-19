@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Portal - Dashboard</title>
+
+    <link rel="stylesheet" href="dashboard.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-graduation-cap"></i>
+
+            <span>Placement Portal</span>
+
+        </div>
+
+        <nav>
+
+            <a href="dashboard.html" class="active">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+            <a href="companies.html">
+                <i class="fa-solid fa-building"></i>
+                Companies
+            </a>
+
+            <a href="roles.html">
+                <i class="fa-solid fa-user-tie"></i>
+                Roles
+            </a>
+
+            <a href="placements.html">
+                <i class="fa-solid fa-briefcase"></i>
+                Placements
+            </a>
+
+            <a href="students.html">
+                <i class="fa-solid fa-user-graduate"></i>
+                Student Records
+            </a>
+
+            <a href="analytics.html">
+                <i class="fa-solid fa-chart-line"></i>
+                Analytics
+            </a>
+
+            <a href="settings.html">
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main -->
+
+    <main class="main">
+
+        <!-- Top -->
+
+        <header class="top">
+
+            <div>
+
+                <h1>Placement Cell Dashboard</h1>
+
+                <p>Manage placement information from one centralized portal.</p>
+
+            </div>
+
+            <button class="logout-btn">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Logout
+
+            </button>
+
+        </header>
+
+        <!-- Welcome Banner -->
+
+        <section class="welcome-card">
+
+            <div class="welcome-text">
+
+                <h2>Welcome Back 👋</h2>
+
+                <p>
+
+                    Manage companies, job roles, placement records and
+                    student information efficiently through a single dashboard.
+
+                </p>
+
+            </div>
+
+            <div class="action-buttons">
+
+                <button id="companyBtn">
+
+                    <i class="fa-solid fa-building"></i>
+
+                    Add Company
+
+                </button>
+
+                <button id="roleBtn">
+
+                    <i class="fa-solid fa-user-tie"></i>
+
+                    Add Role
+
+                </button>
+
+                <button id="placementBtn">
+
+                    <i class="fa-solid fa-briefcase"></i>
+
+                    Add Placement
+
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- Overview -->
+
+        <section class="cards">
+
+            <div class="card">
+
+                <i class="fa-solid fa-building"></i>
+
+                <h2>0</h2>
+
+                <h3>Companies</h3>
+
+                <span>Backend Pending</span>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-user-tie"></i>
+
+                <h2>0</h2>
+
+                <h3>Roles</h3>
+
+                <span>Backend Pending</span>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-briefcase"></i>
+
+                <h2>0</h2>
+
+                <h3>Placements</h3>
+
+                <span>Backend Pending</span>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+                <h2>0</h2>
+
+                <h3>Student Records</h3>
+
+                <span>Backend Pending</span>
+
+            </div>
+
+        </section>
+
+        <!-- Recent Activity -->
+
+        <section class="activity">
+
+            <div class="section-header">
+
+                <h2>Recent Activity</h2>
+
+            </div>
+
+            <div class="activity-box">
+
+                <i class="fa-solid fa-clock-rotate-left"></i>
+
+                <div>
+
+                    <h3>No Recent Activity</h3>
+
+                    <p>
+
+                        Activity history will appear here after Firebase
+                        integration.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="dashboard.js"></script>
+
+</body>
+
+</html>

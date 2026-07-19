@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Records | Job Tracker</title>
+
+    <link rel="stylesheet" href="student-records.css">
+
+    <!-- Poppins Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        <i class="fa-solid fa-briefcase"></i>
+        <span>Job Tracker</span>
+    </div>
+
+
+    <nav>
+
+        <a href="#">
+            <i class="fa-solid fa-chart-line"></i>
+            Dashboard
+        </a>
+
+
+        <a href="#">
+            <i class="fa-solid fa-building"></i>
+            Companies
+        </a>
+
+
+        <a href="#">
+            <i class="fa-solid fa-user-tie"></i>
+            Roles
+        </a>
+
+
+        <a href="#" class="active">
+            <i class="fa-solid fa-users"></i>
+            Student Records
+        </a>
+
+
+        <a href="#">
+            <i class="fa-solid fa-chart-pie"></i>
+            Insights
+        </a>
+
+
+        <a href="#">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </a>
+
+
+    </nav>
+
+</div>
+
+
+
+<!-- Main -->
+
+<div class="main">
+
+
+<div class="top">
+
+<div>
+
+<h1>Student Records</h1>
+
+<p>
+View all registered students using Job Tracker
+</p>
+
+</div>
+
+
+<button id="addStudent">
+
+<i class="fa-solid fa-user-plus"></i>
+
+Add Student
+
+</button>
+
+
+</div>
+
+
+
+
+<!-- Search -->
+
+<div class="search-box">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+<input 
+type="text" 
+id="search"
+placeholder="Search students by name or mail id..."
+>
+
+</div>
+
+
+
+
+
+<!-- Table Card -->
+
+
+<div class="table-card">
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>College Mail ID</th>
+
+<th>Branch</th>
+
+<th>Passing Year</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody id="studentTable">
+
+
+</tbody>
+
+
+</table>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<!-- Add Student Modal -->
+
+<div class="modal" id="studentModal">
+
+
+<div class="modal-content">
+
+
+<span class="close">
+&times;
+</span>
+
+
+<h2>Add Student</h2>
+
+
+
+<label>Name</label>
+
+<input id="name">
+
+
+
+<label>College Mail ID</label>
+
+<input id="email">
+
+
+
+<label>Branch</label>
+
+<input id="branch">
+
+
+
+<label>Passing Year</label>
+
+<input id="year">
+
+
+
+<div class="buttons">
+
+
+<button class="cancel">
+Cancel
+</button>
+
+
+<button class="save" id="saveStudent">
+Save
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script src="student-records.js"></script>
+
+
+</body>
+
+</html>

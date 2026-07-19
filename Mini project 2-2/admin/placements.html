@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Placement Records</title>
+
+    <link rel="stylesheet" href="placements.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- ================= Sidebar ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-graduation-cap"></i>
+
+            <span>Placement Portal</span>
+
+        </div>
+
+        <nav>
+
+            <a href="dashboard.html">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+            <a href="companies.html">
+                <i class="fa-solid fa-building"></i>
+                Companies
+            </a>
+
+            <a href="roles.html">
+                <i class="fa-solid fa-user-tie"></i>
+                Roles
+            </a>
+
+            <a href="placements.html" class="active">
+                <i class="fa-solid fa-briefcase"></i>
+                Placements
+            </a>
+
+            <a href="students.html">
+                <i class="fa-solid fa-user-graduate"></i>
+                Student Records
+            </a>
+
+            <a href="analytics.html">
+                <i class="fa-solid fa-chart-line"></i>
+                Analytics
+            </a>
+
+            <a href="settings.html">
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- ================= Main ================= -->
+
+    <main class="main">
+
+        <!-- Header -->
+
+        <div class="top">
+
+            <div>
+
+                <h1>Placement Records</h1>
+
+                <p>
+
+                    Manage placed students and their placement journey.
+
+                </p>
+
+            </div>
+
+            <button id="openModal">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Placement Record
+
+            </button>
+
+        </div>
+
+        <!-- Search -->
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                placeholder="Search by student, company or role...">
+
+        </div>
+
+        <!-- ================= Records Table ================= -->
+
+        <div class="table-container">
+
+            <table class="placement-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Student</th>
+
+                        <th>Company</th>
+
+                        <th>Role</th>
+
+                        <th>Batch</th>
+
+                        <th>Package</th>
+
+                        <th>Status</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>Rahul Kumar</td>
+
+                        <td>Google</td>
+
+                        <td>Software Engineer</td>
+
+                        <td>2028</td>
+
+                        <td>32 LPA</td>
+
+                        <td>
+
+                            <span class="status active">
+
+                                Selected
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <button class="edit">
+
+                                <i class="fa-solid fa-pen"></i>
+
+                            </button>
+
+                            <button class="delete">
+
+                                <i class="fa-solid fa-trash"></i>
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- ================= Add Placement Modal ================= -->
+
+        <div class="modal" id="placementModal">
+
+            <div class="modal-content">
+
+                <span class="close">&times;</span>
+
+                <h2>Add Placement Record</h2>
+
+                <form id="placementForm">
+
+                                        <!-- =====================================
+                            BASIC PLACEMENT DETAILS
+                    ====================================== -->
+
+                    <h3 class="section-title">
+                        Basic Placement Details
+                    </h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Student Name</label>
+
+                            <input type="text" required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Graduation Year</label>
+
+                            <select required>
+
+                                <option>2027</option>
+                                <option selected>2028</option>
+                                <option>2029</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Branch</label>
+
+                            <select>
+
+                                <option>CSE</option>
+                                <option>IT</option>
+                                <option>AIML</option>
+                                <option>ECE</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Company</label>
+
+                            <select id="companySelect">
+
+                                <option>Select Company</option>
+
+                                <option>Google</option>
+
+                                <option>Amazon</option>
+
+                                <option>Deloitte</option>
+
+                                <option>Microsoft</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Role</label>
+
+                            <select id="roleSelect">
+
+                                <option>Select Role</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Internship / Full Time</label>
+
+                            <select>
+
+                                <option>Internship</option>
+
+                                <option>Full Time</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Package (LPA)</label>
+
+                            <input type="number">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Placement Date</label>
+
+                            <input type="date">
+
+                        </div>
+
+                    </div>
+
+                    <!-- =====================================
+                            ACADEMIC PROFILE
+                    ====================================== -->
+
+                    <h3 class="section-title">
+
+                        Academic Profile
+
+                    </h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>CGPA</label>
+
+                            <select>
+
+                                <option>6.5 - 7</option>
+
+                                <option>7 - 8</option>
+
+                                <option>8 - 9</option>
+
+                                <option>Above 9</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Company CGPA Cutoff</label>
+
+                            <select>
+
+                                <option>Yes</option>
+
+                                <option>No</option>
+
+                                <option>Don't Know</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <!-- =====================================
+                            ELIGIBILITY
+                    ====================================== -->
+
+                    <h3 class="section-title">
+
+                        Eligibility Criteria
+
+                    </h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Minimum CGPA Required</label>
+
+                            <input type="number" step="0.01">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Online Assessment Conducted?</label>
+
+                            <select>
+
+                                <option>Yes</option>
+
+                                <option>No</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Aptitude Round</label>
+
+                            <select>
+
+                                <option>Yes</option>
+
+                                <option>No</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Backlogs Allowed?</label>
+
+                            <select>
+
+                                <option>Yes</option>
+
+                                <option>No</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <!-- =====================================
+                            TECHNICAL SKILLS
+                    ====================================== -->
+
+                    <h3 class="section-title">
+
+                        Technical Skills
+
+                    </h3>
+
+                    <p class="section-note">
+
+                        Rate proficiency before getting selected (1 = Beginner, 5 = Expert)
+
+                    </p>
+
+                    <div id="skillsContainer">
+
+                        <!-- JS will generate grouped sliders here -->
+
+                    </div>
+
+                    <div class="summaryCard">
+
+                        <h3>Overall Technical Profile</h3>
+
+                        <div class="progress">
+
+                            <div class="progress-bar"></div>
+
+                        </div>
+
+                        <div class="summary-details">
+
+                            <div class="summary-box">
+
+                                <h2 id="overallScore">50%</h2>
+
+                                <p>Overall Skill Score</p>
+
+                            </div>
+
+                            <div class="summary-box">
+
+                                <h2 id="skillLevel">Intermediate</h2>
+
+                                <p>Current Level</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                                        <!-- =====================================
+                            CODING PRACTICE
+                    ====================================== -->
+
+                    <h3 class="section-title">
+
+                        Coding Practice
+
+                    </h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Total Coding Problems Solved</label>
+
+                            <select>
+
+                                <option>Below 50</option>
+                                <option>50 - 150</option>
+                                <option>150 - 300</option>
+                                <option>300 - 500</option>
+                                <option>Above 500</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Primary Coding Platform</label>
+
+                            <select>
+
+                                <option>LeetCode</option>
+                                <option>GeeksforGeeks</option>
+                                <option>CodeChef</option>
+                                <option>Codeforces</option>
+                                <option>HackerRank</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Practice Frequency</label>
+
+                            <select>
+
+                                <option>Daily</option>
+                                <option>4-5 Days / Week</option>
+                                <option>Weekends Only</option>
+                                <option>Occasionally</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <!-- =====================================
+                            PROJECT DETAILS
+                    ====================================== -->
+
+                    <h3 class="section-title">
+
+                        Project Details
+
+                    </h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>No. of Projects</label>
+
+                            <select>
+
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>More than 3</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Main Project Name</label>
+
+                            <input type="text">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Project Domain</label>
+
+                            <select>
+
+                                <option>Web Development</option>
+                                <option>Data Analytics</option>
+                                <option>AI / ML</option>
+                                <option>Cloud</option>
+                                <option>IoT</option>
+                                <option>Mobile App</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>GitHub Link</label>
+
+                            <input type="url">
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Project Description</label>
+
+                        <textarea rows="5"
+                            placeholder="Explain your project, technologies used and your contribution..."></textarea>
+
+                    </div>
+
+                    <!-- =====================================
+                            SELECTION PROCESS
+                    ====================================== -->
+
+                    <h3 class="section-title">
+
+                        Selection Process
+
+                    </h3>
+
+                    <div class="checkGrid">
+
+                        <label><input type="checkbox"> Online Assessment</label>
+
+                        <label><input type="checkbox"> Technical Interview</label>
+
+                        <label><input type="checkbox"> Managerial Interview</label>
+
+                        <label><input type="checkbox"> HR Interview</label>
+
+                        <label><input type="checkbox"> Group Discussion</label>
+
+                    </div>
+
+                    <br>
+
+                    <div class="form-group">
+
+                        <label>Overall Difficulty (1-5)</label>
+
+                        <input type="range"
+                            min="1"
+                            max="5"
+                            value="3">
+
+                    </div>
+
+                    <!-- =====================================
+                            INTERVIEW EXPERIENCE
+                    ====================================== -->
+
+                    <h3 class="section-title">
+
+                        Interview Experience
+
+                    </h3>
+
+                    <div class="form-group">
+
+                        <label>Interview Experience</label>
+
+                        <textarea rows="6"
+                            placeholder="Describe your complete interview experience..."></textarea>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Preparation Strategy</label>
+
+                        <textarea rows="5"
+                            placeholder="How did you prepare for this company?"></textarea>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Company Specific Insights</label>
+
+                        <textarea rows="5"
+                            placeholder="Share important insights about this company..."></textarea>
+
+                    </div>
+
+                    <!-- =====================================
+                            PREPARATION JOURNEY
+                    ====================================== -->
+
+                    <h3 class="section-title">
+
+                        Preparation Journey
+
+                    </h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Preparation Duration</label>
+
+                            <select>
+
+                                <option>Less than 3 Months</option>
+                                <option>3 - 6 Months</option>
+                                <option>6 - 12 Months</option>
+                                <option>More than 1 Year</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Preparation Consistency</label>
+
+                            <select>
+
+                                <option>Daily</option>
+                                <option>4-5 Days / Week</option>
+                                <option>Weekends Only</option>
+                                <option>Occasionally</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <!-- =====================================
+                            RESOURCES USED
+                    ====================================== -->
+
+                    <h3 class="section-title">
+
+                        Resources Used
+
+                    </h3>
+
+                    <div class="checkGrid">
+
+                        <label><input type="checkbox"> Striver A2Z</label>
+
+                        <label><input type="checkbox"> Love Babbar</label>
+
+                        <label><input type="checkbox"> LeetCode</label>
+
+                        <label><input type="checkbox"> GeeksforGeeks</label>
+
+                        <label><input type="checkbox"> NPTEL</label>
+
+                        <label><input type="checkbox"> Coursera</label>
+
+                        <label><input type="checkbox"> Udemy</label>
+
+                        <label><input type="checkbox"> YouTube</label>
+
+                        <label><input type="checkbox"> ChatGPT</label>
+
+                    </div>
+                                        <!-- =====================================
+                            MISTAKES & ADVICE
+                    ====================================== -->
+
+                    <h3 class="section-title">
+
+                        Mistakes & Advice
+
+                    </h3>
+
+                    <div class="form-group">
+
+                        <label>What mistake delayed your placement?</label>
+
+                        <textarea rows="5"
+                            placeholder="Mention the biggest mistake you made..."></textarea>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            If you had only 6 months to prepare again,
+                            what would your plan be?
+                        </label>
+
+                        <textarea rows="6"
+                            placeholder="Write your preparation roadmap..."></textarea>
+
+                    </div>
+
+                    <!-- =====================================
+                            TODAY'S CHALLENGE DATA
+                    ====================================== -->
+
+                    <h3 class="section-title">
+
+                        Most Asked Questions
+
+                    </h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Most Asked DSA Topic</label>
+
+                            <input type="text"
+                                   placeholder="Trees">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Most Asked CS Subject</label>
+
+                            <input type="text"
+                                   placeholder="DBMS">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Most Asked Coding Pattern</label>
+
+                            <input type="text"
+                                   placeholder="Sliding Window">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Coding Difficulty</label>
+
+                            <select>
+
+                                <option>Easy</option>
+
+                                <option>Medium</option>
+
+                                <option>Hard</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Frequently Asked Interview Questions</label>
+
+                        <textarea rows="6"
+                        placeholder="Paste the most frequently asked interview questions..."></textarea>
+
+                    </div>
+
+                    <!-- =====================================
+                            CONTACT DETAILS
+                    ====================================== -->
+
+                    <h3 class="section-title">
+
+                        Contact Details
+
+                    </h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>LinkedIn Profile</label>
+
+                            <input type="url">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Email</label>
+
+                            <input type="email">
+
+                        </div>
+
+                    </div>
+
+                    <!-- ================= Buttons ================= -->
+
+                    <div class="buttons">
+
+                        <button
+                            type="button"
+                            class="cancel">
+
+                            Cancel
+
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="save">
+
+                            Save Placement
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="placements.js"></script>
+
+</body>
+
+</html>

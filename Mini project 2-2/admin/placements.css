@@ -1,0 +1,1128 @@
+/* ==========================================
+   RESET
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f5f8fc;
+    color:#222;
+}
+
+/* ==========================================
+   SIDEBAR
+========================================== */
+
+.sidebar{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:250px;
+
+    height:100vh;
+
+    background:#1f3c88;
+
+    color:#fff;
+
+    padding:30px 20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    margin-bottom:45px;
+
+}
+
+.logo i{
+
+    font-size:28px;
+
+}
+
+.sidebar nav{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+.sidebar nav a{
+
+    text-decoration:none;
+
+    color:#dfe7ff;
+
+    padding:14px 16px;
+
+    border-radius:10px;
+
+    transition:.3s;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    font-size:15px;
+
+}
+
+.sidebar nav a:hover{
+
+    background:#3157c9;
+
+}
+
+.sidebar nav a.active{
+
+    background:#ffffff;
+
+    color:#1f3c88;
+
+    font-weight:600;
+
+}
+
+/* ==========================================
+   MAIN
+========================================== */
+
+.main{
+
+    margin-left:250px;
+
+    padding:35px;
+
+}
+
+/* ==========================================
+   TOP HEADER
+========================================== */
+
+.top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+.top h1{
+
+    font-size:32px;
+
+    font-weight:700;
+
+    color:#1f3c88;
+
+}
+
+.top p{
+
+    margin-top:6px;
+
+    color:#777;
+
+    font-size:15px;
+
+}
+
+/* ==========================================
+   ADD BUTTON
+========================================== */
+
+#openModal{
+
+    border:none;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    padding:14px 22px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
+
+#openModal i{
+
+    margin-right:8px;
+
+}
+
+#openModal:hover{
+
+    background:#184ec5;
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================
+   SEARCH BOX
+========================================== */
+
+.search-box{
+
+    background:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:15px 20px;
+
+    border-radius:12px;
+
+    margin-bottom:30px;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+
+}
+
+.search-box i{
+
+    color:#888;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    border:none;
+
+    outline:none;
+
+    font-size:15px;
+
+    background:transparent;
+
+}
+/* ==========================================
+   TABLE CONTAINER
+========================================== */
+
+.table-container{
+
+    background:#fff;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    overflow-x:auto;
+
+}
+
+/* ==========================================
+   TABLE
+========================================== */
+
+.placement-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.placement-table thead{
+
+    background:#f3f7ff;
+
+}
+
+.placement-table th{
+
+    padding:16px;
+
+    text-align:left;
+
+    color:#1f3c88;
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+.placement-table td{
+
+    padding:18px 16px;
+
+    border-bottom:1px solid #eef2f8;
+
+    font-size:14px;
+
+    color:#444;
+
+}
+
+.placement-table tbody tr{
+
+    transition:.25s;
+
+}
+
+.placement-table tbody tr:hover{
+
+    background:#f8fbff;
+
+}
+
+/* ==========================================
+   STATUS BADGES
+========================================== */
+
+.status{
+
+    display:inline-block;
+
+    padding:6px 14px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.status.active{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+}
+
+.status.upcoming{
+
+    background:#fef3c7;
+
+    color:#b45309;
+
+}
+
+.status.closed{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+}
+
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
+
+.edit,
+.delete{
+
+    border:none;
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    margin-right:8px;
+
+}
+
+.edit{
+
+    background:#dbeafe;
+
+    color:#2563eb;
+
+}
+
+.edit:hover{
+
+    background:#2563eb;
+
+    color:#fff;
+
+}
+
+.delete{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+}
+
+.delete:hover{
+
+    background:#dc2626;
+
+    color:#fff;
+
+}
+
+/* ==========================================
+   MODAL
+========================================== */
+
+.modal{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(0,0,0,.45);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:999;
+
+    padding:30px;
+
+}
+
+.modal-content{
+
+    width:95%;
+
+    max-width:1100px;
+
+    max-height:92vh;
+
+    overflow-y:auto;
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:35px;
+
+    position:relative;
+
+    animation:popup .25s ease;
+
+}
+
+/* ==========================================
+   MODAL TITLE
+========================================== */
+
+.modal-content h2{
+
+    color:#1f3c88;
+
+    margin-bottom:25px;
+
+    font-size:28px;
+
+}
+
+.close{
+
+    position:absolute;
+
+    top:20px;
+
+    right:25px;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+    color:#888;
+
+    transition:.3s;
+
+}
+
+.close:hover{
+
+    color:#2563eb;
+
+}
+
+/* ==========================================
+   ANIMATION
+========================================== */
+
+@keyframes popup{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-25px) scale(.96);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0) scale(1);
+
+    }
+
+}
+/* ==========================================
+   FORM
+========================================== */
+
+form{
+
+    margin-top:20px;
+
+}
+
+/* ==========================================
+   SECTION TITLES
+========================================== */
+
+.section-title{
+
+    font-size:22px;
+
+    font-weight:600;
+
+    color:#1f3c88;
+
+    margin:35px 0 20px;
+
+    padding-bottom:10px;
+
+    border-bottom:2px solid #edf2ff;
+
+}
+
+.section-note{
+
+    color:#777;
+
+    font-size:14px;
+
+    margin-top:-10px;
+
+    margin-bottom:20px;
+
+}
+
+/* ==========================================
+   FORM GRID
+========================================== */
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+    gap:22px;
+
+    margin-bottom:25px;
+
+}
+
+/* ==========================================
+   FORM GROUP
+========================================== */
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.form-group label{
+
+    font-size:14px;
+
+    font-weight:500;
+
+    margin-bottom:8px;
+
+    color:#444;
+
+}
+
+/* ==========================================
+   INPUTS
+========================================== */
+
+.form-group input,
+
+.form-group select,
+
+.form-group textarea{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border:1px solid #d9e2ef;
+
+    border-radius:10px;
+
+    outline:none;
+
+    background:#fff;
+
+    font-size:14px;
+
+    transition:.3s;
+
+}
+
+.form-group textarea{
+
+    resize:vertical;
+
+    min-height:120px;
+
+}
+
+.form-group input:focus,
+
+.form-group select:focus,
+
+.form-group textarea:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.12);
+
+}
+
+/* ==========================================
+   PLACEHOLDER
+========================================== */
+
+input::placeholder,
+
+textarea::placeholder{
+
+    color:#9aa4b2;
+
+}
+
+/* ==========================================
+   CHECKBOX GRID
+========================================== */
+
+.checkGrid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:14px;
+
+    margin:18px 0 30px;
+
+}
+
+.checkGrid label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    background:#f8fbff;
+
+    border:1px solid #e5edf8;
+
+    border-radius:10px;
+
+    padding:12px 14px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.checkGrid label:hover{
+
+    border-color:#2563eb;
+
+    background:#eef5ff;
+
+}
+
+.checkGrid input[type="checkbox"]{
+
+    width:18px;
+
+    height:18px;
+
+    accent-color:#2563eb;
+
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.buttons{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:15px;
+
+    margin-top:40px;
+
+}
+
+.cancel{
+
+    border:none;
+
+    background:#eef2f7;
+
+    color:#444;
+
+    padding:14px 28px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
+
+.cancel:hover{
+
+    background:#d9e2ef;
+
+}
+
+.save{
+
+    border:none;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    padding:14px 30px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
+
+.save:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* ==========================================
+   SKILLS SECTION
+========================================== */
+
+.skill-group{
+
+    background:#f8fbff;
+
+    border:1px solid #e5edf8;
+
+    border-radius:14px;
+
+    padding:22px;
+
+    margin-bottom:25px;
+
+}
+
+.skill-group h3{
+
+    color:#1f3c88;
+
+    font-size:18px;
+
+    margin-bottom:20px;
+
+}
+
+.skill-row{
+
+    display:grid;
+
+    grid-template-columns:170px 1fr 55px;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:18px;
+
+}
+
+.skill-row:last-child{
+
+    margin-bottom:0;
+
+}
+
+.skill-row label{
+
+    font-size:14px;
+
+    font-weight:500;
+
+    color:#444;
+
+}
+
+.skill-value{
+
+    text-align:center;
+
+    font-weight:600;
+
+    color:#2563eb;
+
+}
+
+/* ==========================================
+   RANGE SLIDER
+========================================== */
+
+.slider{
+
+    width:100%;
+
+    cursor:pointer;
+
+    accent-color:#2563eb;
+
+}
+
+/* ==========================================
+   SUMMARY CARD
+========================================== */
+
+.summaryCard{
+
+    margin-top:35px;
+
+    background:#ffffff;
+
+    border-radius:16px;
+
+    padding:28px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.summaryCard h3{
+
+    color:#1f3c88;
+
+    margin-bottom:18px;
+
+}
+
+/* ==========================================
+   PROGRESS BAR
+========================================== */
+
+.progress{
+
+    width:100%;
+
+    height:12px;
+
+    background:#e9eef8;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin-bottom:25px;
+
+}
+
+.progress-bar{
+
+    width:50%;
+
+    height:100%;
+
+    background:linear-gradient(90deg,#2563eb,#4f46e5);
+
+    transition:.4s;
+
+}
+
+/* ==========================================
+   SUMMARY BOXES
+========================================== */
+
+.summary-details{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:20px;
+
+}
+
+.summary-box{
+
+    background:#f8fbff;
+
+    border-radius:14px;
+
+    text-align:center;
+
+    padding:22px;
+
+}
+
+.summary-box h2{
+
+    color:#2563eb;
+
+    font-size:30px;
+
+    margin-bottom:8px;
+
+}
+
+.summary-box p{
+
+    color:#666;
+
+    font-size:14px;
+
+}
+
+/* ==========================================
+   TOAST
+========================================== */
+
+.toast{
+
+    position:fixed;
+
+    right:30px;
+
+    top:30px;
+
+    background:#16a34a;
+
+    color:#fff;
+
+    padding:15px 22px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    transform:translateX(130%);
+
+    transition:.35s;
+
+    z-index:1200;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.18);
+
+}
+
+.toast.show{
+
+    transform:translateX(0);
+
+}
+
+.toast i{
+
+    font-size:18px;
+
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+.modal-content::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+.modal-content::-webkit-scrollbar-thumb{
+
+    background:#c7d4ef;
+
+    border-radius:10px;
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+.main{
+
+    margin-left:0;
+
+    padding:25px;
+
+}
+
+.sidebar{
+
+    display:none;
+
+}
+
+.top{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:20px;
+
+}
+
+.summary-details{
+
+    grid-template-columns:1fr;
+
+}
+
+.skill-row{
+
+    grid-template-columns:1fr;
+
+    gap:10px;
+
+}
+
+.buttons{
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+}
+
+.modal-content{
+
+    width:100%;
+
+    padding:22px;
+
+}
+
+}
+
+@media(max-width:600px){
+
+.form-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.checkGrid{
+
+    grid-template-columns:1fr;
+
+}
+
+.placement-table{
+
+    min-width:850px;
+
+}
+
+}

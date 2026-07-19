@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analytics Dashboard</title>
+
+    <link rel="stylesheet" href="analytics.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+
+    <div class="sidebar">
+
+        <h2>Admin</h2>
+
+        <a href="dashboard.html">
+            <i class="fa-solid fa-house"></i> Dashboard
+        </a>
+
+        <a href="companies.html">
+            <i class="fa-solid fa-building"></i> Companies
+        </a>
+
+        <a href="roles.html">
+            <i class="fa-solid fa-user-tie"></i> Roles
+        </a>
+
+        <a href="placements.html">
+            <i class="fa-solid fa-briefcase"></i> Placements
+        </a>
+
+        <a href="analytics.html" class="active">
+            <i class="fa-solid fa-chart-line"></i> Analytics
+        </a>
+
+    </div>
+
+    <!-- Main -->
+
+    <div class="main">
+
+        <div class="top">
+
+            <h1>Placement Analytics Dashboard</h1>
+
+        </div>
+
+        <!-- Statistics -->
+
+        <div class="cards">
+
+            <div class="card">
+
+                <i class="fa-solid fa-building"></i>
+
+                <h2>18</h2>
+
+                <p>Total Companies</p>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+                <h2>145</h2>
+
+                <p>Students Placed</p>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                <h2>9.2 LPA</h2>
+
+                <p>Average Package</p>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-trophy"></i>
+
+                <h2>32 LPA</h2>
+
+                <p>Highest Package</p>
+
+            </div>
+
+        </div>
+
+        <!-- Charts Row 1 -->
+
+        <div class="chartRow">
+
+            <div class="chartCard">
+
+                <h2>Placement by Company</h2>
+
+                <canvas id="companyChart"></canvas>
+
+            </div>
+
+            <div class="chartCard">
+
+                <h2>Role Distribution</h2>
+
+                <canvas id="roleChart"></canvas>
+
+            </div>
+
+        </div>
+
+        <!-- Charts Row 2 -->
+
+        <div class="chartRow">
+
+            <div class="chartCard">
+
+                <h2>Most Required Skills</h2>
+
+                <canvas id="skillChart"></canvas>
+
+            </div>
+
+            <div class="chartCard">
+
+                <h2>Branch-wise Placements</h2>
+
+                <canvas id="branchChart"></canvas>
+
+            </div>
+
+        </div>
+
+        <!-- Summary -->
+
+        <div class="summary">
+
+            <h2>Placement Insights</h2>
+
+            <div class="summaryGrid">
+
+                <div>
+
+                    <h3>🏆 Top Hiring Company</h3>
+
+                    <p>Amazon</p>
+
+                </div>
+
+                <div>
+
+                    <h3>💼 Most Popular Role</h3>
+
+                    <p>Software Engineer</p>
+
+                </div>
+
+                <div>
+
+                    <h3>⭐ Most Required Skill</h3>
+
+                    <p>SQL</p>
+
+                </div>
+
+                <div>
+
+                    <h3>📈 Placement Rate</h3>
+
+                    <p>92%</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Recent Placements -->
+
+        <div class="tableCard">
+
+            <h2>Recent Placements</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Student</th>
+
+                        <th>Company</th>
+
+                        <th>Role</th>
+
+                        <th>Package</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>Rahul</td>
+
+                        <td>Amazon</td>
+
+                        <td>Software Engineer</td>
+
+                        <td>24 LPA</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Anjali</td>
+
+                        <td>Deloitte</td>
+
+                        <td>Data Analyst</td>
+
+                        <td>8 LPA</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Keerthi</td>
+
+                        <td>Cisco</td>
+
+                        <td>Intern</td>
+
+                        <td>50K/Month</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Sneha</td>
+
+                        <td>Infosys</td>
+
+                        <td>System Engineer</td>
+
+                        <td>6.5 LPA</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- Chart.js -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="analytics.js"></script>
+
+</body>
+
+</html>
