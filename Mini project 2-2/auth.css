@@ -643,3 +643,90 @@ font-size:14px;
 }
 
 }
+.role-selection{
+
+    text-align:center;
+
+}
+
+.role-selection h2{
+
+    font-size:30px;
+
+    color:#1f2937;
+
+    margin-bottom:10px;
+
+}
+
+.role-selection p{
+
+    color:#666;
+
+    margin-bottom:30px;
+
+}
+
+.role-buttons{
+
+    display:flex;
+
+    gap:20px;
+
+    justify-content:center;
+
+    margin-bottom:30px;
+
+}
+
+.roleBtn{
+
+    flex:1;
+
+    padding:30px;
+
+    border:none;
+
+    border-radius:20px;
+
+    background:#f4f7ff;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.roleBtn i{
+
+    font-size:40px;
+
+    margin-bottom:10px;
+
+    color:#2563eb;
+
+}
+
+.roleBtn:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.activeRole{
+
+    background:linear-gradient(135deg,#2563eb,#4f46e5);
+
+    color:white;
+
+}
+
+.activeRole i{
+
+    color:white;
+
+}

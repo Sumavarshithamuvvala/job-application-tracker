@@ -179,7 +179,7 @@ onAuthStateChanged(auth, async (user) => {
 
     try {
 
-        const docRef = doc(db, "students", user.uid);
+        const docRef = doc(db, "studentProfiles", user.uid);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -252,7 +252,7 @@ saveBtn.addEventListener("click", async () => {
 
     try {
 
-        await setDoc(doc(db, "students", user.uid), profile, { merge: true });
+        await setDoc(doc(db, "studentProfiles", user.uid), profile, { merge: true });
 
         alert("Profile Saved Successfully!");
 
