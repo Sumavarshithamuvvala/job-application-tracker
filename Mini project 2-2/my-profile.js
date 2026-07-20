@@ -173,36 +173,44 @@ allInputs.forEach(input => {
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
-
         window.location.href = "auth.html";
         return;
-
     }
 
-    const docRef = doc(db, "students", user.uid);
+    try {
 
-    const docSnap = await getDoc(docRef);
+        const docRef = doc(db, "students", user.uid);
+        const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
+        if (docSnap.exists()) {
 
-        const profile = docSnap.data();
+            const profile = docSnap.data();
 
-        fullName.value = profile.fullName || "";
-        email.value = profile.email || "";
-        phone.value = profile.phone || "";
-        roll.value = profile.roll || "";
-        college.value = profile.college || "";
-        branch.value = profile.branch || "";
-        year.value = profile.year || "";
-        cgpa.value = profile.cgpa || "";
-        semester.value = profile.semester || "";
-        graduation.value = profile.graduation || "";
-        careerGoal.value = profile.careerGoal || "";
-        dreamCompanies.value = profile.dreamCompanies || "";
+            fullName.value = profile.fullName || "";
+            email.value = profile.email || "";
+            phone.value = profile.phone || "";
+            roll.value = profile.roll || "";
+            college.value = profile.college || "";
+            branch.value = profile.branch || "";
+            year.value = profile.year || "";
+            cgpa.value = profile.cgpa || "";
+            semester.value = profile.semester || "";
+            graduation.value = profile.graduation || "";
+            careerGoal.value = profile.careerGoal || "";
+            dreamCompanies.value = profile.dreamCompanies || "";
 
-        selectedSkills = profile.skills || [];
+            selectedSkills = profile.skills || [];
 
-        renderSelectedSkills();
+            renderSelectedSkills();
+
+            // THIS LINE IS THE IMPORTANT ONE
+            showProfile(profile);
+
+        }
+
+    } catch(error) {
+
+        console.log(error);
 
     }
 
@@ -264,34 +272,35 @@ saveBtn.addEventListener("click", async () => {
 
 function showProfile(profile){
 
-    viewName.textContent = profile.fullName;
-    viewEmail.textContent = profile.email;
-    viewPhone.textContent = profile.phone;
-    viewRoll.textContent = profile.roll;
-    viewCollege.textContent = profile.college;
-    viewBranch.textContent = profile.branch;
-    viewYear.textContent = profile.year;
-    viewCgpa.textContent = profile.cgpa;
-    viewSemester.textContent = profile.semester;
-    viewGraduation.textContent = profile.graduation;
-    viewGoal.textContent = profile.careerGoal;
-    viewDreamCompanies.textContent = profile.dreamCompanies;
+    viewName.textContent = profile.fullName || "";
+    viewEmail.textContent = profile.email || "";
+    viewPhone.textContent = profile.phone || "";
+    viewRoll.textContent = profile.roll || "";
+    viewCollege.textContent = profile.college || "";
+    viewBranch.textContent = profile.branch || "";
+    viewYear.textContent = profile.year || "";
+    viewCgpa.textContent = profile.cgpa || "";
+    viewSemester.textContent = profile.semester || "";
+    viewGraduation.textContent = profile.graduation || "";
+    viewGoal.textContent = profile.careerGoal || "";
+    viewDreamCompanies.textContent = profile.dreamCompanies || "";
 
     viewSkills.innerHTML = "";
 
-    profile.skills.forEach(skill=>{
+    (profile.skills || []).forEach(skill => {
 
-        const chip=document.createElement("span");
+        const chip = document.createElement("span");
 
-        chip.textContent=skill;
+        chip.className = "selected-skill";
+
+        chip.textContent = skill;
 
         viewSkills.appendChild(chip);
 
     });
 
-    editProfile.style.display="none";
-
-    viewProfile.style.display="block";
+    editProfile.style.display = "none";
+    viewProfile.style.display = "block";
 
 }
 
