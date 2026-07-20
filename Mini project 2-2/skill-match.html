@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Skill Match</title>
+
+    <link rel="stylesheet" href="skill-match.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Skill Match Analysis</h1>
+
+    <p>
+        Compare your skills with successful seniors and identify your skill gap.
+    </p>
+
+    <!-- Select Senior -->
+
+    <div class="select-box">
+
+        <label>Select Senior</label>
+
+        <select id="seniorSelect">
+
+            <option value="google">Rahul Sharma - Google</option>
+
+            <option value="microsoft">Priya Reddy - Microsoft</option>
+
+            <option value="amazon">Sai Kumar - Amazon</option>
+
+        </select>
+
+    </div>
+
+    <!-- Skill Comparison -->
+
+    <div class="comparison">
+
+        <!-- Student -->
+
+        <div class="card">
+
+            <h2>Your Skills</h2>
+
+            <div class="skills">
+
+                <span>Java</span>
+
+                <span>HTML</span>
+
+                <span>CSS</span>
+
+                <span>SQL</span>
+
+                <span>Python</span>
+
+            </div>
+
+        </div>
+
+        <!-- Senior -->
+
+        <div class="card">
+
+            <h2>Senior Skills</h2>
+
+            <div class="skills" id="seniorSkills">
+
+                <span>Java</span>
+
+                <span>DSA</span>
+
+                <span>System Design</span>
+
+                <span>SQL</span>
+
+                <span>Git</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Match -->
+
+    <div class="result">
+
+        <h2>Skill Match</h2>
+
+        <div class="circle">
+
+            <span id="percentage">70%</span>
+
+        </div>
+
+    </div>
+
+    <!-- Missing Skills -->
+
+    <div class="missing">
+
+        <h2>Recommended Skills</h2>
+
+        <div id="missingSkills">
+
+            <span>DSA</span>
+
+            <span>Git</span>
+
+            <span>System Design</span>
+
+        </div>
+
+    </div>
+
+    <!-- Recommendation -->
+
+    <div class="recommendation">
+
+        <h2>Recommendation</h2>
+
+        <p>
+
+            Learn DSA and Git first.
+
+            Then practice System Design.
+
+            Complete 100 LeetCode problems before applying.
+
+        </p>
+
+    </div>
+
+</div>
+
+<script src="skill-match.js"></script>
+
+</body>
+
+</html>

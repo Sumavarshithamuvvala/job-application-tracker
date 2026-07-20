@@ -1,7 +1,10 @@
 // ==============================
 // Get Selected Role
 // ==============================
-
+import { auth, db } from "./firebase.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 const role = localStorage.getItem("role") || "student";
 
 // ==============================
@@ -121,22 +124,28 @@ passwordIcons.forEach(icon=>{
 // ==============================
 // Login Demo
 // ==============================
-
-loginForm.addEventListener("submit",(e)=>{
+loginForm.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    alert("Login Successful!");
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
 
-    if(role==="student"){
+    try {
 
-        window.location.href="student-dashboard.html";
+        await signInWithEmailAndPassword(auth, email, password);
 
-    }
+        alert("Login Successful!");
 
-    else{
+        if (role === "student") {
+            window.location.href = "student-dashboard.html";
+        } else {
+            window.location.href = "admin-dashboard.html";
+        }
 
-        window.location.href="admin-dashboard.html";
+    } catch (error) {
+
+        alert(error.message);
 
     }
 
@@ -145,19 +154,48 @@ loginForm.addEventListener("submit",(e)=>{
 // ==============================
 // Signup Demo
 // ==============================
-
-signupForm.addEventListener("submit",(e)=>{
+signupForm.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    alert("Account Created Successfully!");
+    const fullName = document.getElementById("fullName").value;
+    const email = document.getElementById("signupEmail").value;
+    const rollNumber = document.getElementById("roleField").value;
+    const password = document.getElementById("signupPassword").value;
 
-    loginForm.style.display="block";
+    try {
 
-    signupForm.style.display="none";
+        const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
 
-    loginTab.classList.add("active");
+        const user = userCredential.user;
 
-    signupTab.classList.remove("active");
+        await setDoc(doc(db, "students", user.uid), {
+
+            fullName: fullName,
+            email: email,
+            rollNumber: rollNumber,
+            role: role
+
+        });
+
+        alert("Account Created Successfully!");
+
+        signupForm.reset();
+
+        loginForm.style.display = "block";
+        signupForm.style.display = "none";
+
+        loginTab.classList.add("active");
+        signupTab.classList.remove("active");
+
+    } catch (error) {
+
+        alert(error.message);
+
+    }
 
 });

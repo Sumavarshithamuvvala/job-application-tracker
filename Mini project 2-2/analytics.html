@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analytics Dashboard</title>
+
+    <link rel="stylesheet" href="analytics.css">
+   
+
+</head>
+
+<body>
+
+    <!-- ==========================
+         Sidebar Here
+         Paste your existing sidebar
+    =========================== -->
+
+
+
+    <!-- ==========================
+         Analytics Content
+    =========================== -->
+
+    <main class="analytics-container">
+
+        <!-- Page Header -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>Analytics Dashboard</h1>
+
+                <p>
+                    View placement trends, company insights,
+                    hiring process and skill analytics.
+                </p>
+
+            </div>
+
+            <div class="filters">
+
+                <select id="yearFilter">
+
+                    <option>All Years</option>
+
+                    <option>2026</option>
+
+                    <option>2025</option>
+
+                    <option>2024</option>
+
+                    <option>2023</option>
+
+                </select>
+
+                <select id="companyFilter">
+
+                    <option>All Companies</option>
+
+                    <option>TCS</option>
+
+                    <option>Infosys</option>
+
+                    <option>Accenture</option>
+
+                    <option>Deloitte</option>
+
+                    <option>Google</option>
+
+                    <option>Amazon</option>
+
+                </select>
+
+                <select id="branchFilter">
+
+                    <option>All Branches</option>
+
+                    <option>CSE</option>
+
+                    <option>IT</option>
+
+                    <option>AIML</option>
+
+                    <option>ECE</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- KPI Cards -->
+
+        <section class="kpi-grid">
+
+            <div class="kpi-card">
+
+                <h3>Total Companies</h3>
+
+                <h2 id="companiesCount">86</h2>
+
+            </div>
+
+            <div class="kpi-card">
+
+                <h3>Students Placed</h3>
+
+                <h2 id="studentsPlaced">412</h2>
+
+            </div>
+
+            <div class="kpi-card">
+
+                <h3>Placement %</h3>
+
+                <h2 id="placementPercent">92%</h2>
+
+            </div>
+
+            <div class="kpi-card">
+
+                <h3>Average Package</h3>
+
+                <h2 id="avgPackage">₹7.8 LPA</h2>
+
+            </div>
+
+            <div class="kpi-card">
+
+                <h3>Highest Package</h3>
+
+                <h2 id="highestPackage">₹32 LPA</h2>
+
+            </div>
+
+        </section>
+
+
+        <!-- Charts Start -->
+
+        <section class="chart-grid">
+
+
+            <!-- Top Hiring Companies -->
+
+            <div class="chart-card">
+
+                <h3>Top Hiring Companies</h3>
+
+                <canvas id="topCompaniesChart"></canvas>
+
+            </div>
+
+
+
+            <!-- Company Visit Trend -->
+
+            <div class="chart-card">
+
+                <h3>Company Visit Trend</h3>
+
+                <canvas id="companyTrendChart"></canvas>
+
+            </div>
+
+
+
+            <!-- Hiring Process Distribution -->
+
+            <div class="chart-card">
+
+                <h3>Hiring Process Distribution</h3>
+
+                <canvas id="hiringProcessChart"></canvas>
+
+            </div>
+
+
+
+            <!-- Interview Topic Analytics -->
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+
+                    <h3>Interview Topic Analytics</h3>
+
+                    <div>
+
+                        <select id="subjectFilter">
+
+                            <option>Java</option>
+
+                            <option>Python</option>
+
+                            <option>SQL</option>
+
+                            <option>DSA</option>
+
+                            <option>JavaScript</option>
+
+                        </select>
+
+                        <select id="topicCompanyFilter">
+
+                            <option>All Companies</option>
+
+                            <option>TCS</option>
+
+                            <option>Infosys</option>
+
+                            <option>Accenture</option>
+
+                            <option>Amazon</option>
+
+                            <option>Google</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <canvas id="topicChart"></canvas>
+
+            </div>
+                        <!-- Subject-wise Skill Analytics -->
+
+            <div class="chart-card">
+
+                <h3>Subject-wise Skill Analytics</h3>
+
+                <canvas id="skillChart"></canvas>
+
+            </div>
+
+
+
+            <!-- Company-wise Placement Analytics -->
+
+            <div class="chart-card">
+
+                <h3>Company-wise Placement Analytics</h3>
+
+                <canvas id="placementCompanyChart"></canvas>
+
+            </div>
+
+
+
+            <!-- Placement Trend -->
+
+            <div class="chart-card">
+
+                <h3>Placement Trend</h3>
+
+                <canvas id="placementTrendChart"></canvas>
+
+            </div>
+
+
+
+            <!-- Package Distribution -->
+
+            <div class="chart-card">
+
+                <h3>Package Distribution</h3>
+
+                <canvas id="packageChart"></canvas>
+
+            </div>
+
+
+
+            <!-- Company Eligibility Analytics -->
+
+            <div class="chart-card">
+
+                <h3>Company Eligibility Analytics</h3>
+
+                <canvas id="eligibilityChart"></canvas>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ==========================
+         Chart.js Library
+    =========================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+    <!-- ==========================
+         Analytics JavaScript
+    =========================== -->
+
+    <script src="analytics.js"></script>
+
+</body>
+
+</html>

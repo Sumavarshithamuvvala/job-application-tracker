@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings</title>
+
+    <link rel="stylesheet" href="settings.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Settings</h1>
+
+    <p>Manage your account preferences.</p>
+
+    <!-- Account -->
+
+    <div class="card">
+
+        <h2><i class="fa-solid fa-user"></i> Account Information</h2>
+
+        <div class="input-group">
+
+            <label>Full Name</label>
+
+            <input type="text" value="Varshitha">
+
+        </div>
+
+        <div class="input-group">
+
+            <label>Email</label>
+
+            <input type="email" value="varshitha@gmail.com">
+
+        </div>
+
+        <button class="save-btn">Save Changes</button>
+
+    </div>
+
+    <!-- Password -->
+
+    <div class="card">
+
+        <h2><i class="fa-solid fa-lock"></i> Change Password</h2>
+
+        <div class="input-group">
+
+            <label>Current Password</label>
+
+            <input type="password" placeholder="Current Password">
+
+        </div>
+
+        <div class="input-group">
+
+            <label>New Password</label>
+
+            <input type="password" placeholder="New Password">
+
+        </div>
+
+        <div class="input-group">
+
+            <label>Confirm Password</label>
+
+            <input type="password" placeholder="Confirm Password">
+
+        </div>
+
+        <button class="save-btn">Update Password</button>
+
+    </div>
+
+    <!-- Notifications -->
+
+    <div class="card">
+
+        <h2><i class="fa-solid fa-bell"></i> Notifications</h2>
+
+        <div class="toggle">
+
+            <span>Email Notifications</span>
+
+            <input type="checkbox" checked>
+
+        </div>
+
+        <div class="toggle">
+
+            <span>Placement Updates</span>
+
+            <input type="checkbox" checked>
+
+        </div>
+
+        <div class="toggle">
+
+            <span>Company Alerts</span>
+
+            <input type="checkbox">
+
+        </div>
+
+    </div>
+
+    <!-- Theme -->
+
+    <div class="card">
+
+        <h2><i class="fa-solid fa-palette"></i> Theme</h2>
+
+        <select>
+
+            <option>Light Mode</option>
+
+            <option>Dark Mode</option>
+
+        </select>
+
+    </div>
+
+    <!-- Logout -->
+
+    <div class="card danger">
+
+        <h2><i class="fa-solid fa-right-from-bracket"></i> Logout</h2>
+
+        <p>Click below to logout from your account.</p>
+
+        <button id="logoutBtn">Logout</button>
+
+    </div>
+
+</div>
+
+<script src="settings.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,206 @@
+/* ===========================
+   RESET
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7fc;
+    color:#333;
+}
+
+.container{
+    width:90%;
+    max-width:900px;
+    margin:40px auto;
+}
+
+/* ===========================
+   HEADER
+=========================== */
+
+.container h1{
+    color:#2563eb;
+    margin-bottom:10px;
+}
+
+.container > p{
+    color:#666;
+    margin-bottom:30px;
+}
+
+/* ===========================
+   CARD
+=========================== */
+
+.card{
+    background:#fff;
+    border-radius:15px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+}
+
+.card h2{
+    color:#2563eb;
+    margin-bottom:20px;
+    font-size:22px;
+}
+
+.card h2 i{
+    margin-right:10px;
+}
+
+/* ===========================
+   INPUTS
+=========================== */
+
+.input-group{
+    margin-bottom:18px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:500;
+}
+
+.input-group input{
+    width:100%;
+    padding:14px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    outline:none;
+    transition:.3s;
+    font-size:15px;
+}
+
+.input-group input:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 8px rgba(37,99,235,.2);
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+
+.save-btn{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    padding:14px 28px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:15px;
+    transition:.3s;
+}
+
+.save-btn:hover{
+    background:#1d4ed8;
+}
+
+/* ===========================
+   TOGGLE
+=========================== */
+
+.toggle{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 0;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.toggle:last-child{
+    border-bottom:none;
+}
+
+.toggle span{
+    font-size:15px;
+}
+
+/* ===========================
+   CHECKBOX
+=========================== */
+
+.toggle input[type="checkbox"]{
+    width:20px;
+    height:20px;
+    cursor:pointer;
+}
+
+/* ===========================
+   SELECT
+=========================== */
+
+select{
+    width:100%;
+    padding:14px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    outline:none;
+    font-size:15px;
+}
+
+select:focus{
+    border-color:#2563eb;
+}
+
+/* ===========================
+   DANGER CARD
+=========================== */
+
+.danger{
+    border-left:6px solid #ef4444;
+}
+
+#logoutBtn{
+    background:#ef4444;
+    color:#fff;
+    border:none;
+    padding:14px 30px;
+    border-radius:10px;
+    cursor:pointer;
+    margin-top:15px;
+    transition:.3s;
+    font-size:15px;
+}
+
+#logoutBtn:hover{
+    background:#dc2626;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:768px){
+
+    .container{
+        width:95%;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .card h2{
+        font-size:20px;
+    }
+
+    .save-btn,
+    #logoutBtn{
+        width:100%;
+    }
+
+}

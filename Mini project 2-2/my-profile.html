@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile</title>
+
+    <link rel="stylesheet" href="my-profile.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ========================= -->
+    <!-- EDIT PROFILE -->
+    <!-- ========================= -->
+
+    <div id="editProfile">
+
+        <header>
+
+            <a href="student-dashboard.html" class="back-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+                Dashboard
+            </a>
+
+            <h1>My Profile</h1>
+
+        </header>
+
+        <!-- Profile Photo -->
+
+        <section class="profile-card">
+
+            <div class="profile-avatar" id="profileAvatar">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+            <button class="upload-btn">
+
+                Upload Profile Photo
+
+            </button>
+
+        </section>
+
+        <!-- Personal Details -->
+
+        <section class="info-card">
+
+            <h2>Personal Details</h2>
+
+            <div class="info-grid">
+
+                <div class="input-box">
+
+                    <label>Full Name</label>
+
+                    <input
+                        id="fullName"
+                        type="text"
+                        placeholder="Enter your full name">
+
+                </div>
+
+                <div class="input-box">
+
+                    <label>Email</label>
+
+                    <input
+                        id="email"
+                        type="email"
+                        placeholder="Enter your email">
+
+                </div>
+
+                <div class="input-box">
+
+                    <label>Phone Number</label>
+
+                    <input
+                        id="phone"
+                        type="tel"
+                        placeholder="Enter phone number">
+
+                </div>
+
+                <div class="input-box">
+
+                    <label>Roll Number</label>
+
+                    <input
+                        id="roll"
+                        type="text"
+                        placeholder="Enter roll number">
+
+                </div>
+
+                <div class="input-box">
+
+                    <label>College</label>
+
+                    <input
+                        id="college"
+                        type="text"
+                        placeholder="Enter college name">
+
+                </div>
+
+                <div class="input-box">
+
+                    <label>Branch</label>
+
+                    <input
+                        id="branch"
+                        type="text"
+                        placeholder="Enter branch">
+
+                </div>
+
+                <div class="input-box">
+
+                    <label>Year</label>
+
+                    <select id="year">
+
+                        <option value="">Select Year</option>
+                        <option>1st Year</option>
+                        <option>2nd Year</option>
+                        <option>3rd Year</option>
+                        <option>4th Year</option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-box">
+
+                    <label>CGPA</label>
+
+                    <input
+                        id="cgpa"
+                        type="number"
+                        step="0.01"
+                        placeholder="Enter CGPA">
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Academic Details -->
+
+        <section class="info-card">
+
+            <h2>Academic Details</h2>
+
+            <div class="info-grid">
+
+                <div class="input-box">
+
+                    <label>Current Semester</label>
+
+                    <input
+                        id="semester"
+                        type="text"
+                        placeholder="Enter current semester">
+
+                </div>
+
+                <div class="input-box">
+
+                    <label>Expected Graduation Year</label>
+
+                    <input
+                        id="graduation"
+                        type="number"
+                        placeholder="Enter graduation year">
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Technical Skills -->
+
+        <section class="info-card">
+
+            <h2>Technical Skills</h2>
+
+            <div class="skills-container">
+
+                <button type="button" class="skill">Java</button>
+                <button type="button" class="skill">Python</button>
+                <button type="button" class="skill">C</button>
+                <button type="button" class="skill">C++</button>
+                <button type="button" class="skill">HTML</button>
+                <button type="button" class="skill">CSS</button>
+                <button type="button" class="skill">JavaScript</button>
+                <button type="button" class="skill">React</button>
+                <button type="button" class="skill">Node.js</button>
+                <button type="button" class="skill">SQL</button>
+                <button type="button" class="skill">MongoDB</button>
+                <button type="button" class="skill">Firebase</button>
+                <button type="button" class="skill">Git</button>
+                <button type="button" class="skill">GitHub</button>
+                <button type="button" class="skill">DSA</button>
+
+            </div>
+
+            <div class="custom-skill">
+
+                <input
+                    type="text"
+                    id="customSkill"
+                    placeholder="Enter your skill">
+
+                <button
+                    type="button"
+                    id="addSkill">
+
+                    Add
+
+                </button>
+
+            </div>
+
+            <div
+                class="selected-skills"
+                id="selectedSkills">
+
+            </div>
+
+        </section>
+                <!-- Career Goal -->
+
+        <section class="info-card">
+
+            <h2>Career Goal</h2>
+
+            <textarea
+                id="careerGoal"
+                rows="4"
+                placeholder="Write your career objective..."></textarea>
+
+        </section>
+
+        <!-- Dream Companies -->
+
+        <section class="info-card">
+
+            <h2>Dream Companies</h2>
+
+            <input
+                id="dreamCompanies"
+                type="text"
+                placeholder="Example: Google, Microsoft, Amazon">
+
+        </section>
+
+        <!-- Save Button -->
+
+        <section class="button-section">
+
+            <button id="saveProfile">
+
+                <i class="fa-solid fa-floppy-disk"></i>
+
+                Save Profile
+
+            </button>
+
+        </section>
+
+    </div>
+
+    <!-- ====================================== -->
+    <!-- VIEW PROFILE (Shown after Save) -->
+    <!-- ====================================== -->
+
+    <div id="viewProfile" style="display:none;">
+
+        <div class="profile-view-card">
+
+            <div class="profile-top">
+
+                <div class="profile-avatar large">
+
+                    <i class="fa-solid fa-user"></i>
+
+                </div>
+
+                <div>
+
+                    <h1 id="viewName">Your Name</h1>
+
+                    <p id="viewBranch">
+                        Branch
+                    </p>
+
+                    <p id="viewCollege">
+                        College
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="profile-details">
+
+                <div class="detail-card">
+
+                    <h3>Email</h3>
+
+                    <p id="viewEmail"></p>
+
+                </div>
+
+                <div class="detail-card">
+
+                    <h3>Phone Number</h3>
+
+                    <p id="viewPhone"></p>
+
+                </div>
+
+                <div class="detail-card">
+
+                    <h3>Roll Number</h3>
+
+                    <p id="viewRoll"></p>
+
+                </div>
+
+                <div class="detail-card">
+
+                    <h3>Year</h3>
+
+                    <p id="viewYear"></p>
+
+                </div>
+
+                <div class="detail-card">
+
+                    <h3>CGPA</h3>
+
+                    <p id="viewCgpa"></p>
+
+                </div>
+
+                <div class="detail-card">
+
+                    <h3>Semester</h3>
+
+                    <p id="viewSemester"></p>
+
+                </div>
+
+                <div class="detail-card">
+
+                    <h3>Expected Graduation</h3>
+
+                    <p id="viewGraduation"></p>
+
+                </div>
+
+            </div>
+
+            <!-- Skills -->
+
+            <div class="profile-section">
+
+                <h2>Technical Skills</h2>
+
+                <div
+                    id="viewSkills"
+                    class="skills-display">
+
+                </div>
+
+            </div>
+
+            <!-- Career Goal -->
+
+            <div class="profile-section">
+
+                <h2>Career Goal</h2>
+
+                <p id="viewGoal"></p>
+
+            </div>
+
+            <!-- Dream Companies -->
+
+            <div class="profile-section">
+
+                <h2>Dream Companies</h2>
+
+                <p id="viewDreamCompanies"></p>
+
+            </div>
+
+            <button id="editProfileBtn">
+
+                <i class="fa-solid fa-pen"></i>
+
+                Edit Profile
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="my-profile.js"></script>
+
+</body>
+
+</html>

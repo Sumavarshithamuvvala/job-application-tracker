@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Senior Profiles</title>
+
+    <link rel="stylesheet" href="senior-profiles.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+
+    <header>
+
+        <a href="student-dashboard.html" class="back-btn">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Dashboard
+
+        </a>
+
+        <h1>Senior Profiles</h1>
+
+    </header>
+
+    <!-- Search -->
+
+    <section class="search-section">
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by Senior Name...">
+
+        </div>
+
+    </section>
+
+    <!-- Filters -->
+
+    <section class="filter-section">
+
+        <select id="companyFilter">
+
+            <option>All Companies</option>
+            <option>Google</option>
+            <option>Microsoft</option>
+            <option>Amazon</option>
+            <option>Adobe</option>
+            <option>Oracle</option>
+            <option>Infosys</option>
+            <option>TCS</option>
+            <option>Accenture</option>
+            <option>Capgemini</option>
+
+        </select>
+
+        <select id="roleFilter">
+
+            <option>All Roles</option>
+            <option>Software Engineer</option>
+            <option>SDE</option>
+            <option>Frontend Developer</option>
+            <option>Backend Developer</option>
+            <option>Full Stack Developer</option>
+            <option>Data Analyst</option>
+            <option>Data Scientist</option>
+            <option>AI/ML Engineer</option>
+
+        </select>
+
+        <select id="branchFilter">
+
+            <option>All Branches</option>
+            <option>CSE</option>
+            <option>CSE-AI</option>
+            <option>CSE-DS</option>
+            <option>IT</option>
+            <option>ECE</option>
+            <option>EEE</option>
+
+        </select>
+
+        <select id="batchFilter">
+
+            <option>All Batches</option>
+            <option>2024</option>
+            <option>2025</option>
+            <option>2026</option>
+            <option>2027</option>
+
+        </select>
+
+        <select id="sortFilter">
+
+            <option>Sort By</option>
+            <option>A-Z</option>
+            <option>Newest Batch</option>
+            <option>Oldest Batch</option>
+            <option>Company</option>
+
+        </select>
+
+        <button id="resetFilters">
+
+            <i class="fa-solid fa-rotate-left"></i>
+
+            Reset
+
+        </button>
+
+    </section>
+
+    <!-- Senior Profiles -->
+
+    <section class="profiles-grid">
+
+        <!-- Profile Card 1 -->
+
+        <div class="profile-card">
+
+            <div class="profile-image">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+            <div class="profile-info">
+
+                <h3>Ananya Reddy</h3>
+
+                <p>CSE • 2026 Batch</p>
+
+                <p>Google</p>
+
+                <p>Software Engineer</p>
+
+            </div>
+
+        </div>
+
+        <!-- Profile Card 2 -->
+
+        <div class="profile-card">
+
+            <div class="profile-image">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+            <div class="profile-info">
+
+                <h3>Rahul Kumar</h3>
+
+                <p>IT • 2025 Batch</p>
+
+                <p>Microsoft</p>
+
+                <p>SDE Intern</p>
+
+            </div>
+
+        </div>
+
+        <!-- Profile Card 3 -->
+
+        <div class="profile-card">
+
+            <div class="profile-image">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+            <div class="profile-info">
+
+                <h3>Priya Sharma</h3>
+
+                <p>CSE-AI • 2026 Batch</p>
+
+                <p>Amazon</p>
+
+                <p>Frontend Developer</p>
+
+            </div>
+
+        </div>
+                <!-- Profile Card 4 -->
+
+        <div class="profile-card">
+
+            <div class="profile-image">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+            <div class="profile-info">
+
+                <h3>Kiran Kumar</h3>
+
+                <p>CSE • 2025 Batch</p>
+
+                <p>Adobe</p>
+
+                <p>Software Engineer</p>
+
+            </div>
+
+        </div>
+
+        <!-- Profile Card 5 -->
+
+        <div class="profile-card">
+
+            <div class="profile-image">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+            <div class="profile-info">
+
+                <h3>Sneha Patel</h3>
+
+                <p>IT • 2026 Batch</p>
+
+                <p>Oracle</p>
+
+                <p>Backend Developer</p>
+
+            </div>
+
+        </div>
+
+        <!-- Profile Card 6 -->
+
+        <div class="profile-card">
+
+            <div class="profile-image">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+            <div class="profile-info">
+
+                <h3>Arjun Reddy</h3>
+
+                <p>CSE-DS • 2025 Batch</p>
+
+                <p>Infosys</p>
+
+                <p>Full Stack Developer</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+<!-- ===========================================
+     Profile Details Modal
+     (Firebase Data Later)
+=========================================== -->
+
+<div id="profileModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close-btn">&times;</span>
+
+        <div class="modal-profile">
+
+            <div class="modal-avatar">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+            <h2 id="modalName">
+                Senior Name
+            </h2>
+
+            <p id="modalRole">
+                Company • Role
+            </p>
+
+        </div>
+
+        <hr>
+
+        <div class="coming-soon">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <h3>
+                Senior Profile Details
+            </h3>
+
+            <p>
+
+                Detailed information like skills,
+                projects, interview experience,
+                certifications, package,
+                contact details and tips for juniors
+                will be displayed here after
+                Firebase integration.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="senior-profiles.js"></script>
+
+</body>
+
+</html>
