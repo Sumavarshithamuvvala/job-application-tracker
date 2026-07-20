@@ -4,6 +4,15 @@
 // ======================================
 
 // ---------- Form Sections ----------
+import { auth, db } from "./firebase.js";
+
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+    doc,
+    getDoc,
+    setDoc
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 const editProfile = document.getElementById("editProfile");
 const viewProfile = document.getElementById("viewProfile");
 
@@ -161,11 +170,22 @@ allInputs.forEach(input => {
 // LOAD PROFILE FROM LOCAL STORAGE
 // ======================================
 
-window.addEventListener("load", () => {
+onAuthStateChanged(auth, async (user) => {
 
-    const profile = JSON.parse(localStorage.getItem("studentProfile"));
+    if (!user) {
 
-    if (profile) {
+        window.location.href = "auth.html";
+        return;
+
+    }
+
+    const docRef = doc(db, "students", user.uid);
+
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+
+        const profile = docSnap.data();
 
         fullName.value = profile.fullName || "";
         email.value = profile.email || "";
@@ -184,16 +204,6 @@ window.addEventListener("load", () => {
 
         renderSelectedSkills();
 
-        skillButtons.forEach(button => {
-
-            if(selectedSkills.includes(button.textContent)){
-
-                button.classList.add("active");
-
-            }
-
-        });
-
     }
 
 });
@@ -202,7 +212,17 @@ window.addEventListener("load", () => {
 // SAVE PROFILE
 // ======================================
 
-saveBtn.addEventListener("click", () => {
+saveBtn.addEventListener("click", async () => {
+
+    const user = auth.currentUser;
+
+    if (!user) {
+
+        alert("Please login again.");
+
+        return;
+
+    }
 
     const profile = {
 
@@ -222,12 +242,19 @@ saveBtn.addEventListener("click", () => {
 
     };
 
-    localStorage.setItem(
-        "studentProfile",
-        JSON.stringify(profile)
-    );
+    try {
 
-    showProfile(profile);
+        await setDoc(doc(db, "students", user.uid), profile, { merge: true });
+
+        alert("Profile Saved Successfully!");
+
+        showProfile(profile);
+
+    } catch (error) {
+
+        alert(error.message);
+
+    }
 
 });
 
@@ -272,14 +299,8 @@ function showProfile(profile){
 // SHOW PROFILE IF ALREADY SAVED
 // ======================================
 
-const savedProfile =
-JSON.parse(localStorage.getItem("studentProfile"));
 
-if(savedProfile){
 
-    showProfile(savedProfile);
-
-}
 
 // ======================================
 // EDIT PROFILE

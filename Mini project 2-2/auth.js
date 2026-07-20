@@ -140,7 +140,7 @@ loginForm.addEventListener("submit", async (e) => {
         if (role === "student") {
             window.location.href = "student-dashboard.html";
         } else {
-            window.location.href = "admin-dashboard.html";
+            window.location.href = "admin/admin-dashboard.html";
         }
 
     } catch (error) {

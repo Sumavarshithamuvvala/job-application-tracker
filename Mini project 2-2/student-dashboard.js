@@ -4,11 +4,15 @@
 
 // Student Name
 import { auth, db } from "./firebase.js";
-const studentName = localStorage.getItem("studentName") || "Varshitha";
 
-document.getElementById("studentName").textContent = studentName;
-document.getElementById("welcomeName").textContent = studentName;
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+const studentName = document.getElementById("studentName");
+const welcomeName = document.getElementById("welcomeName");
+const dashboardAvatar = document.getElementById("dashboardAvatar");
+const navAvatar = document.getElementById("navAvatar");
 // ===============================
 // INITIALS AVATAR
 // ===============================
