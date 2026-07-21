@@ -2,30 +2,14 @@
 // Student Data
 // ===========================
 
-let students = [
+import { db } from "../firebase.js";
 
-    {
-        name:"Bhavya Pallemsetty",
-        email:"bhavya@svecw.edu.in",
-        branch:"CSE",
-        year:"2028"
-    },
+import {
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-    {
-        name:"Rahul Kumar",
-        email:"rahul@svecw.edu.in",
-        branch:"ECE",
-        year:"2027"
-    },
-
-    {
-        name:"Priya Sharma",
-        email:"priya@svecw.edu.in",
-        branch:"CSE",
-        year:"2028"
-    }
-
-];
+let students = [];
 
 
 
@@ -66,6 +50,47 @@ const yearInput = document.getElementById("year");
 // ===========================
 // Display Students
 // ===========================
+async function loadStudents() {
+
+    try {
+
+        students = [];
+
+        const querySnapshot = await getDocs(collection(db, "studentProfiles"));
+
+        querySnapshot.forEach((docSnap) => {
+
+            const profile = docSnap.data();
+
+            students.push({
+
+                id: docSnap.id,
+
+                name: profile.fullName || "",
+
+                email: profile.email || "",
+
+                branch: profile.branch || "",
+
+                year: profile.graduation || ""
+
+            });
+
+        });
+
+        displayStudents(students);
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert("Unable to load student records.");
+
+    }
+
+}
 
 
 function displayStudents(data){
@@ -119,8 +144,7 @@ function displayStudents(data){
 
 
 // Initial load
-
-displayStudents(students);
+loadStudents();
 
 
 
@@ -162,146 +186,7 @@ search.addEventListener("keyup",()=>{
 // ===========================
 
 
-addBtn.onclick=()=>{
 
-
-    modal.style.display="block";
-
-
-};
-
-
-
-
-
-// ===========================
-// Close Modal
-// ===========================
-
-
-closeBtn.onclick=()=>{
-
-
-    modal.style.display="none";
-
-
-};
-
-
-cancelBtn.onclick=()=>{
-
-
-    modal.style.display="none";
-
-
-};
-
-
-
-
-
-// Close when clicking outside
-
-window.onclick=(event)=>{
-
-
-    if(event.target==modal){
-
-        modal.style.display="none";
-
-    }
-
-
-};
-
-
-
-
-
-
-// ===========================
-// Add Student
-// ===========================
-
-
-saveBtn.onclick=()=>{
-
-
-    let student={
-
-        name:nameInput.value,
-
-        email:emailInput.value,
-
-        branch:branchInput.value,
-
-        year:yearInput.value
-
-    };
-
-
-
-    if(
-
-        student.name=="" ||
-
-        student.email=="" ||
-
-        student.branch=="" ||
-
-        student.year==""
-
-    ){
-
-        alert("Please fill all details");
-
-        return;
-
-    }
-
-
-
-
-    students.push(student);
-
-
-
-    displayStudents(students);
-
-
-
-    modal.style.display="none";
-
-
-
-    clearForm();
-
-
-};
-
-
-
-
-
-
-// ===========================
-// Clear Form
-// ===========================
-
-
-function clearForm(){
-
-
-    nameInput.value="";
-
-    emailInput.value="";
-
-    branchInput.value="";
-
-    yearInput.value="";
-
-
-}
 
 
 
