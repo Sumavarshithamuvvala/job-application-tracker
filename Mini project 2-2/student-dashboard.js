@@ -2,18 +2,45 @@
 // STUDENT DASHBOARD
 // ===============================
 
-// Student Name
 import { auth, db } from "./firebase.js";
-const studentName = localStorage.getItem("studentName") || "Varshitha";
 
-document.getElementById("studentName").textContent = studentName;
-document.getElementById("welcomeName").textContent = studentName;
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 // ===============================
-// INITIALS AVATAR
+// ELEMENTS
 // ===============================
 
-function getInitials(name){
+const studentName = document.getElementById("studentName");
+const welcomeName = document.getElementById("welcomeName");
+const dashboardAvatar = document.getElementById("dashboardAvatar");
+const navAvatar = document.getElementById("navAvatar");
+
+const searchInput = document.getElementById("searchInput");
+
+const companyFilter = document.getElementById("companyFilter");
+const roleFilter = document.getElementById("roleFilter");
+const hiringFilter = document.getElementById("hiringFilter");
+
+const resetBtn = document.getElementById("resetBtn");
+
+const sidebarLogout = document.getElementById("sidebarLogout");
+const dropdownLogout = document.getElementById("dropdownLogout");
+
+const dropdown = document.getElementById("profileDropdown");
+
+// ===============================
+// INITIALS
+// ===============================
+
+function getInitials(name) {
 
     return name
         .split(" ")
@@ -23,65 +50,84 @@ function getInitials(name){
 
 }
 
-const initials = getInitials(studentName);
+// ===============================
+// LOAD LOGGED IN STUDENT
+// ===============================
 
-const dashboardAvatar = document.getElementById("dashboardAvatar");
+onAuthStateChanged(auth, async (user) => {
 
-if(dashboardAvatar){
-    dashboardAvatar.textContent = initials;
-}
+    if (!user) {
 
-const navAvatar = document.getElementById("navAvatar");
+        window.location.href = "auth.html";
+        return;
 
-if(navAvatar){
-    navAvatar.textContent = initials;
-}
+    }
+
+    try {
+
+        const docRef = doc(db, "students", user.uid);
+
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+
+            const data = docSnap.data();
+
+            studentName.textContent = data.fullName || "";
+
+            welcomeName.textContent = data.fullName || "";
+
+            const initials = getInitials(data.fullName || "");
+
+            dashboardAvatar.textContent = initials;
+
+            navAvatar.textContent = initials;
+
+        }
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+});
 
 // ===============================
 // SEARCH
 // ===============================
 
-const searchInput = document.getElementById("searchInput");
+searchInput.addEventListener("keyup", () => {
 
-searchInput.addEventListener("keyup", function(){
-
-    console.log("Searching :", searchInput.value);
-
-    // Firebase:
-    // Search senior profiles
+    console.log("Searching:", searchInput.value);
 
 });
 
 // ===============================
-// FILTERS
+// FILTER
 // ===============================
-
-const companyFilter = document.getElementById("companyFilter");
-const roleFilter = document.getElementById("roleFilter");
-const hiringFilter = document.getElementById("hiringFilter");
 
 companyFilter.addEventListener("change", filterProfiles);
 roleFilter.addEventListener("change", filterProfiles);
 hiringFilter.addEventListener("change", filterProfiles);
 
-function filterProfiles(){
+function filterProfiles() {
 
     console.log(
-        companyFilter.value,
-        roleFilter.value,
-        hiringFilter.value
-    );
 
-    // Firebase:
-    // Filter senior profiles
+        companyFilter.value,
+
+        roleFilter.value,
+
+        hiringFilter.value
+
+    );
 
 }
 
 // ===============================
-// RESET
+// RESET FILTERS
 // ===============================
-
-const resetBtn = document.getElementById("resetBtn");
 
 resetBtn.addEventListener("click", () => {
 
@@ -96,7 +142,7 @@ resetBtn.addEventListener("click", () => {
 });
 
 // ===============================
-// VIEW PROFILE BUTTONS
+// VIEW PROFILE
 // ===============================
 
 const buttons = document.querySelectorAll(".profile-card button");
@@ -112,77 +158,59 @@ buttons.forEach(button => {
 });
 
 // ===============================
-// QUICK ACTIONS
+// NAVBAR DROPDOWN
 // ===============================
 
+navAvatar.addEventListener("click", function () {
 
+    if (dropdown.style.display === "block") {
+
+        dropdown.style.display = "none";
+
+    } else {
+
+        dropdown.style.display = "block";
+
+    }
+
+});
+
+window.addEventListener("click", function (e) {
+
+    if (!e.target.closest(".profile-menu")) {
+
+        dropdown.style.display = "none";
+
+    }
+
+});
 
 // ===============================
-// LOGOUT
+// LOGOUT FUNCTION
 // ===============================
 
-const logout = document.getElementById("logout");
-
-logout.addEventListener("click", function(e){
+async function logoutUser(e) {
 
     e.preventDefault();
 
     const confirmLogout = confirm("Are you sure you want to logout?");
 
-    if(confirmLogout){
+    if (!confirmLogout) return;
 
-        localStorage.clear();
+    try {
+
+        await signOut(auth);
 
         window.location.href = "auth.html";
 
+    } catch (error) {
+
+        alert(error.message);
+
     }
 
-});
-const avatar = document.getElementById("navAvatar");
-const dropdown = document.getElementById("profileDropdown");
+}
 
-avatar.addEventListener("click", function () {
+sidebarLogout.addEventListener("click", logoutUser);
 
-    if(dropdown.style.display === "block"){
-        dropdown.style.display = "none";
-    }else{
-        dropdown.style.display = "block";
-    }
-
-});
-
-window.addEventListener("click", function(e){
-
-    if(!e.target.closest(".profile-menu")){
-        dropdown.style.display = "none";
-    }
-
-});
-
-// ===============================
-// FUTURE FIREBASE
-// ===============================
-
-/*
-
-Later this dashboard will:
-
-✔ Load Student Details
-
-✔ Fetch Senior Profiles
-
-✔ Search Seniors
-
-✔ Filter Companies
-
-✔ Skill Match
-
-✔ Recent Updates
-
-✔ Placement Statistics
-
-✔ Notifications
-
-✔ Logout using Firebase Authentication
-
-*/
+dropdownLogout.addEventListener("click", logoutUser);

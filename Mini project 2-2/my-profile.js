@@ -4,6 +4,15 @@
 // ======================================
 
 // ---------- Form Sections ----------
+import { auth, db } from "./firebase.js";
+
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+    doc,
+    getDoc,
+    setDoc
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 const editProfile = document.getElementById("editProfile");
 const viewProfile = document.getElementById("viewProfile");
 
@@ -161,38 +170,47 @@ allInputs.forEach(input => {
 // LOAD PROFILE FROM LOCAL STORAGE
 // ======================================
 
-window.addEventListener("load", () => {
+onAuthStateChanged(auth, async (user) => {
 
-    const profile = JSON.parse(localStorage.getItem("studentProfile"));
+    if (!user) {
+        window.location.href = "auth.html";
+        return;
+    }
 
-    if (profile) {
+    try {
 
-        fullName.value = profile.fullName || "";
-        email.value = profile.email || "";
-        phone.value = profile.phone || "";
-        roll.value = profile.roll || "";
-        college.value = profile.college || "";
-        branch.value = profile.branch || "";
-        year.value = profile.year || "";
-        cgpa.value = profile.cgpa || "";
-        semester.value = profile.semester || "";
-        graduation.value = profile.graduation || "";
-        careerGoal.value = profile.careerGoal || "";
-        dreamCompanies.value = profile.dreamCompanies || "";
+        const docRef = doc(db, "studentProfiles", user.uid);
+        const docSnap = await getDoc(docRef);
 
-        selectedSkills = profile.skills || [];
+        if (docSnap.exists()) {
 
-        renderSelectedSkills();
+            const profile = docSnap.data();
 
-        skillButtons.forEach(button => {
+            fullName.value = profile.fullName || "";
+            email.value = profile.email || "";
+            phone.value = profile.phone || "";
+            roll.value = profile.roll || "";
+            college.value = profile.college || "";
+            branch.value = profile.branch || "";
+            year.value = profile.year || "";
+            cgpa.value = profile.cgpa || "";
+            semester.value = profile.semester || "";
+            graduation.value = profile.graduation || "";
+            careerGoal.value = profile.careerGoal || "";
+            dreamCompanies.value = profile.dreamCompanies || "";
 
-            if(selectedSkills.includes(button.textContent)){
+            selectedSkills = profile.skills || [];
 
-                button.classList.add("active");
+            renderSelectedSkills();
 
-            }
+            // THIS LINE IS THE IMPORTANT ONE
+            showProfile(profile);
 
-        });
+        }
+
+    } catch(error) {
+
+        console.log(error);
 
     }
 
@@ -202,7 +220,17 @@ window.addEventListener("load", () => {
 // SAVE PROFILE
 // ======================================
 
-saveBtn.addEventListener("click", () => {
+saveBtn.addEventListener("click", async () => {
+
+    const user = auth.currentUser;
+
+    if (!user) {
+
+        alert("Please login again.");
+
+        return;
+
+    }
 
     const profile = {
 
@@ -222,12 +250,19 @@ saveBtn.addEventListener("click", () => {
 
     };
 
-    localStorage.setItem(
-        "studentProfile",
-        JSON.stringify(profile)
-    );
+    try {
 
-    showProfile(profile);
+        await setDoc(doc(db, "studentProfiles", user.uid), profile, { merge: true });
+
+        alert("Profile Saved Successfully!");
+
+        showProfile(profile);
+
+    } catch (error) {
+
+        alert(error.message);
+
+    }
 
 });
 
@@ -237,34 +272,35 @@ saveBtn.addEventListener("click", () => {
 
 function showProfile(profile){
 
-    viewName.textContent = profile.fullName;
-    viewEmail.textContent = profile.email;
-    viewPhone.textContent = profile.phone;
-    viewRoll.textContent = profile.roll;
-    viewCollege.textContent = profile.college;
-    viewBranch.textContent = profile.branch;
-    viewYear.textContent = profile.year;
-    viewCgpa.textContent = profile.cgpa;
-    viewSemester.textContent = profile.semester;
-    viewGraduation.textContent = profile.graduation;
-    viewGoal.textContent = profile.careerGoal;
-    viewDreamCompanies.textContent = profile.dreamCompanies;
+    viewName.textContent = profile.fullName || "";
+    viewEmail.textContent = profile.email || "";
+    viewPhone.textContent = profile.phone || "";
+    viewRoll.textContent = profile.roll || "";
+    viewCollege.textContent = profile.college || "";
+    viewBranch.textContent = profile.branch || "";
+    viewYear.textContent = profile.year || "";
+    viewCgpa.textContent = profile.cgpa || "";
+    viewSemester.textContent = profile.semester || "";
+    viewGraduation.textContent = profile.graduation || "";
+    viewGoal.textContent = profile.careerGoal || "";
+    viewDreamCompanies.textContent = profile.dreamCompanies || "";
 
     viewSkills.innerHTML = "";
 
-    profile.skills.forEach(skill=>{
+    (profile.skills || []).forEach(skill => {
 
-        const chip=document.createElement("span");
+        const chip = document.createElement("span");
 
-        chip.textContent=skill;
+        chip.className = "selected-skill";
+
+        chip.textContent = skill;
 
         viewSkills.appendChild(chip);
 
     });
 
-    editProfile.style.display="none";
-
-    viewProfile.style.display="block";
+    editProfile.style.display = "none";
+    viewProfile.style.display = "block";
 
 }
 
@@ -272,14 +308,8 @@ function showProfile(profile){
 // SHOW PROFILE IF ALREADY SAVED
 // ======================================
 
-const savedProfile =
-JSON.parse(localStorage.getItem("studentProfile"));
 
-if(savedProfile){
 
-    showProfile(savedProfile);
-
-}
 
 // ======================================
 // EDIT PROFILE
