@@ -1,17 +1,48 @@
-// ============================================
-// MODAL
-// ============================================
+import { db } from "../firebase.js";
 
-const openModal = document.getElementById("openModal");
+import {
+    collection,
+    addDoc,
+    getDocs,
+    deleteDoc,
+    doc,
+    serverTimestamp,
+    query,
+    orderBy
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+console.log("placements.js loaded");
+
+const placementCollection = collection(db, "placements");
+// =========================
+// ELEMENTS
+// =========================
+
 const modal = document.getElementById("placementModal");
+
+const openBtn = document.getElementById("openModal");
+
 const closeBtn = document.querySelector(".close");
+
 const cancelBtn = document.querySelector(".cancel");
 
-openModal.addEventListener("click", () => {
+const placementForm = document.getElementById("placementForm");
+
+const tableBody = document.getElementById("placementTableBody");
+
+
+// =========================
+// OPEN MODAL
+// =========================
+
+openBtn.addEventListener("click", () => {
 
     modal.style.display = "flex";
 
 });
+// =========================
+// CLOSE MODAL
+// =========================
 
 closeBtn.addEventListener("click", () => {
 
@@ -35,436 +66,336 @@ window.addEventListener("click", (e) => {
 
 });
 
-// ============================================
-// COMPANY → ROLE DATA
-// ============================================
+console.log("Placement Module Loaded Successfully.");
+console.log("Form =", placementForm);
+console.log(db);
+// ===================================
+// SKILLS LIST
+// ===================================
 
-const companyRoles = {
+const allSkills = [
 
-    "Google": [
+    "Java",
+    "Python",
+    "C",
+    "C++",
+    "JavaScript",
+    "HTML",
+    "CSS",
+    "React",
+    "Node.js",
+    "Spring Boot",
+    "SQL",
+    "MySQL",
+    "MongoDB",
+    "Firebase",
+    "Excel",
+    "Power BI",
+    "Tableau",
+    "Python Pandas",
+    "NumPy",
+    "Machine Learning",
+    "AWS",
+    "Azure",
+    "Git",
+    "GitHub",
+    "DSA",
+    "DBMS",
+    "Operating Systems",
+    "Computer Networks",
+    "OOP",
+    "Aptitude",
+    "Communication",
+    "Problem Solving"
 
-        "Software Engineer",
+];
 
-        "Data Analyst",
+const skillInput = document.getElementById("skillInput");
 
-        "Cloud Engineer",
+const suggestionBox = document.getElementById("skillsSuggestions");
 
-        "Product Engineer"
+const selectedSkillsContainer =
+document.getElementById("selectedSkills");
 
-    ],
+const hiddenSkills =
+document.getElementById("technicalSkills");
 
-    "Amazon": [
+let selectedSkills = [];
 
-        "SDE",
+function updateHiddenSkills(){
 
-        "Business Analyst",
+    hiddenSkills.value =
+    JSON.stringify(selectedSkills);
 
-        "Data Engineer",
+}
 
-        "Cloud Support"
+function renderSelectedSkills(){
 
-    ],
+    selectedSkillsContainer.innerHTML = "";
 
-    "Microsoft": [
+    selectedSkills.forEach(skill=>{
 
-        "Software Engineer",
+        const tag =
+        document.createElement("div");
 
-        "Program Manager",
+        tag.className = "skill-tag";
 
-        "Data Scientist"
+        tag.innerHTML = `
+            ${skill}
+            <span data-skill="${skill}">
+            ✕
+            </span>
+        `;
 
-    ],
+        selectedSkillsContainer.appendChild(tag);
 
-    "Deloitte": [
+    });
 
-        "Analyst",
+    updateHiddenSkills();
 
-        "Data Analyst",
+}
 
-        "Associate Analyst",
+skillInput.addEventListener("input", ()=>{
 
-        "Consultant"
+    const value =
+    skillInput.value.toLowerCase();
 
-    ]
+    suggestionBox.innerHTML = "";
 
-};
+    if(value==="") return;
 
-// ============================================
-// ROLE DROPDOWN
-// ============================================
+    const filtered =
+    allSkills.filter(skill=>
 
-const companySelect = document.getElementById("companySelect");
+        skill.toLowerCase().includes(value)
 
-const roleSelect = document.getElementById("roleSelect");
+        &&
 
-companySelect.addEventListener("change", function () {
+        !selectedSkills.includes(skill)
 
-    roleSelect.innerHTML = "<option>Select Role</option>";
+    );
 
-    const roles = companyRoles[this.value];
+    filtered.forEach(skill=>{
 
-    if (!roles) return;
+        const item =
+        document.createElement("div");
 
-    roles.forEach(role => {
+        item.className="suggestion-item";
 
-        const option = document.createElement("option");
+        item.innerText=skill;
 
-        option.value = role;
-
-        option.textContent = role;
-
-        roleSelect.appendChild(option);
+        suggestionBox.appendChild(item);
 
     });
 
 });
+// ===================================
+// CLICK ON A SUGGESTION
+// ===================================
 
-// ============================================
-// SKILLS DATA
-// ============================================
+suggestionBox.addEventListener("click", (e) => {
 
-const skills = {
+    if (!e.target.classList.contains("suggestion-item")) return;
 
-    "Programming Languages": [
-        "Java",
-        "Python",
-        "C",
-        "C++"
-    ],
+    const skill = e.target.innerText;
 
-    "Web Development": [
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "React",
-        "Node.js",
-        "Spring Boot"
-    ],
+    if (!selectedSkills.includes(skill)) {
 
-    "Database & Cloud": [
-        "SQL",
-        "AWS",
-        "Azure"
-    ],
-
-    "Data Analytics": [
-        "Excel",
-        "Power BI",
-        "Tableau"
-    ],
-
-    "Version Control": [
-        "Git",
-        "GitHub"
-    ],
-
-    "Core Subjects": [
-        "DSA",
-        "DBMS",
-        "Operating Systems",
-        "Computer Networks",
-        "OOP"
-    ]
-
-};
-
-// ============================================
-// GENERATE SKILL SLIDERS
-// ============================================
-
-const skillsContainer = document.getElementById("skillsContainer");
-
-function createSkillSliders() {
-
-    skillsContainer.innerHTML = "";
-
-    Object.keys(skills).forEach(group => {
-
-        const skillGroup = document.createElement("div");
-
-        skillGroup.className = "skill-group";
-
-        skillGroup.innerHTML = `<h3>${group}</h3>`;
-
-        skills[group].forEach(skill => {
-
-            skillGroup.innerHTML += `
-
-                <div class="skill-row">
-
-                    <label>${skill}</label>
-
-                    <input
-                        type="range"
-                        min="1"
-                        max="5"
-                        value="3"
-                        class="slider">
-
-                    <div class="skill-value">3</div>
-
-                </div>
-
-            `;
-
-        });
-
-        skillsContainer.appendChild(skillGroup);
-
-    });
-
-}
-
-createSkillSliders();
-
-// ============================================
-// LIVE SLIDER VALUES
-// ============================================
-
-const progressBar = document.querySelector(".progress-bar");
-
-const overallScore = document.getElementById("overallScore");
-
-const skillLevel = document.getElementById("skillLevel");
-
-function initializeSliders() {
-
-    const sliders = document.querySelectorAll(".slider");
-
-    sliders.forEach(slider => {
-
-        slider.addEventListener("input", function () {
-
-            this.nextElementSibling.textContent = this.value;
-
-            calculateOverall();
-
-        });
-
-    });
-
-}
-
-// ============================================
-// CALCULATE SCORE
-// ============================================
-
-function calculateOverall() {
-
-    const sliders = document.querySelectorAll(".slider");
-
-    let total = 0;
-
-    sliders.forEach(slider => {
-
-        total += Number(slider.value);
-
-    });
-
-    const maxScore = sliders.length * 5;
-
-    const percentage = Math.round((total / maxScore) * 100);
-
-    progressBar.style.width = percentage + "%";
-
-    overallScore.innerHTML = percentage + "%";
-
-    if (percentage < 40) {
-
-        skillLevel.innerHTML = "Beginner";
+        selectedSkills.push(skill);
 
     }
 
-    else if (percentage < 60) {
+    renderSelectedSkills();
 
-        skillLevel.innerHTML = "Intermediate";
+    skillInput.value = "";
 
-    }
+    suggestionBox.innerHTML = "";
 
-    else if (percentage < 80) {
+});
+// ===================================
+// REMOVE SKILL
+// ===================================
 
-        skillLevel.innerHTML = "Advanced";
+selectedSkillsContainer.addEventListener("click", (e) => {
 
-    }
+    const removeBtn = e.target.closest("span");
 
-    else {
+    if (!removeBtn) return;
 
-        skillLevel.innerHTML = "Excellent";
+    const skill = removeBtn.dataset.skill;
 
-    }
+    selectedSkills = selectedSkills.filter(s => s !== skill);
+    console.log(selectedSkills);
 
-}
-
-initializeSliders();
-
-calculateOverall();
-
-// ============================================
-// SEARCH PLACEMENT RECORDS
-// ============================================
-
-const searchInput = document.querySelector(".search-box input");
-
-searchInput.addEventListener("keyup", function () {
-
-    const value = this.value.toLowerCase();
-
-    const rows = document.querySelectorAll(".placement-table tbody tr");
-
-    rows.forEach(row => {
-
-        const text = row.innerText.toLowerCase();
-
-        if (text.includes(value)) {
-
-            row.style.display = "";
-
-        }
-
-        else {
-
-            row.style.display = "none";
-
-        }
-
-    });
+    renderSelectedSkills();
 
 });
 
-// ============================================
-// TOAST MESSAGE
-// ============================================
+function getCheckedValues(className) {
 
-function showToast(message) {
+    return [...document.querySelectorAll("." + className + ":checked")]
 
-    const toast = document.createElement("div");
-
-    toast.className = "toast";
-
-    toast.innerHTML = `
-
-        <i class="fa-solid fa-circle-check"></i>
-
-        <span>${message}</span>
-
-    `;
-
-    document.body.appendChild(toast);
-
-    setTimeout(() => {
-
-        toast.classList.add("show");
-
-    }, 100);
-
-    setTimeout(() => {
-
-        toast.classList.remove("show");
-
-    }, 2500);
-
-    setTimeout(() => {
-
-        toast.remove();
-
-    }, 3000);
+        .map(item => item.value);
 
 }
 
-// ============================================
-// SAVE PLACEMENT
-// ============================================
 
-const placementForm = document.getElementById("placementForm");
+function getCheckedTopics(cardTitle) {
 
-placementForm.addEventListener("submit", function (e) {
+    const card = [...document.querySelectorAll(".topic-card")]
+
+        .find(c => c.querySelector("h4").innerText === cardTitle);
+
+    if (!card) return [];
+
+    return [...card.querySelectorAll("input[type='checkbox']:checked")]
+
+        .map(cb => cb.value);
+
+}
+
+placementForm.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    // Later:
-    // Save to Firebase
+    try {
 
-    showToast("Placement Record Saved Successfully!");
+        const placementData = {
 
-    placementForm.reset();
+    // =========================
+    // Basic Placement Details
+    // =========================
 
-    modal.style.display = "none";
+    studentName: document.getElementById("studentName").value,
+    graduationYear: document.getElementById("graduationYear").value,
+    branch: document.getElementById("branch").value,
+    companyName: document.getElementById("companyName").value,
+    companyType: document.getElementById("companyType").value,
+    roleOffered: document.getElementById("roleOffered").value,
+    jobType: document.getElementById("jobType").value,
+    workMode: document.getElementById("workMode").value,
+    location: document.getElementById("location").value,
+    package: document.getElementById("package").value,
+    placementDate: document.getElementById("placementDate").value,
 
-    // Reset role dropdown
+    // =========================
+    // Academic Profile
+    // =========================
 
-    roleSelect.innerHTML = "<option>Select Role</option>";
+    cgpa: document.getElementById("cgpa").value,
+    cgpaCutoff: document.getElementById("cgpaCutoff").value,
+    activeBacklogs: document.getElementById("activeBacklogs").value,
 
-    // Reset sliders
+    // =========================
+// Eligibility Criteria
+// =========================
 
-    document.querySelectorAll(".slider").forEach(slider => {
+minimumCGPA: document.getElementById("minimumCGPA").value,
+eligibleBranches: document.getElementById("eligibleBranches").value,
+onlineAssessment: document.getElementById("onlineAssessment").value,
+oaMandatory: document.getElementById("oaMandatory").value,
+interviewRounds: document.getElementById("interviewRounds").value,
+additionalCriteria: document.getElementById("additionalCriteria").value,
+eligibleInitially: document.getElementById("eligibleInitially").value,
+eligibilityImprovement: document.getElementById("eligibilityImprovement").value,
 
-        slider.value = 3;
+// =========================
+// Skills Worked With
+// =========================
 
-        slider.nextElementSibling.textContent = "3";
+technicalSkills: selectedSkills,
 
-    });
+// =========================
+// Coding Preparation
+// =========================
 
-    calculateOverall();
+codingPlatform: document.getElementById("codingPlatform").value,
+problemsSolved: document.getElementById("problemsSolved").value,
+practiceFrequency: document.getElementById("practiceFrequency").value,
+
+// =========================
+// Projects
+// =========================
+
+projectCount: document.getElementById("projectCount").value,
+projectName: document.getElementById("projectName").value,
+projectDomain: document.getElementById("projectDomain").value,
+projectTechnologies: document.getElementById("projectTechnologies").value,
+projectDescription: document.getElementById("projectDescription").value,
+projectDiscussed: document.getElementById("projectDiscussed").value,
+githubLink: document.getElementById("githubLink").value,
+
+// =========================
+// Interview Process & Experience
+// =========================
+
+interviewDifficulty: document.getElementById("interviewDifficulty").value,
+codingDifficulty: document.getElementById("codingDifficulty").value,
+interviewExperience: document.getElementById("interviewExperience").value,
+preparationStrategy: document.getElementById("preparationStrategy").value,
+mistakesMade: document.getElementById("mistakesMade").value,
+
+roundsFaced: getCheckedValues("rounds"),
+
+// =========================
+// Preparation Journey
+// =========================
+
+preparationDuration: document.getElementById("preparationDuration").value,
+resourcesUsed: getCheckedValues("resource"),
+
+// =========================
+// Advice
+// =========================
+
+wishStartedEarlier: document.getElementById("wishStartedEarlier").value,
+roadmap: document.getElementById("roadmap").value,
+
+// =========================
+// Frequently Asked Topics
+// =========================
+
+programmingTopics: getCheckedTopics("Programming Languages"),
+
+dsaTopics: getCheckedTopics("DSA"),
+
+sqlTopics: getCheckedTopics("SQL"),
+
+dbmsTopics: getCheckedTopics("DBMS"),
+
+osTopics: getCheckedTopics("Operating Systems"),
+
+cnTopics: getCheckedTopics("Computer Networks"),
+
+hrTopics: getCheckedTopics("HR Interview"),
+
+createdAt: serverTimestamp(),
+
+// =========================
+// Contact Details
+// =========================
+
+linkedin: document.getElementById("linkedin").value,
+
+email: document.getElementById("email").value,
+
+//phone: document.getElementById("phone").value
+
+
+};
+        console.log(placementData);
+
+        await addDoc(placementCollection, placementData);
+
+        alert("Placement Saved Successfully!");
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
 
 });
-
-// ============================================
-// SAMPLE FUNCTION
-// (Replace with Firebase later)
-// ============================================
-
-function addPlacementToTable(data) {
-
-    const tbody = document.querySelector(".placement-table tbody");
-
-    const row = document.createElement("tr");
-
-    row.innerHTML = `
-
-        <td>${data.student}</td>
-
-        <td>${data.company}</td>
-
-        <td>${data.role}</td>
-
-        <td>${data.batch}</td>
-
-        <td>${data.package}</td>
-
-        <td>
-
-            <span class="status active">
-
-                Selected
-
-            </span>
-
-        </td>
-
-        <td>
-
-            <button class="edit">
-
-                <i class="fa-solid fa-pen"></i>
-
-            </button>
-
-            <button class="delete">
-
-                <i class="fa-solid fa-trash"></i>
-
-            </button>
-
-        </td>
-
-    `;
-
-    tbody.prepend(row);
-
-}
-
-// ============================================
-// READY
-// ============================================
-
-console.log("Placement Module Loaded Successfully.");
