@@ -451,14 +451,6 @@ header h1{
 
     color:#2563eb;
 
-    opacity:0;
-
-    transition:.3s;
-
-}
-
-.profile-card:hover::after{
-
     opacity:1;
 
 }

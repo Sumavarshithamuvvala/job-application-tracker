@@ -6,9 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Placement Records</title>
+    <title>Senior Placement Details</title>
 
-    <link rel="stylesheet" href="placements.css">
+    <link rel="stylesheet" href="senior-details.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -20,155 +20,26 @@
 
 <body>
 
-    <!-- ================= Sidebar ================= -->
+<main class="main">
 
-    <aside class="sidebar">
+    <div class="top">
 
-        <div class="logo">
+        <div>
 
-            <i class="fa-solid fa-graduation-cap"></i>
+            <h1>Senior Placement Details</h1>
 
-            <span>Placement Portal</span>
-
-        </div>
-
-        <nav>
-
-            <a href="admin-dashboard.html">
-                <i class="fa-solid fa-house"></i>
-                Dashboard
-            </a>
-
-            
-
-            <a href="placements.html" class="active">
-                <i class="fa-solid fa-briefcase"></i>
-                Placements
-            </a>
-
-            <a href="students.html">
-                <i class="fa-solid fa-user-graduate"></i>
-                Student Records
-            </a>
-
-            <a href="analytics.html">
-                <i class="fa-solid fa-chart-line"></i>
-                Analytics
-            </a>
-
-            <a href="settings.html">
-                <i class="fa-solid fa-gear"></i>
-                Settings
-            </a>
-
-        </nav>
-
-    </aside>
-
-    <!-- ================= Main ================= -->
-
-    <main class="main">
-
-        <!-- ================= Header ================= -->
-
-        <div class="top">
-
-            <div>
-
-                <h1>Placement Records</h1>
-
-                <p>
-
-                    Manage verified placement records of placed students.
-
-                </p>
-
-            </div>
-
-            <button id="openModal">
-
-                <i class="fa-solid fa-plus"></i>
-
-                Add Placement Record
-
-            </button>
+            <p>
+                View the complete placement journey shared by the placed senior.
+            </p>
 
         </div>
 
-        <!-- ================= Search ================= -->
+    </div>
 
-        <div class="search-box">
+<form id="placementForm">
 
-            <i class="fa-solid fa-magnifying-glass"></i>
-
-            <input
-                type="text"
-                id="searchPlacement"
-                placeholder="Search by student, company or role...">
-
-        </div>
-
-        <!-- ================= Placement Records Table ================= -->
-
-        <div class="table-container">
-
-            <table class="placement-table">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Student</th>
-
-                        <th>Company</th>
-
-                        <th>Role</th>
-
-                        <th>Batch</th>
-
-                        <th>Package</th>
-
-                        <th>Status</th>
-
-                        <th>Actions</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="placementTableBody">
-
-                    <!-- Dynamic records will come from Firebase -->
-
-                    <tr>
-
-                        <td colspan="7" class="empty-row">
-
-                            No Placement Records Available
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-        <!-- ================= Add Placement Modal ================= -->
-
-        <div class="modal" id="placementModal">
-
-            <div class="modal-content">
-
-                <span class="close">&times;</span>
-
-                <h2>Add Placement Record</h2>
-
-                <form id="placementForm">
-                    <!-- =======================================================
-        SECTION 1 : BASIC PLACEMENT DETAILS
+<!-- =======================================================
+SECTION 1 : BASIC PLACEMENT DETAILS
 ======================================================== -->
 
 <h3 class="section-title">
@@ -192,8 +63,7 @@
         <input
             type="text"
             id="studentName"
-            placeholder="Enter Student Name"
-            required>
+            readonly>
 
     </div>
 
@@ -201,7 +71,7 @@
 
         <label>Graduation Year</label>
 
-        <select id="graduationYear" required>
+        <select id="graduationYear" disabled>
 
             <option value="">Select Year</option>
 
@@ -209,7 +79,7 @@
 
             <option>2027</option>
 
-            <option selected>2028</option>
+            <option>2028</option>
 
             <option>2029</option>
 
@@ -223,7 +93,7 @@
 
         <label>Branch</label>
 
-        <select id="branch" required>
+        <select id="branch" disabled>
 
             <option value="">Select Branch</option>
 
@@ -256,8 +126,7 @@
         <input
             type="text"
             id="companyName"
-            placeholder="Google"
-            required>
+            readonly>
 
     </div>
 
@@ -265,7 +134,7 @@
 
         <label>Company Type</label>
 
-        <select id="companyType">
+        <select id="companyType" disabled>
 
             <option value="">Select</option>
 
@@ -286,8 +155,7 @@
         <input
             type="text"
             id="roleOffered"
-            placeholder="Software Engineer"
-            required>
+            readonly>
 
     </div>
 
@@ -295,7 +163,7 @@
 
         <label>Internship / Full-Time</label>
 
-        <select id="jobType">
+        <select id="jobType" disabled>
 
             <option>Internship</option>
 
@@ -309,7 +177,7 @@
 
         <label>Work Mode</label>
 
-        <select id="workMode">
+        <select id="workMode" disabled>
 
             <option>Onsite</option>
 
@@ -328,7 +196,7 @@
         <input
             type="text"
             id="location"
-            placeholder="Bangalore">
+            readonly>
 
     </div>
 
@@ -339,7 +207,7 @@
         <input
             type="number"
             id="package"
-            placeholder="32">
+            readonly>
 
     </div>
 
@@ -349,14 +217,15 @@
 
         <input
             type="date"
-            id="placementDate">
+            id="placementDate"
+            readonly>
 
     </div>
 
 </div>
 
 <!-- =======================================================
-        SECTION 2 : ACADEMIC PROFILE
+SECTION 2 : ACADEMIC PROFILE
 ======================================================== -->
 
 <h3 class="section-title">
@@ -375,7 +244,7 @@
             type="number"
             id="cgpa"
             step="0.01"
-            placeholder="8.75">
+            readonly>
 
     </div>
 
@@ -387,7 +256,7 @@
             type="number"
             id="cgpaCutoff"
             step="0.01"
-            placeholder="8.0">
+            readonly>
 
     </div>
 
@@ -395,7 +264,7 @@
 
         <label>Active Backlogs</label>
 
-        <select id="activeBacklogs">
+        <select id="activeBacklogs" disabled>
 
             <option>No</option>
 
@@ -407,7 +276,7 @@
 
 </div>
 <!-- =======================================================
-        SECTION 3 : ELIGIBILITY CRITERIA
+SECTION 3 : ELIGIBILITY CRITERIA
 ======================================================== -->
 
 <h3 class="section-title">
@@ -426,7 +295,7 @@
             type="number"
             id="minimumCGPA"
             step="0.01"
-            placeholder="7.5">
+            readonly>
 
     </div>
 
@@ -437,7 +306,7 @@
         <input
             type="text"
             id="eligibleBranches"
-            placeholder="CSE, IT, AIML">
+            readonly>
 
     </div>
 
@@ -445,7 +314,7 @@
 
         <label>Online Assessment Conducted?</label>
 
-        <select id="onlineAssessment">
+        <select id="onlineAssessment" disabled>
 
             <option>Yes</option>
 
@@ -459,7 +328,7 @@
 
         <label>Was OA Mandatory?</label>
 
-        <select id="oaMandatory">
+        <select id="oaMandatory" disabled>
 
             <option>Yes</option>
 
@@ -476,7 +345,7 @@
         <input
             type="number"
             id="interviewRounds"
-            placeholder="3">
+            readonly>
 
     </div>
 
@@ -487,7 +356,7 @@
         <input
             type="text"
             id="additionalCriteria"
-            placeholder="No Active Backlogs">
+            readonly>
 
     </div>
 
@@ -495,7 +364,7 @@
 
         <label>Eligible From Beginning?</label>
 
-        <select id="eligibleInitially">
+        <select id="eligibleInitially" disabled>
 
             <option>Yes</option>
 
@@ -518,12 +387,12 @@
     <textarea
         id="eligibilityImprovement"
         rows="4"
-        placeholder="Explain what was improved before becoming eligible..."></textarea>
+        readonly></textarea>
 
 </div>
 
 <!-- =======================================================
-        SECTION 4 : SKILLS WORKED WITH
+SECTION 4 : SKILLS WORKED WITH
 ======================================================== -->
 
 <h3 class="section-title">
@@ -544,9 +413,12 @@
     <input
         type="text"
         id="skillInput"
-        placeholder="Search skills (Java, SQL, React, Power BI...)">
+        readonly
+        placeholder="Skills">
 
-    <div id="skillsSuggestions" class="skills-suggestions">
+    <div
+        id="skillsSuggestions"
+        class="skills-suggestions">
 
     </div>
 
@@ -563,7 +435,7 @@
     id="technicalSkills">
 
 <!-- =======================================================
-        SECTION 5 : CODING PREPARATION
+SECTION 5 : CODING PREPARATION
 ======================================================== -->
 
 <h3 class="section-title">
@@ -578,7 +450,7 @@
 
         <label>Coding Platform Used</label>
 
-        <select id="codingPlatform">
+        <select id="codingPlatform" disabled>
 
             <option>LeetCode</option>
 
@@ -590,27 +462,28 @@
 
             <option>HackerRank</option>
 
-           <option>Other</option>
+            <option>Other</option>
 
         </select>
 
     </div>
+
     <div
-    class="otherSelectInput"
-    style="display:none;">
+        class="otherSelectInput"
+        style="display:none;">
 
-    <input
-        type="text"
-        id="otherProjectDomain"
-        placeholder="Enter Project Domain">
+        <input
+            type="text"
+            id="otherProjectDomain"
+            readonly>
 
-</div>
+    </div>
 
     <div class="form-group">
 
         <label>Problems Solved</label>
 
-        <select id="problemsSolved">
+        <select id="problemsSolved" disabled>
 
             <option>Below 50</option>
 
@@ -630,7 +503,7 @@
 
         <label>Practice Frequency</label>
 
-        <select id="practiceFrequency">
+        <select id="practiceFrequency" disabled>
 
             <option>Daily</option>
 
@@ -645,9 +518,8 @@
     </div>
 
 </div>
-
 <!-- =======================================================
-        SECTION 6 : PROJECTS
+SECTION 6 : PROJECTS
 ======================================================== -->
 
 <h3 class="section-title">
@@ -662,14 +534,11 @@
 
         <label>Number of Projects</label>
 
-        <select id="projectCount">
+        <select id="projectCount" disabled>
 
             <option>1</option>
-
             <option>2</option>
-
             <option>3</option>
-
             <option>More than 3</option>
 
         </select>
@@ -683,7 +552,7 @@
         <input
             type="text"
             id="projectName"
-            placeholder="Job Preparation Tracker">
+            readonly>
 
     </div>
 
@@ -691,24 +560,16 @@
 
         <label>Project Domain</label>
 
-        <select id="projectDomain">
+        <select id="projectDomain" disabled>
 
             <option>Web Development</option>
-
             <option>Data Analytics</option>
-
             <option>Artificial Intelligence</option>
-
             <option>Machine Learning</option>
-
             <option>Cloud Computing</option>
-
             <option>Cyber Security</option>
-
             <option>IoT</option>
-
             <option>Mobile Development</option>
-
             <option>Other</option>
 
         </select>
@@ -722,7 +583,7 @@
         <input
             type="text"
             id="projectTechnologies"
-            placeholder="HTML, CSS, JavaScript, Firebase">
+            readonly>
 
     </div>
 
@@ -739,7 +600,7 @@
     <textarea
         id="projectDescription"
         rows="5"
-        placeholder="Explain your project in 3-5 lines..."></textarea>
+        readonly></textarea>
 
 </div>
 
@@ -753,10 +614,9 @@
 
         </label>
 
-        <select id="projectDiscussed">
+        <select id="projectDiscussed" disabled>
 
             <option>Yes</option>
-
             <option>No</option>
 
         </select>
@@ -774,14 +634,14 @@
         <input
             type="url"
             id="githubLink"
-            placeholder="https://github.com/username/project">
+            readonly>
 
     </div>
 
 </div>
 
 <!-- =======================================================
-        SECTION 7 : INTERVIEW PROCESS & EXPERIENCE
+SECTION 7 : INTERVIEW PROCESS & EXPERIENCE
 ======================================================== -->
 
 <h3 class="section-title">
@@ -803,7 +663,8 @@
         <input
             type="checkbox"
             value="Online Assessment"
-            class="rounds">
+            class="rounds"
+            disabled>
 
         Online Assessment
 
@@ -814,7 +675,8 @@
         <input
             type="checkbox"
             value="Technical Interview"
-            class="rounds">
+            class="rounds"
+            disabled>
 
         Technical Interview
 
@@ -825,7 +687,8 @@
         <input
             type="checkbox"
             value="Managerial Interview"
-            class="rounds">
+            class="rounds"
+            disabled>
 
         Managerial Interview
 
@@ -836,7 +699,8 @@
         <input
             type="checkbox"
             value="HR Interview"
-            class="rounds">
+            class="rounds"
+            disabled>
 
         HR Interview
 
@@ -847,7 +711,8 @@
         <input
             type="checkbox"
             value="Group Discussion"
-            class="rounds">
+            class="rounds"
+            disabled>
 
         Group Discussion
 
@@ -867,16 +732,12 @@
 
         </label>
 
-        <select id="interviewDifficulty">
+        <select id="interviewDifficulty" disabled>
 
             <option>1 - Very Easy</option>
-
             <option>2 - Easy</option>
-
-            <option selected>3 - Moderate</option>
-
+            <option>3 - Moderate</option>
             <option>4 - Difficult</option>
-
             <option>5 - Very Difficult</option>
 
         </select>
@@ -891,12 +752,10 @@
 
         </label>
 
-        <select id="codingDifficulty">
+        <select id="codingDifficulty" disabled>
 
             <option>Easy</option>
-
             <option>Medium</option>
-
             <option>Hard</option>
 
         </select>
@@ -916,7 +775,7 @@
     <textarea
         id="interviewExperience"
         rows="6"
-        placeholder="Describe the complete interview experience..."></textarea>
+        readonly></textarea>
 
 </div>
 
@@ -931,7 +790,7 @@
     <textarea
         id="preparationStrategy"
         rows="5"
-        placeholder="Explain how the student prepared for this company..."></textarea>
+        readonly></textarea>
 
 </div>
 
@@ -946,12 +805,11 @@
     <textarea
         id="mistakesMade"
         rows="5"
-        placeholder="Mention the mistakes that could have been avoided..."></textarea>
+        readonly></textarea>
 
 </div>
-
 <!-- =======================================================
-        SECTION 8 : PREPARATION JOURNEY
+SECTION 8 : PREPARATION JOURNEY
 ======================================================== -->
 
 <h3 class="section-title">
@@ -966,7 +824,7 @@
 
         <label>Preparation Duration</label>
 
-        <select id="preparationDuration">
+        <select id="preparationDuration" disabled>
 
             <option>Less than 3 Months</option>
 
@@ -990,48 +848,51 @@
 
 <div class="checkGrid">
 
-    <label><input type="checkbox" class="resource" value="Striver"> Striver</label>
+    <label><input type="checkbox" class="resource" value="Striver" disabled> Striver</label>
 
-    <label><input type="checkbox" class="resource" value="Love Babbar"> Love Babbar</label>
+    <label><input type="checkbox" class="resource" value="Love Babbar" disabled> Love Babbar</label>
 
-    <label><input type="checkbox" class="resource" value="Apna College"> Apna College</label>
+    <label><input type="checkbox" class="resource" value="Apna College" disabled> Apna College</label>
 
-    <label><input type="checkbox" class="resource" value="LeetCode"> LeetCode</label>
+    <label><input type="checkbox" class="resource" value="LeetCode" disabled> LeetCode</label>
 
-    <label><input type="checkbox" class="resource" value="GeeksforGeeks"> GeeksforGeeks</label>
+    <label><input type="checkbox" class="resource" value="GeeksforGeeks" disabled> GeeksforGeeks</label>
 
-    <label><input type="checkbox" class="resource" value="NPTEL"> NPTEL</label>
+    <label><input type="checkbox" class="resource" value="NPTEL" disabled> NPTEL</label>
 
-    <label><input type="checkbox" class="resource" value="Coursera"> Coursera</label>
+    <label><input type="checkbox" class="resource" value="Coursera" disabled> Coursera</label>
 
-    <label><input type="checkbox" class="resource" value="Udemy"> Udemy</label>
+    <label><input type="checkbox" class="resource" value="Udemy" disabled> Udemy</label>
 
-    <label><input type="checkbox" class="resource" value="YouTube"> YouTube</label>
+    <label><input type="checkbox" class="resource" value="YouTube" disabled> YouTube</label>
 
-    <label><input type="checkbox" class="resource" value="ChatGPT"> ChatGPT</label>
+    <label><input type="checkbox" class="resource" value="ChatGPT" disabled> ChatGPT</label>
 
-<label>
-    <input
-        type="checkbox"
-        class="otherCheckbox"
-        value="Other">
+    <label>
+        <input
+            type="checkbox"
+            class="otherCheckbox"
+            value="Other"
+            disabled>
 
-    Other
-</label>
+        Other
+    </label>
 
 </div>
+
 <div
     class="otherInput"
     style="display:none; margin-top:15px;">
 
     <input
         type="text"
-        placeholder="Enter Resource">
+        placeholder="Enter Resource"
+        readonly>
 
 </div>
 
 <!-- =======================================================
-        SECTION 9 : ADVICE
+SECTION 9 : ADVICE
 ======================================================== -->
 
 <h3 class="section-title">
@@ -1054,7 +915,7 @@
 
         rows="5"
 
-        placeholder="Share your advice..."></textarea>
+        readonly></textarea>
 
 </div>
 
@@ -1072,12 +933,12 @@
 
         rows="6"
 
-        placeholder="Write your preparation roadmap..."></textarea>
+        readonly></textarea>
 
 </div>
 
 <!-- =======================================================
-        SECTION 10 : FREQUENTLY ASKED SKILLS & TOPICS
+SECTION 10 : FREQUENTLY ASKED SKILLS & TOPICS
 ======================================================== -->
 
 <h3 class="section-title">
@@ -1098,76 +959,24 @@
 
     <h4>Programming Languages</h4>
 
-    
     <div class="checkGrid">
 
-        <label><input type="checkbox" value="Java"> Java</label>
+        <label><input type="checkbox" value="Java" disabled> Java</label>
 
-        <label><input type="checkbox" value="Python"> Python</label>
+        <label><input type="checkbox" value="Python" disabled> Python</label>
 
-        <label><input type="checkbox" value="C"> C</label>
+        <label><input type="checkbox" value="C" disabled> C</label>
 
-        <label><input type="checkbox" value="C++"> C++</label>
+        <label><input type="checkbox" value="C++" disabled> C++</label>
 
-        <label><input type="checkbox" value="JavaScript"> JavaScript</label>
-       <label>
-    <input
-        type="checkbox"
-        class="otherCheckbox"
-        value="Other">
-
-    Other
-</label>
-
-    </div>
-    <div
-    class="otherInput"
-    style="display:none; margin-top:15px;">
-
-    <input
-        type="text"
-        placeholder="Enter topic">
-
-</div>
-
-</div>
-
-<!-- DSA -->
-<div class="topic-card">
-
-    <h4>DSA</h4>
-
-    <div class="checkGrid">
-
-        <label><input type="checkbox" value="Arrays"> Arrays</label>
-
-        <label><input type="checkbox" value="Strings"> Strings</label>
-
-        <label><input type="checkbox" value="Linked List"> Linked List</label>
-
-        <label><input type="checkbox" value="Stack"> Stack</label>
-
-        <label><input type="checkbox" value="Queue"> Queue</label>
-
-        <label><input type="checkbox" value="Trees"> Trees</label>
-
-        <label><input type="checkbox" value="Graphs"> Graphs</label>
-
-        <label><input type="checkbox" value="DP"> DP</label>
-
-        <label><input type="checkbox" value="Sliding Window"> Sliding Window</label>
-
-        <label><input type="checkbox" value="Binary Search"> Binary Search</label>
-
-        <label><input type="checkbox" value="Recursion"> Recursion</label>
-
-        <label><input type="checkbox" value="HashMap"> HashMap</label>
+        <label><input type="checkbox" value="JavaScript" disabled> JavaScript</label>
 
         <label>
             <input
                 type="checkbox"
                 class="otherCheckbox"
-                value="Other">
+                value="Other"
+                disabled>
 
             Other
         </label>
@@ -1180,12 +989,69 @@
 
         <input
             type="text"
-            placeholder="Enter Topic">
+            placeholder="Enter Topic"
+            readonly>
 
     </div>
 
 </div>
 
+<!-- DSA -->
+
+<div class="topic-card">
+
+    <h4>DSA</h4>
+
+    <div class="checkGrid">
+
+        <label><input type="checkbox" value="Arrays" disabled> Arrays</label>
+
+        <label><input type="checkbox" value="Strings" disabled> Strings</label>
+
+        <label><input type="checkbox" value="Linked List" disabled> Linked List</label>
+
+        <label><input type="checkbox" value="Stack" disabled> Stack</label>
+
+        <label><input type="checkbox" value="Queue" disabled> Queue</label>
+
+        <label><input type="checkbox" value="Trees" disabled> Trees</label>
+
+        <label><input type="checkbox" value="Graphs" disabled> Graphs</label>
+
+        <label><input type="checkbox" value="DP" disabled> DP</label>
+
+        <label><input type="checkbox" value="Sliding Window" disabled> Sliding Window</label>
+
+        <label><input type="checkbox" value="Binary Search" disabled> Binary Search</label>
+
+        <label><input type="checkbox" value="Recursion" disabled> Recursion</label>
+
+        <label><input type="checkbox" value="HashMap" disabled> HashMap</label>
+
+        <label>
+            <input
+                type="checkbox"
+                class="otherCheckbox"
+                value="Other"
+                disabled>
+
+            Other
+        </label>
+
+    </div>
+
+    <div
+        class="otherInput"
+        style="display:none; margin-top:15px;">
+
+        <input
+            type="text"
+            placeholder="Enter Topic"
+            readonly>
+
+    </div>
+
+</div>
 <!-- =======================================================
         SQL
 ======================================================== -->
@@ -1196,36 +1062,35 @@
 
     <div class="checkGrid">
 
-        <label><input type="checkbox" value="Joins"> Joins</label>
+        <label><input type="checkbox" value="Joins" disabled> Joins</label>
 
-        <label><input type="checkbox" value="GROUP BY"> GROUP BY</label>
+        <label><input type="checkbox" value="GROUP BY" disabled> GROUP BY</label>
 
-        <label><input type="checkbox" value="HAVING"> HAVING</label>
+        <label><input type="checkbox" value="HAVING" disabled> HAVING</label>
 
-        <label><input type="checkbox" value="Window Functions"> Window Functions</label>
+        <label><input type="checkbox" value="Window Functions" disabled> Window Functions</label>
 
-        <label><input type="checkbox" value="CTE"> CTE</label>
+        <label><input type="checkbox" value="CTE" disabled> CTE</label>
 
-        <label><input type="checkbox" value="Indexing"> Indexing</label>
+        <label><input type="checkbox" value="Indexing" disabled> Indexing</label>
 
         <label>
             <input
                 type="checkbox"
                 class="otherCheckbox"
-                value="Other">
-
+                value="Other"
+                disabled>
             Other
         </label>
 
     </div>
 
-    <div
-        class="otherInput"
-        style="display:none; margin-top:15px;">
+    <div class="otherInput" style="display:none; margin-top:15px;">
 
         <input
             type="text"
-            placeholder="Enter Topic">
+            placeholder="Enter Topic"
+            readonly>
 
     </div>
 
@@ -1241,36 +1106,36 @@
 
     <div class="checkGrid">
 
-        <label><input type="checkbox" value="ACID"> ACID</label>
+        <label><input type="checkbox" value="ACID" disabled> ACID</label>
 
-        <label><input type="checkbox" value="Transactions"> Transactions</label>
+        <label><input type="checkbox" value="Transactions" disabled> Transactions</label>
 
-        <label><input type="checkbox" value="Keys"> Keys</label>
+        <label><input type="checkbox" value="Keys" disabled> Keys</label>
 
-        <label><input type="checkbox" value="Normalization"> Normalization</label>
+        <label><input type="checkbox" value="Normalization" disabled> Normalization</label>
 
         <label>
             <input
                 type="checkbox"
                 class="otherCheckbox"
-                value="Other">
-
+                value="Other"
+                disabled>
             Other
         </label>
 
     </div>
 
-    <div
-        class="otherInput"
-        style="display:none; margin-top:15px;">
+    <div class="otherInput" style="display:none; margin-top:15px;">
 
         <input
             type="text"
-            placeholder="Enter Topic">
+            placeholder="Enter Topic"
+            readonly>
 
     </div>
 
 </div>
+
 <!-- =======================================================
         OPERATING SYSTEMS
 ======================================================== -->
@@ -1281,124 +1146,115 @@
 
     <div class="checkGrid">
 
-        <label><input type="checkbox" value="Deadlock"> Deadlock</label>
+        <label><input type="checkbox" value="Deadlock" disabled> Deadlock</label>
 
-        <label><input type="checkbox" value="Scheduling"> Scheduling</label>
+        <label><input type="checkbox" value="Scheduling" disabled> Scheduling</label>
 
-        <label><input type="checkbox" value="Process vs Thread"> Process vs Thread</label>
+        <label><input type="checkbox" value="Process vs Thread" disabled> Process vs Thread</label>
 
-        <label><input type="checkbox" value="Memory Management"> Memory Management</label>
+        <label><input type="checkbox" value="Memory Management" disabled> Memory Management</label>
 
         <label>
             <input
                 type="checkbox"
                 class="otherCheckbox"
-                value="Other">
-
+                value="Other"
+                disabled>
             Other
         </label>
 
     </div>
 
-    <div
-        class="otherInput"
-        style="display:none; margin-top:15px;">
+    <div class="otherInput" style="display:none; margin-top:15px;">
 
         <input
             type="text"
-            placeholder="Enter Topic">
+            placeholder="Enter Topic"
+            readonly>
 
     </div>
 
 </div>
-
 
 <!-- =======================================================
         COMPUTER NETWORKS
 ======================================================== -->
 
-   
-
-    <div class="topic-card">
+<div class="topic-card">
 
     <h4>Computer Networks</h4>
 
     <div class="checkGrid">
 
-        <label><input type="checkbox" value="TCP/IP"> TCP/IP</label>
+        <label><input type="checkbox" value="TCP/IP" disabled> TCP/IP</label>
 
-        <label><input type="checkbox" value="OSI Model"> OSI Model</label>
+        <label><input type="checkbox" value="OSI Model" disabled> OSI Model</label>
 
-        <label><input type="checkbox" value="HTTP"> HTTP</label>
+        <label><input type="checkbox" value="HTTP" disabled> HTTP</label>
 
-        <label><input type="checkbox" value="DNS"> DNS</label>
+        <label><input type="checkbox" value="DNS" disabled> DNS</label>
 
         <label>
             <input
                 type="checkbox"
                 class="otherCheckbox"
-                value="Other">
-
+                value="Other"
+                disabled>
             Other
         </label>
 
     </div>
 
-    <div
-        class="otherInput"
-        style="display:none; margin-top:15px;">
+    <div class="otherInput" style="display:none; margin-top:15px;">
 
         <input
             type="text"
-            placeholder="Enter Topic">
+            placeholder="Enter Topic"
+            readonly>
 
     </div>
 
 </div>
 
-
-
 <!-- =======================================================
-        HR
+        HR INTERVIEW
 ======================================================== -->
 
 <div class="topic-card">
 
     <h4>HR Interview</h4>
 
-    
-
     <div class="checkGrid">
 
-    <label><input type="checkbox" value="Tell Me About Yourself"> Tell Me About Yourself</label>
+        <label><input type="checkbox" value="Tell Me About Yourself" disabled> Tell Me About Yourself</label>
 
-    <label><input type="checkbox" value="Strengths"> Strengths</label>
+        <label><input type="checkbox" value="Strengths" disabled> Strengths</label>
 
-    <label><input type="checkbox" value="Weaknesses"> Weaknesses</label>
+        <label><input type="checkbox" value="Weaknesses" disabled> Weaknesses</label>
 
-    <label><input type="checkbox" value="Why Our Company?"> Why Our Company?</label>
+        <label><input type="checkbox" value="Why Our Company?" disabled> Why Our Company?</label>
 
-    <label><input type="checkbox" value="Conflict Handling"> Conflict Handling</label>
+        <label><input type="checkbox" value="Conflict Handling" disabled> Conflict Handling</label>
 
-    <label>
+        <label>
+            <input
+                type="checkbox"
+                class="otherCheckbox"
+                value="Other"
+                disabled>
+            Other
+        </label>
+
+    </div>
+
+    <div class="otherInput" style="display:none; margin-top:15px;">
+
         <input
-            type="checkbox"
-            class="otherCheckbox"
-            value="Other">
-        Other
-    </label>
+            type="text"
+            placeholder="Enter Topic"
+            readonly>
 
-</div>
-
-<div
-    class="otherInput"
-    style="display:none; margin-top:15px;">
-
-    <input
-        type="text"
-        placeholder="Enter Topic">
-
-</div>
+    </div>
 
 </div>
 
@@ -1421,7 +1277,7 @@
         <input
             type="url"
             id="linkedin"
-            placeholder="https://linkedin.com/in/username">
+            readonly>
 
     </div>
 
@@ -1432,43 +1288,17 @@
         <input
             type="email"
             id="email"
-            placeholder="student@gmail.com">
+            readonly>
 
     </div>
 
 </div>
 
-<!-- ================= Buttons ================= -->
-
-<div class="buttons">
-
-    <button
-        type="button"
-        class="cancel">
-
-        Cancel
-
-    </button>
-
-    <button
-        type="submit"
-        class="save">
-
-        Save Placement
-
-    </button>
-
-</div>
-
 </form>
-
-</div>
-
-</div>
 
 </main>
 
-<script type="module" src="placements.js"></script>
+<script type="module" src="senior-details.js"></script>
 
 </body>
 

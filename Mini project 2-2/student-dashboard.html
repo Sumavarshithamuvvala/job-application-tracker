@@ -25,63 +25,99 @@
 
     <div class="profile">
 
-        <div class="profile-avatar" id="dashboardAvatar"></div>
+        <div class="profile-avatar" id="dashboardAvatar">
+            ST
+        </div>
 
-        <h3 id="studentName"></h3>
+        <h3 id="studentName">
+            Loading...
+        </h3>
 
-        <p id="studentBranch"></p>
+        <p id="studentBranch">
+            Loading...
+        </p>
 
     </div>
 
     <ul>
 
         <li class="active">
+
             <a href="student-dashboard.html">
+
                 <i class="fa-solid fa-house"></i>
+
                 <span>Dashboard</span>
+
             </a>
+
         </li>
 
         <li>
+
             <a href="senior-profiles.html">
+
                 <i class="fa-solid fa-users"></i>
+
                 <span>Senior Profiles</span>
+
             </a>
+
         </li>
 
         <li>
+
             <a href="skill-match.html">
+
                 <i class="fa-solid fa-chart-line"></i>
+
                 <span>Skill Match</span>
+
             </a>
+
         </li>
 
         <li>
+
             <a href="analytics.html">
+
                 <i class="fa-solid fa-chart-pie"></i>
+
                 <span>Analytics</span>
+
             </a>
+
         </li>
 
         <li>
+
             <a href="settings.html">
+
                 <i class="fa-solid fa-gear"></i>
+
                 <span>Settings</span>
+
             </a>
+
         </li>
 
         <li>
+
             <a href="#" id="sidebarLogout">
+
                 <i class="fa-solid fa-right-from-bracket"></i>
+
                 <span>Logout</span>
+
             </a>
+
         </li>
 
     </ul>
 
 </aside>
 
-<!-- ================= MAIN CONTENT ================= -->
+<!-- ================= MAIN ================= -->
 
 <div class="main">
 
@@ -97,23 +133,34 @@
 
         <div class="profile-menu">
 
-            <div class="nav-avatar" id="navAvatar"></div>
+            <div class="nav-avatar" id="navAvatar">
+                ST
+            </div>
 
             <div class="dropdown" id="profileDropdown">
 
                 <a href="my-profile.html">
+
                     <i class="fa-solid fa-user"></i>
+
                     My Profile
+
                 </a>
 
                 <a href="settings.html">
+
                     <i class="fa-solid fa-gear"></i>
+
                     Settings
+
                 </a>
 
                 <a href="#" id="dropdownLogout">
+
                     <i class="fa-solid fa-right-from-bracket"></i>
+
                     Logout
+
                 </a>
 
             </div>
@@ -129,13 +176,22 @@
 <section class="welcome">
 
     <h1>
+
         Welcome,
-        <span id="welcomeName"></span> 👋
+
+        <span id="welcomeName">
+            Student
+        </span>
+
+        👋
+
     </h1>
 
     <p>
-        Track your preparation, explore senior experiences, compare your skills,
-        and prepare for your dream company.
+
+        Track your preparation, explore senior experiences,
+        compare your skills, and prepare for your dream company.
+
     </p>
 
 </section>
@@ -151,68 +207,115 @@
 
     <select id="companyFilter">
 
-        <option>All Companies</option>
-        <option>Amazon</option>
-        <option>Google</option>
-        <option>Microsoft</option>
-        <option>TCS</option>
-        <option>Infosys</option>
-        <option>Accenture</option>
+        <option value="All Companies">All Companies</option>
+
+        <option value="Google">Google</option>
+
+        <option value="Microsoft">Microsoft</option>
+
+        <option value="Amazon">Amazon</option>
+
+        <option value="Adobe">Adobe</option>
+
+        <option value="Oracle">Oracle</option>
+
+        <option value="Infosys">Infosys</option>
+
+        <option value="TCS">TCS</option>
+
+        <option value="Accenture">Accenture</option>
+
+        <option value="Capgemini">Capgemini</option>
 
     </select>
 
     <select id="roleFilter">
 
-        <option>All Roles</option>
-        <option>Software Engineer</option>
-        <option>Frontend Developer</option>
-        <option>Backend Developer</option>
-        <option>Data Analyst</option>
+        <option value="All Roles">All Roles</option>
+
+        <option value="Software Engineer">Software Engineer</option>
+
+        <option value="SDE">SDE</option>
+
+        <option value="Frontend Developer">Frontend Developer</option>
+
+        <option value="Backend Developer">Backend Developer</option>
+
+        <option value="Full Stack Developer">Full Stack Developer</option>
+
+        <option value="Data Analyst">Data Analyst</option>
+
+        <option value="Data Scientist">Data Scientist</option>
+
+        <option value="AI/ML Engineer">AI/ML Engineer</option>
 
     </select>
 
     <select id="hiringFilter">
 
-        <option>All Hiring</option>
-        <option>On Campus</option>
-        <option>Off Campus</option>
-        <option>Referral</option>
-        <option>Internship</option>
+        <option value="All Hiring">All Hiring</option>
+
+        <option value="On Campus">On Campus</option>
+
+        <option value="Off Campus">Off Campus</option>
+
+        <option value="Referral">Referral</option>
+
+        <option value="Internship">Internship</option>
 
     </select>
 
     <button id="resetBtn">
+
+        <i class="fa-solid fa-rotate-left"></i>
+
         Reset
+
     </button>
 
 </section>
-
 <!-- ================= STATS ================= -->
 
 <section class="stats">
 
     <div class="card">
+
         <i class="fa-solid fa-user-group"></i>
-        <h2>120</h2>
+
+        <h2 id="totalSeniors">0</h2>
+
         <p>Senior Profiles</p>
+
     </div>
 
     <div class="card">
+
         <i class="fa-solid fa-building"></i>
-        <h2>52</h2>
+
+        <h2 id="totalCompanies">0</h2>
+
         <p>Companies</p>
+
     </div>
 
     <div class="card">
+
         <i class="fa-solid fa-chart-line"></i>
-        <h2>72%</h2>
+
+        <h2 id="skillMatch">--</h2>
+
         <p>Average Skill Match</p>
+
     </div>
 
     <div class="card">
+
         <i class="fa-solid fa-briefcase"></i>
-        <h2>85</h2>
+
+        <h2 id="totalPlacements">0</h2>
+
         <p>Placements</p>
+
     </div>
 
 </section>
@@ -225,65 +328,17 @@
 
         <h2>Featured Senior Profiles</h2>
 
-        <a href="senior-profiles.html">View All</a>
+        <a href="senior-profiles.html">
+
+            View All
+
+        </a>
 
     </div>
 
-    <div class="profile-grid">
+    <div class="profile-grid" id="featuredProfiles">
 
-        <div class="profile-card">
-
-            <div class="profile-avatar">RS</div>
-
-            <h3>Rahul Sharma</h3>
-
-            <p><strong>Company:</strong> Google</p>
-
-            <p><strong>Role:</strong> Software Engineer</p>
-
-            <p><strong>Hiring:</strong> On Campus</p>
-
-            <button onclick="location.href='senior-details.html'">
-                View Profile
-            </button>
-
-        </div>
-
-        <div class="profile-card">
-
-            <div class="profile-avatar">PR</div>
-
-            <h3>Priya Reddy</h3>
-
-            <p><strong>Company:</strong> Microsoft</p>
-
-            <p><strong>Role:</strong> Frontend Developer</p>
-
-            <p><strong>Hiring:</strong> Internship</p>
-
-            <button onclick="location.href='senior-details.html'">
-                View Profile
-            </button>
-
-        </div>
-
-        <div class="profile-card">
-
-            <div class="profile-avatar">SK</div>
-
-            <h3>Sai Kumar</h3>
-
-            <p><strong>Company:</strong> Amazon</p>
-
-            <p><strong>Role:</strong> Backend Developer</p>
-
-            <p><strong>Hiring:</strong> Referral</p>
-
-            <button onclick="location.href='senior-details.html'">
-                View Profile
-            </button>
-
-        </div>
+        <!-- Senior cards will be loaded dynamically from Firebase -->
 
     </div>
 
@@ -293,14 +348,15 @@
 
 <section class="activity">
 
-    <h2>Recent Updates</h2>
+    <div class="section-title">
 
-    <ul>
+        <h2>Activity Feed</h2>
 
-        <li>🎉 New Google Software Engineer profile added.</li>
-        <li>📢 Amazon interview experience uploaded.</li>
-        <li>💡 Skill Match recommendations updated.</li>
-        <li>🏢 Microsoft hiring process details added.</li>
+    </div>
+
+    <ul id="activityFeed">
+
+        <!-- Activities will load dynamically -->
 
     </ul>
 
@@ -310,13 +366,20 @@
 
 <footer>
 
-    <p>© 2026 Job Preparation Tracker | All Rights Reserved</p>
+    <p>
+
+        © 2026 Job Preparation Tracker | All Rights Reserved
+
+    </p>
 
 </footer>
 
 </div>
 
+<!-- ================= JAVASCRIPT ================= -->
+
 <script type="module" src="student-dashboard.js"></script>
 
 </body>
+
 </html>

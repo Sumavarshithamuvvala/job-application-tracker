@@ -15,227 +15,109 @@
 
 <body>
 
+    <!-- Sidebar -->
 
-<!-- Sidebar -->
+    <div class="sidebar">
 
-<div class="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-briefcase"></i>
+            <span>Job Tracker</span>
+        </div>
 
-    <div class="logo">
-        <i class="fa-solid fa-briefcase"></i>
-        <span>Job Tracker</span>
+        <nav>
+
+            <a href="admin-dashboard.html">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+
+            <a href="placements.html">
+                <i class="fa-solid fa-briefcase"></i>
+                Placements
+            </a>
+
+            <a href="students.html" class="active">
+                <i class="fa-solid fa-users"></i>
+                Student Records
+            </a>
+
+            <a href="analytics.html">
+                <i class="fa-solid fa-chart-pie"></i>
+                Analytics
+            </a>
+
+            <a href="settings.html">
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </a>
+
+        </nav>
+
     </div>
 
+    <!-- Main -->
 
-    <nav>
+    <div class="main">
 
-        <a href="#">
-            <i class="fa-solid fa-chart-line"></i>
-            Dashboard
-        </a>
+        <div class="top">
 
+            <div>
 
-        <a href="#">
-            <i class="fa-solid fa-building"></i>
-            Companies
-        </a>
+                <h1>Student Records</h1>
 
+                <p>View all registered students using Job Tracker</p>
 
-        <a href="#">
-            <i class="fa-solid fa-user-tie"></i>
-            Roles
-        </a>
+            </div>
 
+        </div>
 
-        <a href="#" class="active">
-            <i class="fa-solid fa-users"></i>
-            Student Records
-        </a>
+        <!-- Search -->
 
+        <div class="search-box">
 
-        <a href="#">
-            <i class="fa-solid fa-chart-pie"></i>
-            Insights
-        </a>
+            <i class="fa-solid fa-magnifying-glass"></i>
 
+            <input
+                type="text"
+                id="search"
+                placeholder="Search students by name or mail id..."
+            >
 
-        <a href="#">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            Logout
-        </a>
+        </div>
 
+        <!-- Table -->
 
-    </nav>
+        <div class="table-card">
 
-</div>
+            <table>
 
+                <thead>
 
+                    <tr>
 
-<!-- Main -->
+                        <th>Name</th>
 
-<div class="main">
+                        <th>College Mail ID</th>
 
+                        <th>Branch</th>
 
-<div class="top">
+                        <th>Passing Year</th>
 
-<div>
+                    </tr>
 
-<h1>Student Records</h1>
+                </thead>
 
-<p>
-View all registered students using Job Tracker
-</p>
+                <tbody id="studentTable">
 
-</div>
+                </tbody>
 
+            </table>
 
-<button id="addStudent">
+        </div>
 
-<i class="fa-solid fa-user-plus"></i>
+    </div>
 
-Add Student
-
-</button>
-
-
-</div>
-
-
-
-
-<!-- Search -->
-
-<div class="search-box">
-
-<i class="fa-solid fa-magnifying-glass"></i>
-
-<input 
-type="text" 
-id="search"
-placeholder="Search students by name or mail id..."
->
-
-</div>
-
-
-
-
-
-<!-- Table Card -->
-
-
-<div class="table-card">
-
-
-<table>
-
-
-<thead>
-
-<tr>
-
-<th>Name</th>
-
-<th>College Mail ID</th>
-
-<th>Branch</th>
-
-<th>Passing Year</th>
-
-<th>Action</th>
-
-</tr>
-
-</thead>
-
-
-
-<tbody id="studentTable">
-
-
-</tbody>
-
-
-</table>
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-<!-- Add Student Modal -->
-
-<div class="modal" id="studentModal">
-
-
-<div class="modal-content">
-
-
-<span class="close">
-&times;
-</span>
-
-
-<h2>Add Student</h2>
-
-
-
-<label>Name</label>
-
-<input id="name">
-
-
-
-<label>College Mail ID</label>
-
-<input id="email">
-
-
-
-<label>Branch</label>
-
-<input id="branch">
-
-
-
-<label>Passing Year</label>
-
-<input id="year">
-
-
-
-<div class="buttons">
-
-
-<button class="cancel">
-Cancel
-</button>
-
-
-<button class="save" id="saveStudent">
-Save
-</button>
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
-<script type="module" src="student_records.js"></script>
-
+    <script type="module" src="students.js"></script>
 
 </body>
-
 </html>
