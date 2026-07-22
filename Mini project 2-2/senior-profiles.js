@@ -1,115 +1,345 @@
-// ======================================
-// SEARCH
-// ======================================
+// ==========================================
+// FIREBASE IMPORTS
+// ==========================================
+
+import { db } from "./firebase.js";
+
+import {
+    collection,
+    getDocs,
+    query,
+    orderBy
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+// ==========================================
+// ELEMENTS
+// ==========================================
+
+const profilesGrid = document.getElementById("profilesGrid");
 
 const searchInput = document.getElementById("searchInput");
-const cards = document.querySelectorAll(".profile-card");
+
+const companyFilter = document.getElementById("companyFilter");
+
+const roleFilter = document.getElementById("roleFilter");
+
+const branchFilter = document.getElementById("branchFilter");
+
+const batchFilter = document.getElementById("batchFilter");
+
+const sortFilter = document.getElementById("sortFilter");
+
+const resetFilters = document.getElementById("resetFilters");
+
+
+// ==========================================
+// GLOBAL ARRAY
+// ==========================================
+
+let placements = [];
+
+
+// ==========================================
+// LOAD ALL PLACEMENTS
+// ==========================================
+// ==========================================
+// LOAD ALL PLACEMENTS
+// ==========================================
+
+async function loadProfiles() {
+
+    try {
+
+        const q = query(
+            collection(db, "placements"),
+            orderBy("studentName")
+        );
+
+        const snapshot = await getDocs(q);
+
+        placements = [];
+
+        snapshot.forEach((docSnap) => {
+
+            placements.push({
+
+                id: docSnap.id,
+
+                ...docSnap.data()
+
+            });
+
+        });
+
+        console.log("Placements:", placements);
+
+        displayProfiles(placements);
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        profilesGrid.innerHTML = `
+            <h2 style="text-align:center;color:red;">
+                Failed to load senior profiles.
+            </h2>
+        `;
+
+    }
+
+}
+
+// ==========================================
+// DISPLAY PROFILE CARDS
+// ==========================================
+
+// ==========================================
+// DISPLAY PROFILE CARDS
+// ==========================================
+
+function displayProfiles(list) {
+
+    profilesGrid.innerHTML = "";
+
+    if (list.length === 0) {
+
+        profilesGrid.innerHTML = `
+            <h2 style="text-align:center;width:100%;">
+                No Senior Profiles Found
+            </h2>
+        `;
+
+        return;
+    }
+
+    list.forEach(profile => {
+
+        const card = document.createElement("div");
+
+        card.className = "profile-card";
+
+        card.innerHTML = `
+
+            <div class="profile-image">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+            <div class="profile-info">
+
+                <h3>${profile.studentName || ""}</h3>
+
+                <p>
+                    ${profile.branch || ""} • ${profile.graduationYear || ""} Batch
+                </p>
+
+                <p>
+                    ${profile.companyName || ""}
+                </p>
+
+                <p>
+                    ${profile.roleOffered || ""}
+                </p>
+
+            </div>
+
+        `;
+
+        // Make the entire card clickable
+        card.addEventListener("click", () => {
+
+            sessionStorage.setItem("placementId", profile.id);
+
+            window.location.href = "senior-details.html";
+
+        });
+
+        profilesGrid.appendChild(card);
+
+    });
+
+}
+
+
+// ==========================================
+// SEARCH
+// ==========================================
 
 searchInput.addEventListener("keyup", () => {
 
     const value = searchInput.value.toLowerCase();
 
-    cards.forEach(card => {
+    const filtered = placements.filter(profile =>
 
-        const name = card.querySelector("h3").textContent.toLowerCase();
+        profile.studentName?.toLowerCase().includes(value)
 
-        if (name.includes(value)) {
-            card.style.display = "flex";
-        } else {
-            card.style.display = "none";
-        }
+        ||
 
-    });
+        profile.companyName?.toLowerCase().includes(value)
 
-});
+        ||
 
-// ======================================
-// MODAL
-// ======================================
+        profile.roleOffered?.toLowerCase().includes(value)
 
-const modal = document.getElementById("profileModal");
-const closeBtn = document.querySelector(".close-btn");
+    );
 
-cards.forEach(card => {
-
-    card.addEventListener("click", () => {
-
-        // Firebase integration later
-        modal.style.display = "flex";
-
-    });
+    displayProfiles(filtered);
 
 });
 
-closeBtn.addEventListener("click", () => {
 
-    modal.style.display = "none";
+// ==========================================
+// INITIAL LOAD
+// ==========================================
 
-});
+loadProfiles();
+// ==========================================
+// APPLY FILTERS
+// ==========================================
 
-window.addEventListener("click", (e) => {
+function applyFilters() {
 
-    if (e.target === modal) {
+    let filtered = [...placements];
 
-        modal.style.display = "none";
+    // Search
+
+    const searchValue = searchInput.value.toLowerCase();
+
+    if (searchValue !== "") {
+
+        filtered = filtered.filter(profile =>
+
+            profile.studentName?.toLowerCase().includes(searchValue)
+
+            ||
+
+            profile.companyName?.toLowerCase().includes(searchValue)
+
+            ||
+
+            profile.roleOffered?.toLowerCase().includes(searchValue)
+
+        );
 
     }
 
-});
+    // Company
 
-// ======================================
-// FILTERS
-// (Firebase integration later)
-// ======================================
+    if (companyFilter.value !== "All Companies") {
 
-document.getElementById("companyFilter").addEventListener("change", () => {
+        filtered = filtered.filter(profile =>
 
-    // TODO: Filter by company after Firebase
+            profile.companyName === companyFilter.value
 
-});
+        );
 
-document.getElementById("roleFilter").addEventListener("change", () => {
+    }
 
-    // TODO: Filter by role after Firebase
+    // Role
 
-});
+    if (roleFilter.value !== "All Roles") {
 
-document.getElementById("branchFilter").addEventListener("change", () => {
+        filtered = filtered.filter(profile =>
 
-    // TODO: Filter by branch after Firebase
+            profile.roleOffered === roleFilter.value
 
-});
+        );
 
-document.getElementById("batchFilter").addEventListener("change", () => {
+    }
 
-    // TODO: Filter by batch after Firebase
+    // Branch
 
-});
+    if (branchFilter.value !== "All Branches") {
 
-document.getElementById("sortFilter").addEventListener("change", () => {
+        filtered = filtered.filter(profile =>
 
-    // TODO: Sort profiles after Firebase
+            profile.branch === branchFilter.value
 
-});
+        );
 
-// ======================================
-// RESET FILTERS
-// ======================================
+    }
 
-document.getElementById("resetFilters").addEventListener("click", () => {
+    // Batch
+
+    if (batchFilter.value !== "All Batches") {
+
+        filtered = filtered.filter(profile =>
+
+            profile.graduationYear === batchFilter.value
+
+        );
+
+    }
+
+    // Sort
+
+    if (sortFilter.value === "A-Z") {
+
+        filtered.sort((a, b) =>
+
+            a.studentName.localeCompare(b.studentName)
+
+        );
+
+    }
+
+    else if (sortFilter.value === "Company") {
+
+        filtered.sort((a, b) =>
+
+            a.companyName.localeCompare(b.companyName)
+
+        );
+
+    }
+
+    else if (sortFilter.value === "Newest Batch") {
+
+        filtered.sort((a, b) =>
+
+            Number(b.graduationYear) - Number(a.graduationYear)
+
+        );
+
+    }
+
+    else if (sortFilter.value === "Oldest Batch") {
+
+        filtered.sort((a, b) =>
+
+            Number(a.graduationYear) - Number(b.graduationYear)
+
+        );
+
+    }
+
+    displayProfiles(filtered);
+
+}
+companyFilter.addEventListener("change", applyFilters);
+roleFilter.addEventListener("change", applyFilters);
+branchFilter.addEventListener("change", applyFilters);
+batchFilter.addEventListener("change", applyFilters);
+sortFilter.addEventListener("change", applyFilters);
+
+resetFilters.addEventListener("click", () => {
 
     searchInput.value = "";
 
-    document.getElementById("companyFilter").selectedIndex = 0;
-    document.getElementById("roleFilter").selectedIndex = 0;
-    document.getElementById("branchFilter").selectedIndex = 0;
-    document.getElementById("batchFilter").selectedIndex = 0;
-    document.getElementById("sortFilter").selectedIndex = 0;
+    companyFilter.selectedIndex = 0;
 
-    cards.forEach(card => {
+    roleFilter.selectedIndex = 0;
 
-        card.style.display = "flex";
+    branchFilter.selectedIndex = 0;
 
-    });
+    batchFilter.selectedIndex = 0;
+
+    sortFilter.selectedIndex = 0;
+
+    displayProfiles(placements);
 
 });

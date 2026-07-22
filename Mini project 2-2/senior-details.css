@@ -1,0 +1,571 @@
+/* ==========================================
+   GOOGLE FONT & RESET
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f3f6fb;
+    color:#2d3748;
+    line-height:1.6;
+}
+
+.main{
+    max-width:1300px;
+    margin:40px auto;
+    padding:30px;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.top{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:white;
+    padding:30px;
+    border-radius:18px;
+    margin-bottom:35px;
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+.top h1{
+    font-size:34px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.top p{
+    font-size:16px;
+    opacity:.95;
+}
+
+/* ==========================================
+   FORM
+========================================== */
+
+#placementForm{
+    display:flex;
+    flex-direction:column;
+    gap:35px;
+}
+
+/* ==========================================
+   SECTION TITLES
+========================================== */
+
+.section-title{
+
+    font-size:24px;
+
+    color:#1d4ed8;
+
+    font-weight:700;
+
+    margin-top:10px;
+
+    margin-bottom:10px;
+
+    border-left:6px solid #2563eb;
+
+    padding-left:15px;
+
+}
+
+.section-note{
+
+    color:#6b7280;
+
+    margin-bottom:18px;
+
+    font-size:15px;
+
+}
+
+.section-subtitle{
+
+    display:block;
+
+    margin:20px 0 12px;
+
+    font-weight:600;
+
+    color:#374151;
+
+    font-size:18px;
+
+}
+/* ==========================================
+   FORM GRID
+========================================== */
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+
+    gap:22px;
+
+}
+
+/* ==========================================
+   FORM GROUP
+========================================== */
+
+.form-group{
+
+    background:#ffffff;
+
+    padding:22px;
+
+    border-radius:14px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
+
+    transition:.3s;
+
+}
+
+.form-group:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 8px 20px rgba(37,99,235,.15);
+
+}
+
+.form-group label{
+
+    display:block;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#374151;
+
+    margin-bottom:8px;
+
+}
+
+/* ==========================================
+   INPUTS
+========================================== */
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    padding:12px 14px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    font-family:'Poppins',sans-serif;
+
+    background:#f9fafb;
+
+    transition:.3s;
+
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    outline:none;
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.15);
+
+}
+
+textarea{
+
+    resize:vertical;
+
+    min-height:120px;
+
+}
+
+/* ==========================================
+   READ ONLY LOOK
+========================================== */
+
+input[readonly],
+textarea[readonly],
+select:disabled{
+
+    background:#eef4ff;
+
+    color:#1f2937;
+
+    cursor:default;
+
+    font-weight:500;
+
+}
+
+/* ==========================================
+   FULL WIDTH TEXTAREA
+========================================== */
+
+.form-group textarea{
+
+    width:100%;
+
+}
+/* ==========================================
+   CHECKBOX GRID
+========================================== */
+
+.checkGrid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:15px;
+
+    background:#ffffff;
+
+    padding:22px;
+
+    border-radius:14px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
+
+}
+
+.checkGrid label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:15px;
+
+    font-weight:500;
+
+    cursor:default;
+
+}
+
+.checkGrid input[type="checkbox"]{
+
+    width:18px;
+
+    height:18px;
+
+    accent-color:#2563eb;
+
+}
+
+/* ==========================================
+   SKILLS
+========================================== */
+
+.skills-search-container{
+
+    margin-bottom:18px;
+
+}
+
+.selected-skills{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin-top:15px;
+
+}
+
+.skill-chip{
+
+    background:#2563eb;
+
+    color:#fff;
+
+    padding:10px 18px;
+
+    border-radius:30px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    box-shadow:0 4px 10px rgba(37,99,235,.25);
+
+}
+
+/* ==========================================
+   TOPIC CARDS
+========================================== */
+
+.topic-card{
+
+    background:#ffffff;
+
+    border-radius:16px;
+
+    padding:25px;
+
+    margin-bottom:30px;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.07);
+
+    border-top:5px solid #2563eb;
+
+}
+
+.topic-card h4{
+
+    color:#2563eb;
+
+    font-size:21px;
+
+    margin-bottom:20px;
+
+    font-weight:700;
+
+}
+
+/* ==========================================
+   OTHER INPUT
+========================================== */
+
+.otherInput{
+
+    margin-top:15px;
+
+}
+
+.otherInput input{
+
+    background:#f8fafc;
+
+}
+
+/* ==========================================
+   HIDDEN INPUT
+========================================== */
+
+input[type="hidden"]{
+
+    display:none;
+
+}
+
+/* ==========================================
+   LINKS
+========================================== */
+
+a{
+
+    color:#2563eb;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+a:hover{
+
+    text-decoration:underline;
+
+}
+/* ==========================================
+   FORM SECTIONS
+========================================== */
+
+.section-title:first-of-type{
+    margin-top:0;
+}
+
+.section-title:not(:first-of-type){
+    margin-top:40px;
+}
+
+.section-note{
+    margin-bottom:25px;
+}
+
+.form-group,
+.checkGrid,
+.topic-card{
+
+    animation:fadeUp .4s ease;
+
+}
+
+/* ==========================================
+   HOVER EFFECTS
+========================================== */
+
+.topic-card:hover{
+
+    transform:translateY(-4px);
+
+    transition:.3s;
+
+    box-shadow:0 12px 28px rgba(0,0,0,.10);
+
+}
+
+.form-group:hover{
+
+    border-left:4px solid #2563eb;
+
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#eef2ff;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2563eb;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* ==========================================
+   ANIMATION
+========================================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width:900px){
+
+    .main{
+
+        padding:18px;
+
+    }
+
+    .top{
+
+        padding:22px;
+
+    }
+
+    .top h1{
+
+        font-size:28px;
+
+    }
+
+    .form-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .checkGrid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .topic-card{
+
+        padding:18px;
+
+    }
+
+}
+
+@media (max-width:600px){
+
+    .top h1{
+
+        font-size:24px;
+
+    }
+
+    .section-title{
+
+        font-size:20px;
+
+    }
+
+    input,
+    select,
+    textarea{
+
+        font-size:14px;
+
+    }
+
+    .skill-chip{
+
+        font-size:13px;
+
+        padding:8px 14px;
+
+    }
+
+}
+
+/* ==========================================
+   END
+========================================== */

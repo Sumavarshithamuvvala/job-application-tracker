@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Senior Placement Details</title>
+
+    <link rel="stylesheet" href="senior-details.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<main class="main">
+
+    <div class="top">
+
+        <div>
+
+            <h1>Senior Placement Details</h1>
+
+            <p>
+                View the complete placement journey shared by the placed senior.
+            </p>
+
+        </div>
+
+    </div>
+
+<form id="placementForm">
+
+<!-- =======================================================
+SECTION 1 : BASIC PLACEMENT DETAILS
+======================================================== -->
+
+<h3 class="section-title">
+
+    Basic Placement Details
+
+</h3>
+
+<p class="section-note">
+
+    Verified by Placement Cell
+
+</p>
+
+<div class="form-grid">
+
+    <div class="form-group">
+
+        <label>Full Name</label>
+
+        <input
+            type="text"
+            id="studentName"
+            readonly>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Graduation Year</label>
+
+        <select id="graduationYear" disabled>
+
+            <option value="">Select Year</option>
+
+            <option>2026</option>
+
+            <option>2027</option>
+
+            <option>2028</option>
+
+            <option>2029</option>
+
+            <option>2030</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Branch</label>
+
+        <select id="branch" disabled>
+
+            <option value="">Select Branch</option>
+
+            <option>CSE</option>
+
+            <option>CSBS</option>
+
+            <option>AI & ML</option>
+
+            <option>AI & DS</option>
+
+            <option>IT</option>
+
+            <option>ECE</option>
+
+            <option>EEE</option>
+
+            <option>MECH</option>
+
+            <option>CIVIL</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Company Name</label>
+
+        <input
+            type="text"
+            id="companyName"
+            readonly>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Company Type</label>
+
+        <select id="companyType" disabled>
+
+            <option value="">Select</option>
+
+            <option>Product Based</option>
+
+            <option>Service Based</option>
+
+            <option>Startup</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Role Offered</label>
+
+        <input
+            type="text"
+            id="roleOffered"
+            readonly>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Internship / Full-Time</label>
+
+        <select id="jobType" disabled>
+
+            <option>Internship</option>
+
+            <option>Full Time</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Work Mode</label>
+
+        <select id="workMode" disabled>
+
+            <option>Onsite</option>
+
+            <option>Hybrid</option>
+
+            <option>Remote</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Location</label>
+
+        <input
+            type="text"
+            id="location"
+            readonly>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Package (LPA)</label>
+
+        <input
+            type="number"
+            id="package"
+            readonly>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Placement Date</label>
+
+        <input
+            type="date"
+            id="placementDate"
+            readonly>
+
+    </div>
+
+</div>
+
+<!-- =======================================================
+SECTION 2 : ACADEMIC PROFILE
+======================================================== -->
+
+<h3 class="section-title">
+
+    Academic Profile
+
+</h3>
+
+<div class="form-grid">
+
+    <div class="form-group">
+
+        <label>CGPA</label>
+
+        <input
+            type="number"
+            id="cgpa"
+            step="0.01"
+            readonly>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Company CGPA Cutoff</label>
+
+        <input
+            type="number"
+            id="cgpaCutoff"
+            step="0.01"
+            readonly>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Active Backlogs</label>
+
+        <select id="activeBacklogs" disabled>
+
+            <option>No</option>
+
+            <option>Yes</option>
+
+        </select>
+
+    </div>
+
+</div>
+<!-- =======================================================
+SECTION 3 : ELIGIBILITY CRITERIA
+======================================================== -->
+
+<h3 class="section-title">
+
+    Eligibility Criteria
+
+</h3>
+
+<div class="form-grid">
+
+    <div class="form-group">
+
+        <label>Minimum CGPA Required</label>
+
+        <input
+            type="number"
+            id="minimumCGPA"
+            step="0.01"
+            readonly>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Eligible Branches</label>
+
+        <input
+            type="text"
+            id="eligibleBranches"
+            readonly>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Online Assessment Conducted?</label>
+
+        <select id="onlineAssessment" disabled>
+
+            <option>Yes</option>
+
+            <option>No</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Was OA Mandatory?</label>
+
+        <select id="oaMandatory" disabled>
+
+            <option>Yes</option>
+
+            <option>No</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Number of Interview Rounds</label>
+
+        <input
+            type="number"
+            id="interviewRounds"
+            readonly>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Additional Eligibility Criteria</label>
+
+        <input
+            type="text"
+            id="additionalCriteria"
+            readonly>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Eligible From Beginning?</label>
+
+        <select id="eligibleInitially" disabled>
+
+            <option>Yes</option>
+
+            <option>No</option>
+
+        </select>
+
+    </div>
+
+</div>
+
+<div class="form-group">
+
+    <label>
+
+        If No, what did you improve to become eligible?
+
+    </label>
+
+    <textarea
+        id="eligibilityImprovement"
+        rows="4"
+        readonly></textarea>
+
+</div>
+
+<!-- =======================================================
+SECTION 4 : SKILLS WORKED WITH
+======================================================== -->
+
+<h3 class="section-title">
+
+    Skills Worked With
+
+</h3>
+
+<p class="section-note">
+
+    Search and add the skills possessed by the placed student.
+    These skills will be used for recommendation and similarity matching.
+
+</p>
+
+<div class="skills-search-container">
+
+    <input
+        type="text"
+        id="skillInput"
+        readonly
+        placeholder="Skills">
+
+    <div
+        id="skillsSuggestions"
+        class="skills-suggestions">
+
+    </div>
+
+</div>
+
+<div
+    id="selectedSkills"
+    class="selected-skills">
+
+</div>
+
+<input
+    type="hidden"
+    id="technicalSkills">
+
+<!-- =======================================================
+SECTION 5 : CODING PREPARATION
+======================================================== -->
+
+<h3 class="section-title">
+
+    Coding Preparation
+
+</h3>
+
+<div class="form-grid">
+
+    <div class="form-group">
+
+        <label>Coding Platform Used</label>
+
+        <select id="codingPlatform" disabled>
+
+            <option>LeetCode</option>
+
+            <option>GeeksforGeeks</option>
+
+            <option>CodeChef</option>
+
+            <option>Codeforces</option>
+
+            <option>HackerRank</option>
+
+            <option>Other</option>
+
+        </select>
+
+    </div>
+
+    <div
+        class="otherSelectInput"
+        style="display:none;">
+
+        <input
+            type="text"
+            id="otherProjectDomain"
+            readonly>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Problems Solved</label>
+
+        <select id="problemsSolved" disabled>
+
+            <option>Below 50</option>
+
+            <option>50 - 150</option>
+
+            <option>150 - 300</option>
+
+            <option>300 - 500</option>
+
+            <option>Above 500</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Practice Frequency</label>
+
+        <select id="practiceFrequency" disabled>
+
+            <option>Daily</option>
+
+            <option>4-5 Days / Week</option>
+
+            <option>Weekends Only</option>
+
+            <option>Occasionally</option>
+
+        </select>
+
+    </div>
+
+</div>
+<!-- =======================================================
+SECTION 6 : PROJECTS
+======================================================== -->
+
+<h3 class="section-title">
+
+    Projects
+
+</h3>
+
+<div class="form-grid">
+
+    <div class="form-group">
+
+        <label>Number of Projects</label>
+
+        <select id="projectCount" disabled>
+
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>More than 3</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Main Project Name</label>
+
+        <input
+            type="text"
+            id="projectName"
+            readonly>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Project Domain</label>
+
+        <select id="projectDomain" disabled>
+
+            <option>Web Development</option>
+            <option>Data Analytics</option>
+            <option>Artificial Intelligence</option>
+            <option>Machine Learning</option>
+            <option>Cloud Computing</option>
+            <option>Cyber Security</option>
+            <option>IoT</option>
+            <option>Mobile Development</option>
+            <option>Other</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Technologies Used</label>
+
+        <input
+            type="text"
+            id="projectTechnologies"
+            readonly>
+
+    </div>
+
+</div>
+
+<div class="form-group">
+
+    <label>
+
+        Short Project Description
+
+    </label>
+
+    <textarea
+        id="projectDescription"
+        rows="5"
+        readonly></textarea>
+
+</div>
+
+<div class="form-grid">
+
+    <div class="form-group">
+
+        <label>
+
+            Was this project discussed during the interview?
+
+        </label>
+
+        <select id="projectDiscussed" disabled>
+
+            <option>Yes</option>
+            <option>No</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>
+
+            GitHub Link (Optional)
+
+        </label>
+
+        <input
+            type="url"
+            id="githubLink"
+            readonly>
+
+    </div>
+
+</div>
+
+<!-- =======================================================
+SECTION 7 : INTERVIEW PROCESS & EXPERIENCE
+======================================================== -->
+
+<h3 class="section-title">
+
+    Interview Process & Experience
+
+</h3>
+
+<label class="section-subtitle">
+
+    Rounds Faced
+
+</label>
+
+<div class="checkGrid">
+
+    <label>
+
+        <input
+            type="checkbox"
+            value="Online Assessment"
+            class="rounds"
+            disabled>
+
+        Online Assessment
+
+    </label>
+
+    <label>
+
+        <input
+            type="checkbox"
+            value="Technical Interview"
+            class="rounds"
+            disabled>
+
+        Technical Interview
+
+    </label>
+
+    <label>
+
+        <input
+            type="checkbox"
+            value="Managerial Interview"
+            class="rounds"
+            disabled>
+
+        Managerial Interview
+
+    </label>
+
+    <label>
+
+        <input
+            type="checkbox"
+            value="HR Interview"
+            class="rounds"
+            disabled>
+
+        HR Interview
+
+    </label>
+
+    <label>
+
+        <input
+            type="checkbox"
+            value="Group Discussion"
+            class="rounds"
+            disabled>
+
+        Group Discussion
+
+    </label>
+
+</div>
+
+<br>
+
+<div class="form-grid">
+
+    <div class="form-group">
+
+        <label>
+
+            Overall Interview Difficulty
+
+        </label>
+
+        <select id="interviewDifficulty" disabled>
+
+            <option>1 - Very Easy</option>
+            <option>2 - Easy</option>
+            <option>3 - Moderate</option>
+            <option>4 - Difficult</option>
+            <option>5 - Very Difficult</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>
+
+            Coding Difficulty
+
+        </label>
+
+        <select id="codingDifficulty" disabled>
+
+            <option>Easy</option>
+            <option>Medium</option>
+            <option>Hard</option>
+
+        </select>
+
+    </div>
+
+</div>
+
+<div class="form-group">
+
+    <label>
+
+        Interview Experience
+
+    </label>
+
+    <textarea
+        id="interviewExperience"
+        rows="6"
+        readonly></textarea>
+
+</div>
+
+<div class="form-group">
+
+    <label>
+
+        Preparation Strategy
+
+    </label>
+
+    <textarea
+        id="preparationStrategy"
+        rows="5"
+        readonly></textarea>
+
+</div>
+
+<div class="form-group">
+
+    <label>
+
+        Mistakes Made
+
+    </label>
+
+    <textarea
+        id="mistakesMade"
+        rows="5"
+        readonly></textarea>
+
+</div>
+<!-- =======================================================
+SECTION 8 : PREPARATION JOURNEY
+======================================================== -->
+
+<h3 class="section-title">
+
+    Preparation Journey
+
+</h3>
+
+<div class="form-grid">
+
+    <div class="form-group">
+
+        <label>Preparation Duration</label>
+
+        <select id="preparationDuration" disabled>
+
+            <option>Less than 3 Months</option>
+
+            <option>3 - 6 Months</option>
+
+            <option>6 - 12 Months</option>
+
+            <option>More than 1 Year</option>
+
+        </select>
+
+    </div>
+
+</div>
+
+<label class="section-subtitle">
+
+    Resources Used
+
+</label>
+
+<div class="checkGrid">
+
+    <label><input type="checkbox" class="resource" value="Striver" disabled> Striver</label>
+
+    <label><input type="checkbox" class="resource" value="Love Babbar" disabled> Love Babbar</label>
+
+    <label><input type="checkbox" class="resource" value="Apna College" disabled> Apna College</label>
+
+    <label><input type="checkbox" class="resource" value="LeetCode" disabled> LeetCode</label>
+
+    <label><input type="checkbox" class="resource" value="GeeksforGeeks" disabled> GeeksforGeeks</label>
+
+    <label><input type="checkbox" class="resource" value="NPTEL" disabled> NPTEL</label>
+
+    <label><input type="checkbox" class="resource" value="Coursera" disabled> Coursera</label>
+
+    <label><input type="checkbox" class="resource" value="Udemy" disabled> Udemy</label>
+
+    <label><input type="checkbox" class="resource" value="YouTube" disabled> YouTube</label>
+
+    <label><input type="checkbox" class="resource" value="ChatGPT" disabled> ChatGPT</label>
+
+    <label>
+        <input
+            type="checkbox"
+            class="otherCheckbox"
+            value="Other"
+            disabled>
+
+        Other
+    </label>
+
+</div>
+
+<div
+    class="otherInput"
+    style="display:none; margin-top:15px;">
+
+    <input
+        type="text"
+        placeholder="Enter Resource"
+        readonly>
+
+</div>
+
+<!-- =======================================================
+SECTION 9 : ADVICE
+======================================================== -->
+
+<h3 class="section-title">
+
+    Advice
+
+</h3>
+
+<div class="form-group">
+
+    <label>
+
+        What do you wish you had started earlier?
+
+    </label>
+
+    <textarea
+
+        id="wishStartedEarlier"
+
+        rows="5"
+
+        readonly></textarea>
+
+</div>
+
+<div class="form-group">
+
+    <label>
+
+        If you had only 6 months to prepare again, what would your roadmap be?
+
+    </label>
+
+    <textarea
+
+        id="roadmap"
+
+        rows="6"
+
+        readonly></textarea>
+
+</div>
+
+<!-- =======================================================
+SECTION 10 : FREQUENTLY ASKED SKILLS & TOPICS
+======================================================== -->
+
+<h3 class="section-title">
+
+    Frequently Asked Skills & Topics
+
+</h3>
+
+<p class="section-note">
+
+    Select the interview frequency and topics asked for each subject.
+
+</p>
+
+<!-- Programming -->
+
+<div class="topic-card">
+
+    <h4>Programming Languages</h4>
+
+    <div class="checkGrid">
+
+        <label><input type="checkbox" value="Java" disabled> Java</label>
+
+        <label><input type="checkbox" value="Python" disabled> Python</label>
+
+        <label><input type="checkbox" value="C" disabled> C</label>
+
+        <label><input type="checkbox" value="C++" disabled> C++</label>
+
+        <label><input type="checkbox" value="JavaScript" disabled> JavaScript</label>
+
+        <label>
+            <input
+                type="checkbox"
+                class="otherCheckbox"
+                value="Other"
+                disabled>
+
+            Other
+        </label>
+
+    </div>
+
+    <div
+        class="otherInput"
+        style="display:none; margin-top:15px;">
+
+        <input
+            type="text"
+            placeholder="Enter Topic"
+            readonly>
+
+    </div>
+
+</div>
+
+<!-- DSA -->
+
+<div class="topic-card">
+
+    <h4>DSA</h4>
+
+    <div class="checkGrid">
+
+        <label><input type="checkbox" value="Arrays" disabled> Arrays</label>
+
+        <label><input type="checkbox" value="Strings" disabled> Strings</label>
+
+        <label><input type="checkbox" value="Linked List" disabled> Linked List</label>
+
+        <label><input type="checkbox" value="Stack" disabled> Stack</label>
+
+        <label><input type="checkbox" value="Queue" disabled> Queue</label>
+
+        <label><input type="checkbox" value="Trees" disabled> Trees</label>
+
+        <label><input type="checkbox" value="Graphs" disabled> Graphs</label>
+
+        <label><input type="checkbox" value="DP" disabled> DP</label>
+
+        <label><input type="checkbox" value="Sliding Window" disabled> Sliding Window</label>
+
+        <label><input type="checkbox" value="Binary Search" disabled> Binary Search</label>
+
+        <label><input type="checkbox" value="Recursion" disabled> Recursion</label>
+
+        <label><input type="checkbox" value="HashMap" disabled> HashMap</label>
+
+        <label>
+            <input
+                type="checkbox"
+                class="otherCheckbox"
+                value="Other"
+                disabled>
+
+            Other
+        </label>
+
+    </div>
+
+    <div
+        class="otherInput"
+        style="display:none; margin-top:15px;">
+
+        <input
+            type="text"
+            placeholder="Enter Topic"
+            readonly>
+
+    </div>
+
+</div>
+<!-- =======================================================
+        SQL
+======================================================== -->
+
+<div class="topic-card">
+
+    <h4>SQL</h4>
+
+    <div class="checkGrid">
+
+        <label><input type="checkbox" value="Joins" disabled> Joins</label>
+
+        <label><input type="checkbox" value="GROUP BY" disabled> GROUP BY</label>
+
+        <label><input type="checkbox" value="HAVING" disabled> HAVING</label>
+
+        <label><input type="checkbox" value="Window Functions" disabled> Window Functions</label>
+
+        <label><input type="checkbox" value="CTE" disabled> CTE</label>
+
+        <label><input type="checkbox" value="Indexing" disabled> Indexing</label>
+
+        <label>
+            <input
+                type="checkbox"
+                class="otherCheckbox"
+                value="Other"
+                disabled>
+            Other
+        </label>
+
+    </div>
+
+    <div class="otherInput" style="display:none; margin-top:15px;">
+
+        <input
+            type="text"
+            placeholder="Enter Topic"
+            readonly>
+
+    </div>
+
+</div>
+
+<!-- =======================================================
+        DBMS
+======================================================== -->
+
+<div class="topic-card">
+
+    <h4>DBMS</h4>
+
+    <div class="checkGrid">
+
+        <label><input type="checkbox" value="ACID" disabled> ACID</label>
+
+        <label><input type="checkbox" value="Transactions" disabled> Transactions</label>
+
+        <label><input type="checkbox" value="Keys" disabled> Keys</label>
+
+        <label><input type="checkbox" value="Normalization" disabled> Normalization</label>
+
+        <label>
+            <input
+                type="checkbox"
+                class="otherCheckbox"
+                value="Other"
+                disabled>
+            Other
+        </label>
+
+    </div>
+
+    <div class="otherInput" style="display:none; margin-top:15px;">
+
+        <input
+            type="text"
+            placeholder="Enter Topic"
+            readonly>
+
+    </div>
+
+</div>
+
+<!-- =======================================================
+        OPERATING SYSTEMS
+======================================================== -->
+
+<div class="topic-card">
+
+    <h4>Operating Systems</h4>
+
+    <div class="checkGrid">
+
+        <label><input type="checkbox" value="Deadlock" disabled> Deadlock</label>
+
+        <label><input type="checkbox" value="Scheduling" disabled> Scheduling</label>
+
+        <label><input type="checkbox" value="Process vs Thread" disabled> Process vs Thread</label>
+
+        <label><input type="checkbox" value="Memory Management" disabled> Memory Management</label>
+
+        <label>
+            <input
+                type="checkbox"
+                class="otherCheckbox"
+                value="Other"
+                disabled>
+            Other
+        </label>
+
+    </div>
+
+    <div class="otherInput" style="display:none; margin-top:15px;">
+
+        <input
+            type="text"
+            placeholder="Enter Topic"
+            readonly>
+
+    </div>
+
+</div>
+
+<!-- =======================================================
+        COMPUTER NETWORKS
+======================================================== -->
+
+<div class="topic-card">
+
+    <h4>Computer Networks</h4>
+
+    <div class="checkGrid">
+
+        <label><input type="checkbox" value="TCP/IP" disabled> TCP/IP</label>
+
+        <label><input type="checkbox" value="OSI Model" disabled> OSI Model</label>
+
+        <label><input type="checkbox" value="HTTP" disabled> HTTP</label>
+
+        <label><input type="checkbox" value="DNS" disabled> DNS</label>
+
+        <label>
+            <input
+                type="checkbox"
+                class="otherCheckbox"
+                value="Other"
+                disabled>
+            Other
+        </label>
+
+    </div>
+
+    <div class="otherInput" style="display:none; margin-top:15px;">
+
+        <input
+            type="text"
+            placeholder="Enter Topic"
+            readonly>
+
+    </div>
+
+</div>
+
+<!-- =======================================================
+        HR INTERVIEW
+======================================================== -->
+
+<div class="topic-card">
+
+    <h4>HR Interview</h4>
+
+    <div class="checkGrid">
+
+        <label><input type="checkbox" value="Tell Me About Yourself" disabled> Tell Me About Yourself</label>
+
+        <label><input type="checkbox" value="Strengths" disabled> Strengths</label>
+
+        <label><input type="checkbox" value="Weaknesses" disabled> Weaknesses</label>
+
+        <label><input type="checkbox" value="Why Our Company?" disabled> Why Our Company?</label>
+
+        <label><input type="checkbox" value="Conflict Handling" disabled> Conflict Handling</label>
+
+        <label>
+            <input
+                type="checkbox"
+                class="otherCheckbox"
+                value="Other"
+                disabled>
+            Other
+        </label>
+
+    </div>
+
+    <div class="otherInput" style="display:none; margin-top:15px;">
+
+        <input
+            type="text"
+            placeholder="Enter Topic"
+            readonly>
+
+    </div>
+
+</div>
+
+<!-- =======================================================
+        SECTION 11 : CONTACT
+======================================================== -->
+
+<h3 class="section-title">
+
+    Contact (Optional)
+
+</h3>
+
+<div class="form-grid">
+
+    <div class="form-group">
+
+        <label>LinkedIn Profile</label>
+
+        <input
+            type="url"
+            id="linkedin"
+            readonly>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            id="email"
+            readonly>
+
+    </div>
+
+</div>
+
+</form>
+
+</main>
+
+<script type="module" src="senior-details.js"></script>
+
+</body>
+
+</html>
