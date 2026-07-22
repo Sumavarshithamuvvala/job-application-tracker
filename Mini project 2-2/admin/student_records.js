@@ -1,31 +1,13 @@
 // ===========================
 // Student Data
 // ===========================
+import { db } from "../firebase.js";
 
-let students = [
-
-    {
-        name:"Bhavya Pallemsetty",
-        email:"bhavya@svecw.edu.in",
-        branch:"CSE",
-        year:"2028"
-    },
-
-    {
-        name:"Rahul Kumar",
-        email:"rahul@svecw.edu.in",
-        branch:"ECE",
-        year:"2027"
-    },
-
-    {
-        name:"Priya Sharma",
-        email:"priya@svecw.edu.in",
-        branch:"CSE",
-        year:"2028"
-    }
-
-];
+import {
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+let students = [];
 
 
 
@@ -66,7 +48,33 @@ const yearInput = document.getElementById("year");
 // ===========================
 // Display Students
 // ===========================
+async function loadStudents() {
 
+    students = [];
+
+    const snapshot = await getDocs(collection(db, "studentProfiles"));
+
+    snapshot.forEach((doc) => {
+
+        const data = doc.data();
+
+        students.push({
+
+            name: data.fullName || "",
+
+            email: data.email || "",
+
+            branch: data.branch || "",
+
+            year: data.graduation || ""
+
+        });
+
+    });
+
+    displayStudents(students);
+
+}
 
 function displayStudents(data){
 
@@ -120,8 +128,7 @@ function displayStudents(data){
 
 // Initial load
 
-displayStudents(students);
-
+loadStudents();
 
 
 
