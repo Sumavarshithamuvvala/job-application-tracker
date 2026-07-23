@@ -11,11 +11,8 @@ let companyTrendChart;
 let hiringProcessChart;
 
 let topicChart;
-let skillChart;
-let placementCompanyChart;
 let placementTrendChart;
 let packageChart;
-let eligibilityChart;
 // ===============================
 // Sample Data
 // Replace with Firebase later
@@ -39,9 +36,9 @@ const analyticsData = {
         companyTrend:[30,38,41,45,52],
 
         hiringProcess:{
-            labels:["Coding Test","Technical","HR","Group Discussion"],
-            values:[40,32,18,10]
-        }
+    labels:["On-Campus","Off-Campus","Internships"],
+    values:[210,65,35]
+}
 
     },
 
@@ -60,10 +57,10 @@ const analyticsData = {
 
         companyTrend:[40,48,52,58,64],
 
-        hiringProcess:{
-            labels:["Coding Test","Technical","HR","Group Discussion"],
-            values:[42,30,18,10]
-        }
+       hiringProcess:{
+    labels:["On-Campus","Off-Campus","Internships"],
+    values:[245,72,39]
+}
 
     },
 
@@ -83,9 +80,9 @@ const analyticsData = {
         companyTrend:[52,60,67,74,81],
 
         hiringProcess:{
-            labels:["Coding Test","Technical","HR","Group Discussion"],
-            values:[45,28,18,9]
-        }
+    labels:["On-Campus","Off-Campus","Internships"],
+    values:[300,85,40]
+}
 
     },
 
@@ -104,25 +101,16 @@ const analyticsData = {
 
         companyTrend:[60,68,76,84,90],
 
-        hiringProcess:{
-            labels:["Coding Test","Technical","HR","Group Discussion"],
-            values:[46,29,17,8]
-        },
+       hiringProcess:{
+    labels:["On-Campus","Off-Campus","Internships"],
+    values:[335,95,40]
+},
 
         interviewTopics:{
             labels:["Arrays","Strings","OOP","SQL","DBMS","OS"],
             values:[85,78,90,70,60,55]
         },
 
-        subjectSkills:{
-            labels:["Java","Python","SQL","DSA","Web"],
-            values:[90,80,75,88,70]
-        },
-
-        placementCompanies:{
-            labels:["TCS","Infosys","Accenture","Google","Amazon"],
-            values:[135,108,82,18,15]
-        },
 
         placementTrend:{
             labels:["2022","2023","2024","2025","2026"],
@@ -133,11 +121,6 @@ const analyticsData = {
             labels:["3-5 LPA","5-8 LPA","8-12 LPA","12+ LPA"],
             values:[80,180,120,40]
         },
-
-        eligibility:{
-            labels:["Eligible","Not Eligible"],
-            values:[420,50]
-        }
 
     }
 
@@ -404,104 +387,6 @@ function drawInterviewTopics(year){
 // Subject Skill Analytics
 // ===============================
 
-function drawSkillAnalytics(year){
-
-    const d = analyticsData[year];
-
-    if(!d.subjectSkills) return;
-
-    if(skillChart)
-        skillChart.destroy();
-
-    skillChart = new Chart(
-
-        document.getElementById("skillChart"),
-
-        {
-
-            type:"radar",
-
-            data:{
-
-                labels:d.subjectSkills.labels,
-
-                datasets:[{
-
-                    label:"Skill Percentage",
-
-                    data:d.subjectSkills.values
-
-                }]
-
-            },
-
-            options:{
-
-                responsive:true
-
-            }
-
-        }
-
-    );
-
-}
-
-
-
-// ===============================
-// Company Wise Placement
-// ===============================
-
-function drawPlacementCompany(year){
-
-    const d = analyticsData[year];
-
-    if(!d.placementCompanies) return;
-
-    if(placementCompanyChart)
-        placementCompanyChart.destroy();
-
-    placementCompanyChart=new Chart(
-
-        document.getElementById("placementCompanyChart"),
-
-        {
-
-            type:"bar",
-
-            data:{
-
-                labels:d.placementCompanies.labels,
-
-                datasets:[{
-
-                    label:"Students",
-
-                    data:d.placementCompanies.values
-
-                }]
-
-            },
-
-            options:{
-
-                responsive:true,
-
-                plugins:{
-                    legend:{
-                        display:false
-                    }
-                }
-
-            }
-
-        }
-
-    );
-
-}
-
 
 
 // ===============================
@@ -608,46 +493,6 @@ function drawPackageChart(year){
 // Eligibility Chart
 // ===============================
 
-function drawEligibilityChart(year){
-
-    const d=analyticsData[year];
-
-    if(!d.eligibility) return;
-
-    if(eligibilityChart)
-        eligibilityChart.destroy();
-
-    eligibilityChart=new Chart(
-
-        document.getElementById("eligibilityChart"),
-
-        {
-
-            type:"pie",
-
-            data:{
-
-                labels:d.eligibility.labels,
-
-                datasets:[{
-
-                    data:d.eligibility.values
-
-                }]
-
-            },
-
-            options:{
-
-                responsive:true
-
-            }
-
-        }
-
-    );
-
-}
 
 // ===============================
 // Refresh Dashboard
@@ -665,16 +510,9 @@ function refreshDashboard(year){
 
     drawInterviewTopics(year);
 
-    drawSkillAnalytics(year);
-
-    drawPlacementCompany(year);
-
     drawPlacementTrend(year);
 
     drawPackageChart(year);
-
-    drawEligibilityChart(year);
-
 }
 // ===============================
 // Year Filter
