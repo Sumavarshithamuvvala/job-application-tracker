@@ -399,3 +399,64 @@ email: document.getElementById("email").value,
     }
 
 });
+
+// ======================================
+// Load Placement Records
+// ======================================
+
+async function loadPlacements() {
+
+    tableBody.innerHTML = "";
+
+    const q = query(
+        placementCollection,
+        orderBy("createdAt", "desc")
+    );
+
+    const snapshot = await getDocs(q);
+
+    console.log(snapshot.docs.length);
+
+    snapshot.forEach((doc) => {
+
+        const data = doc.data();
+
+       const row = `
+<tr>
+    <td>${data.studentName || "-"}</td>
+    <td>${data.companyName || "-"}</td>
+    <td>${data.roleOffered || "-"}</td>
+    <td>${data.graduationYear || "-"}</td>
+    <td>${data.package || "-"}</td>
+    <td>Verified</td>
+    <td>
+        <button class="editBtn" data-id="${doc.id}">Edit</button>
+        <button class="deleteBtn" data-id="${doc.id}">Delete</button>
+    </td>
+</tr>
+`;
+
+        tableBody.innerHTML += row;
+
+    });
+
+}
+loadPlacements();
+
+tableBody.addEventListener("click", async (e) => {
+
+    if (!e.target.classList.contains("deleteBtn")) return;
+
+    const id = e.target.dataset.id;
+
+    const confirmDelete = confirm("Delete this placement record?");
+
+    if (!confirmDelete) return;
+
+    await deleteDoc(doc(db, "placements", id));
+
+    alert("Record deleted successfully!");
+
+    loadPlacements();
+
+});
