@@ -5,245 +5,245 @@
 // ===============================
 // Chart Variables
 // ===============================
+import { db } from "./firebase.js";
+console.log("Firebase imported successfully");
 
+import {
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 let topCompaniesChart;
 let companyTrendChart;
 let hiringProcessChart;
 
 let topicChart;
-let skillChart;
-let placementCompanyChart;
 let placementTrendChart;
 let packageChart;
-let eligibilityChart;
 // ===============================
 // Sample Data
 // Replace with Firebase later
 // ===============================
-
-const analyticsData = {
-
-    "2023":{
-
-        companies:52,
-        placed:310,
-        placement:84,
-        avgPackage:5.8,
-        highest:18,
-
-        topCompanies:{
-            labels:["TCS","Infosys","Accenture","Capgemini","Wipro"],
-            values:[95,74,55,42,36]
-        },
-
-        companyTrend:[30,38,41,45,52],
-
-        hiringProcess:{
-            labels:["Coding Test","Technical","HR","Group Discussion"],
-            values:[40,32,18,10]
-        }
-
-    },
-
-    "2024":{
-
-        companies:64,
-        placed:356,
-        placement:88,
-        avgPackage:6.5,
-        highest:24,
-
-        topCompanies:{
-            labels:["TCS","Infosys","Accenture","Deloitte","Capgemini"],
-            values:[110,88,66,40,36]
-        },
-
-        companyTrend:[40,48,52,58,64],
-
-        hiringProcess:{
-            labels:["Coding Test","Technical","HR","Group Discussion"],
-            values:[42,30,18,10]
-        }
-
-    },
-
-    "2025":{
-
-        companies:81,
-        placed:425,
-        placement:91,
-        avgPackage:7.4,
-        highest:30,
-
-        topCompanies:{
-            labels:["TCS","Infosys","Accenture","Deloitte","Amazon"],
-            values:[125,102,74,48,20]
-        },
-
-        companyTrend:[52,60,67,74,81],
-
-        hiringProcess:{
-            labels:["Coding Test","Technical","HR","Group Discussion"],
-            values:[45,28,18,9]
-        }
-
-    },
-
-    "2026":{
-
-        companies:90,
-        placed:470,
-        placement:94,
-        avgPackage:8.1,
-        highest:36,
-
-        topCompanies:{
-            labels:["TCS","Infosys","Accenture","Deloitte","Google"],
-            values:[135,108,82,55,18]
-        },
-
-        companyTrend:[60,68,76,84,90],
-
-        hiringProcess:{
-            labels:["Coding Test","Technical","HR","Group Discussion"],
-            values:[46,29,17,8]
-        },
-
-        interviewTopics:{
-            labels:["Arrays","Strings","OOP","SQL","DBMS","OS"],
-            values:[85,78,90,70,60,55]
-        },
-
-        subjectSkills:{
-            labels:["Java","Python","SQL","DSA","Web"],
-            values:[90,80,75,88,70]
-        },
-
-        placementCompanies:{
-            labels:["TCS","Infosys","Accenture","Google","Amazon"],
-            values:[135,108,82,18,15]
-        },
-
-        placementTrend:{
-            labels:["2022","2023","2024","2025","2026"],
-            values:[72,84,88,91,94]
-        },
-
-        packageDistribution:{
-            labels:["3-5 LPA","5-8 LPA","8-12 LPA","12+ LPA"],
-            values:[80,180,120,40]
-        },
-
-        eligibility:{
-            labels:["Eligible","Not Eligible"],
-            values:[420,50]
-        }
-
-    }
-
-};
+// All placement records from Firestore
+let allPlacements = [];
 // ===============================
 // Current Year
 // ===============================
 
-let currentYear = "2026";
+let currentYear = "All Years";
+async function loadPlacements() {
+
+    try {
+
+        const snapshot = await getDocs(collection(db, "placements"));
+
+        allPlacements = [];
+
+        snapshot.forEach((doc) => {
+
+            allPlacements.push(doc.data());
+
+        });
+
+        console.log("Placements:", allPlacements);
+        populateCompanyFilter();
+
+refreshDashboard();
+
+} catch (error) {
+
+    console.error(error);
+}
+
+
+}
 
 // ===============================
 // Update KPI Cards
 // ===============================
 
-function updateCards(year){
+function updateCards() {
 
-    const d = analyticsData[year];
+    let filtered = [...allPlacements];
 
-    document.getElementById("companiesCount").innerText=d.companies;
+    // Filter by Year
+    if (currentYear !== "All Years") {
+        filtered = filtered.filter(p =>
+            String(p.graduationYear) === String(currentYear)
+        );
+    }
 
-    document.getElementById("studentsPlaced").innerText=d.placed;
+    // Filter by Company
+    const company = document.getElementById("companyFilter").value;
+    if (company !== "All Companies") {
+        filtered = filtered.filter(p =>
+            p.companyName === company
+        );
+    }
 
-    document.getElementById("placementPercent").innerText=
-        d.placement+"%";
+    // Filter by Branch
+    const branch = document.getElementById("branchFilter").value;
+    if (branch !== "All Branches") {
+        filtered = filtered.filter(p =>
+            p.branch === branch
+        );
+    }
 
-    document.getElementById("avgPackage").innerText=
-        "₹"+d.avgPackage+" LPA";
+    // KPI Calculations
+    const totalCompanies = new Set(
+        filtered.map(p => p.companyName).filter(Boolean)
+    ).size;
 
-    document.getElementById("highestPackage").innerText=
-        "₹"+d.highest+" LPA";
+    const studentsPlaced = filtered.length;
 
+    const highestPackage = Math.max(
+        0,
+        ...filtered.map(p => Number(p.package) || 0)
+    );
+
+    const avgPackage = studentsPlaced
+        ? (
+            filtered.reduce((sum, p) =>
+                sum + (Number(p.package) || 0), 0
+            ) / studentsPlaced
+        ).toFixed(2)
+        : 0;
+
+    document.getElementById("companiesCount").innerText = totalCompanies;
+    document.getElementById("studentsPlaced").innerText = studentsPlaced;
+
+    // Until student data exists, assume all filtered records are placed
+    document.getElementById("placementPercent").innerText = "100%";
+
+    document.getElementById("avgPackage").innerText =
+        "₹" + avgPackage + " LPA";
+
+    document.getElementById("highestPackage").innerText =
+        "₹" + highestPackage + " LPA";
 }
-
 // ===============================
 // Top Hiring Companies
 // ===============================
 
-function drawTopCompanies(year){
+function drawTopCompanies() {
 
-    const d=analyticsData[year];
+    let filtered = [...allPlacements];
 
-    if(topCompaniesChart)
+    // Graduation Year Filter
+    if (currentYear !== "All Years") {
+        filtered = filtered.filter(p =>
+            String(p.graduationYear) === String(currentYear)
+        );
+    }
+
+    // Company Filter
+    const company = document.getElementById("companyFilter").value;
+    if (company !== "All Companies") {
+        filtered = filtered.filter(p => p.companyName === company);
+    }
+
+    // Branch Filter
+    const branch = document.getElementById("branchFilter").value;
+    if (branch !== "All Branches") {
+        filtered = filtered.filter(p => p.branch === branch);
+    }
+
+    // Count students per company
+    const companyCount = {};
+
+    filtered.forEach(p => {
+        if (!p.companyName) return;
+
+        companyCount[p.companyName] =
+            (companyCount[p.companyName] || 0) + 1;
+    });
+
+    const labels = Object.keys(companyCount);
+    const values = Object.values(companyCount);
+
+    if (topCompaniesChart)
         topCompaniesChart.destroy();
 
-    topCompaniesChart=new Chart(
-
+    topCompaniesChart = new Chart(
         document.getElementById("topCompaniesChart"),
-
         {
-
-            type:"bar",
-
-            data:{
-
-                labels:d.topCompanies.labels,
-
-                datasets:[{
-
-                    label:"Students Hired",
-
-                    data:d.topCompanies.values,
-
-                    borderWidth:1
-
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Students Hired",
+                    data: values,
+                    borderWidth: 1
                 }]
-
             },
-
-            options:{
-
-                responsive:true,
-
-                plugins:{
-
-                    legend:{
-                        display:false
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
                     }
-
                 },
-
-                scales:{
-                    y:{
-                        beginAtZero:true
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
-
             }
-
         }
-
     );
-
 }
 
 // ===============================
 // Company Visit Trend
 // ===============================
 
-function drawCompanyTrend(year){
+function drawCompanyTrend() {
 
-    const d=analyticsData[year];
+    let filtered = [...allPlacements];
+
+    if (currentYear !== "All Years") {
+        filtered = filtered.filter(p =>
+            String(p.graduationYear) === String(currentYear)
+        );
+    }
+
+    const company = document.getElementById("companyFilter").value;
+    if (company !== "All Companies") {
+        filtered = filtered.filter(p =>
+            p.companyName === company
+        );
+    }
+
+    const branch = document.getElementById("branchFilter").value;
+    if (branch !== "All Branches") {
+        filtered = filtered.filter(p =>
+            p.branch === branch
+        );
+    }
+
+    const monthCount = {
+        Jan:0, Feb:0, Mar:0, Apr:0,
+        May:0, Jun:0, Jul:0, Aug:0,
+        Sep:0, Oct:0, Nov:0, Dec:0
+    };
+
+    filtered.forEach(p => {
+
+        if (!p.placementDate) return;
+
+        const date = new Date(p.placementDate);
+
+        const month = date.toLocaleString("default", {
+            month: "short"
+        });
+
+        if (monthCount[month] !== undefined)
+            monthCount[month]++;
+    });
 
     if(companyTrendChart)
         companyTrendChart.destroy();
 
-    companyTrendChart=new Chart(
+    companyTrendChart = new Chart(
 
         document.getElementById("companyTrendChart"),
 
@@ -253,37 +253,19 @@ function drawCompanyTrend(year){
 
             data:{
 
-                labels:[
-                    "Jan",
-                    "Mar",
-                    "May",
-                    "Sep",
-                    "Dec"
-                ],
+                labels:Object.keys(monthCount),
 
                 datasets:[{
 
-                    label:"Companies",
+                    label:"Placements",
 
-                    data:d.companyTrend,
+                    data:Object.values(monthCount),
 
-                    tension:.4,
+                    tension:0.4,
 
                     fill:false
 
                 }]
-
-            },
-
-            options:{
-
-                responsive:true,
-
-                plugins:{
-                    legend:{
-                        display:false
-                    }
-                }
 
             }
 
@@ -297,45 +279,59 @@ function drawCompanyTrend(year){
 // Hiring Process Pie
 // ===============================
 
-function drawHiringProcess(year){
+function drawHiringProcess() {
 
-    const d=analyticsData[year];
+    let filtered = [...allPlacements];
 
-    if(hiringProcessChart)
+    // Graduation Year
+    if (currentYear !== "All Years") {
+        filtered = filtered.filter(p =>
+            String(p.graduationYear) === String(currentYear)
+        );
+    }
+
+    // Company
+    const company = document.getElementById("companyFilter").value;
+    if (company !== "All Companies") {
+        filtered = filtered.filter(p =>
+            p.companyName.trim() === company.trim()
+        );
+    }
+
+    // Branch
+    const branch = document.getElementById("branchFilter").value;
+    if (branch !== "All Branches") {
+        filtered = filtered.filter(p =>
+            p.branch === branch
+        );
+    }
+
+    const jobTypeCount = {};
+
+    filtered.forEach(p => {
+        if (!p.jobType) return;
+        jobTypeCount[p.jobType] = (jobTypeCount[p.jobType] || 0) + 1;
+    });
+
+    if (hiringProcessChart)
         hiringProcessChart.destroy();
 
-    hiringProcessChart=new Chart(
-
+    hiringProcessChart = new Chart(
         document.getElementById("hiringProcessChart"),
-
         {
-
-            type:"pie",
-
-            data:{
-
-                labels:d.hiringProcess.labels,
-
-                datasets:[{
-
-                    data:d.hiringProcess.values
-
+            type: "pie",
+            data: {
+                labels: Object.keys(jobTypeCount),
+                datasets: [{
+                    data: Object.values(jobTypeCount)
                 }]
-
             },
-
-            options:{
-
-                responsive:true
-
+            options: {
+                responsive: true
             }
-
         }
-
     );
-
 }
-
 // ===============================
 // Refresh Dashboard
 // ===============================
@@ -343,164 +339,86 @@ function drawHiringProcess(year){
 // Interview Topic Analytics
 // ===============================
 
-function drawInterviewTopics(year){
+function drawInterviewTopics() {
 
-    const d = analyticsData[year];
+    let filtered = [...allPlacements];
 
-    if(!d.interviewTopics) return;
+    // Year Filter
+    if (currentYear !== "All Years") {
+        filtered = filtered.filter(p =>
+            String(p.graduationYear) === String(currentYear)
+        );
+    }
 
-    if(topicChart)
+    // Company Filter
+    const company = document.getElementById("companyFilter").value;
+    if (company !== "All Companies") {
+        filtered = filtered.filter(p =>
+            p.companyName.trim() === company.trim()
+        );
+    }
+
+    // Branch Filter
+    const branch = document.getElementById("branchFilter").value;
+    if (branch !== "All Branches") {
+        filtered = filtered.filter(p =>
+            p.branch === branch
+        );
+    }
+
+    // Subject selected
+    const subject = document.getElementById("subjectFilter").value;
+
+    const topicCount = {};
+
+    filtered.forEach(p => {
+
+        const topics = p[subject];
+
+        if (!topics) return;
+
+        topics.forEach(topic => {
+            topicCount[topic] = (topicCount[topic] || 0) + 1;
+        });
+
+    });
+
+    if (topicChart)
         topicChart.destroy();
 
     topicChart = new Chart(
         document.getElementById("topicChart"),
         {
-
-            type:"bar",
-
-            data:{
-
-                labels:d.interviewTopics.labels,
-
-                datasets:[{
-
-                    label:"Questions Asked",
-
-                    data:d.interviewTopics.values,
-
-                    borderWidth:1
-
+            type: "bar",
+            data: {
+                labels: Object.keys(topicCount),
+                datasets: [{
+                    label: "Frequency",
+                    data: Object.values(topicCount),
+                    borderWidth: 1
                 }]
-
             },
-
-            options:{
-
-                responsive:true,
-
-                plugins:{
-                    legend:{
-                        display:false
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
                     }
                 },
-
-                scales:{
-                    y:{
-                        beginAtZero:true
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
-
             }
-
         }
-
     );
-
 }
-
 
 
 // ===============================
 // Subject Skill Analytics
 // ===============================
-
-function drawSkillAnalytics(year){
-
-    const d = analyticsData[year];
-
-    if(!d.subjectSkills) return;
-
-    if(skillChart)
-        skillChart.destroy();
-
-    skillChart = new Chart(
-
-        document.getElementById("skillChart"),
-
-        {
-
-            type:"radar",
-
-            data:{
-
-                labels:d.subjectSkills.labels,
-
-                datasets:[{
-
-                    label:"Skill Percentage",
-
-                    data:d.subjectSkills.values
-
-                }]
-
-            },
-
-            options:{
-
-                responsive:true
-
-            }
-
-        }
-
-    );
-
-}
-
-
-
-// ===============================
-// Company Wise Placement
-// ===============================
-
-function drawPlacementCompany(year){
-
-    const d = analyticsData[year];
-
-    if(!d.placementCompanies) return;
-
-    if(placementCompanyChart)
-        placementCompanyChart.destroy();
-
-    placementCompanyChart=new Chart(
-
-        document.getElementById("placementCompanyChart"),
-
-        {
-
-            type:"bar",
-
-            data:{
-
-                labels:d.placementCompanies.labels,
-
-                datasets:[{
-
-                    label:"Students",
-
-                    data:d.placementCompanies.values
-
-                }]
-
-            },
-
-            options:{
-
-                responsive:true,
-
-                plugins:{
-                    legend:{
-                        display:false
-                    }
-                }
-
-            }
-
-        }
-
-    );
-
-}
 
 
 
@@ -508,51 +426,64 @@ function drawPlacementCompany(year){
 // Placement Trend
 // ===============================
 
-function drawPlacementTrend(year){
+function drawPlacementTrend() {
 
-    const d=analyticsData[year];
+    let filtered = [...allPlacements];
 
-    if(!d.placementTrend) return;
+    // Year Filter
+    if (currentYear !== "All Years") {
+        filtered = filtered.filter(p =>
+            String(p.graduationYear) === String(currentYear)
+        );
+    }
 
-    if(placementTrendChart)
+    // Company Filter
+    const company = document.getElementById("companyFilter").value;
+    if (company !== "All Companies") {
+        filtered = filtered.filter(p =>
+            p.companyName.trim() === company.trim()
+        );
+    }
+
+    // Branch Filter
+    const branch = document.getElementById("branchFilter").value;
+    if (branch !== "All Branches") {
+        filtered = filtered.filter(p =>
+            p.branch === branch
+        );
+    }
+
+    // Count placements by graduation year
+    const yearCount = {};
+
+    filtered.forEach(p => {
+        const year = p.graduationYear;
+        if (!year) return;
+
+        yearCount[year] = (yearCount[year] || 0) + 1;
+    });
+
+    if (placementTrendChart)
         placementTrendChart.destroy();
 
-    placementTrendChart=new Chart(
-
+    placementTrendChart = new Chart(
         document.getElementById("placementTrendChart"),
-
         {
-
-            type:"line",
-
-            data:{
-
-                labels:d.placementTrend.labels,
-
-                datasets:[{
-
-                    label:"Placement %",
-
-                    data:d.placementTrend.values,
-
-                    tension:0.4,
-
-                    fill:false
-
+            type: "line",
+            data: {
+                labels: Object.keys(yearCount),
+                datasets: [{
+                    label: "Placed Students",
+                    data: Object.values(yearCount),
+                    tension: 0.4,
+                    fill: false
                 }]
-
             },
-
-            options:{
-
-                responsive:true
-
+            options: {
+                responsive: true
             }
-
         }
-
     );
-
 }
 
 
@@ -560,141 +491,158 @@ function drawPlacementTrend(year){
 // ===============================
 // Package Distribution
 // ===============================
+function drawPackageChart() {
 
-function drawPackageChart(year){
+    let filtered = [...allPlacements];
 
-    const d=analyticsData[year];
+    // Year Filter
+    if (currentYear !== "All Years") {
+        filtered = filtered.filter(p =>
+            String(p.graduationYear) === String(currentYear)
+        );
+    }
 
-    if(!d.packageDistribution) return;
+    // Company Filter
+    const company = document.getElementById("companyFilter").value;
+    if (company !== "All Companies") {
+        filtered = filtered.filter(p =>
+            p.companyName.trim() === company.trim()
+        );
+    }
 
-    if(packageChart)
+    // Branch Filter
+    const branch = document.getElementById("branchFilter").value;
+    if (branch !== "All Branches") {
+        filtered = filtered.filter(p =>
+            p.branch === branch
+        );
+    }
+
+    // Package Ranges
+    let range1 = 0; // <10
+    let range2 = 0; // 10-20
+    let range3 = 0; // 20-30
+    let range4 = 0; // >30
+
+    filtered.forEach(p => {
+
+        const pkg = Number(p.package);
+
+        if (pkg < 10)
+            range1++;
+        else if (pkg < 20)
+            range2++;
+        else if (pkg < 30)
+            range3++;
+        else
+            range4++;
+
+    });
+
+    if (packageChart)
         packageChart.destroy();
 
-    packageChart=new Chart(
-
+    packageChart = new Chart(
         document.getElementById("packageChart"),
-
         {
-
-            type:"doughnut",
-
-            data:{
-
-                labels:d.packageDistribution.labels,
-
-                datasets:[{
-
-                    data:d.packageDistribution.values
-
+            type: "doughnut",
+            data: {
+                labels: [
+                    "< 10 LPA",
+                    "10 - 20 LPA",
+                    "20 - 30 LPA",
+                    "> 30 LPA"
+                ],
+                datasets: [{
+                    data: [
+                        range1,
+                        range2,
+                        range3,
+                        range4
+                    ]
                 }]
-
             },
-
-            options:{
-
-                responsive:true
-
+            options: {
+                responsive: true
             }
-
         }
-
     );
-
 }
-
-
 
 // ===============================
 // Eligibility Chart
 // ===============================
 
-function drawEligibilityChart(year){
-
-    const d=analyticsData[year];
-
-    if(!d.eligibility) return;
-
-    if(eligibilityChart)
-        eligibilityChart.destroy();
-
-    eligibilityChart=new Chart(
-
-        document.getElementById("eligibilityChart"),
-
-        {
-
-            type:"pie",
-
-            data:{
-
-                labels:d.eligibility.labels,
-
-                datasets:[{
-
-                    data:d.eligibility.values
-
-                }]
-
-            },
-
-            options:{
-
-                responsive:true
-
-            }
-
-        }
-
-    );
-
-}
 
 // ===============================
 // Refresh Dashboard
 // ===============================
 
-function refreshDashboard(year){
+function refreshDashboard() {
 
-    updateCards(year);
+    updateCards();
 
-    drawTopCompanies(year);
+    drawTopCompanies();
+   drawCompanyTrend();
 
-    drawCompanyTrend(year);
+    drawHiringProcess();
 
-    drawHiringProcess(year);
+    drawInterviewTopics();
 
-    drawInterviewTopics(year);
+    drawPlacementTrend();
 
-    drawSkillAnalytics(year);
-
-    drawPlacementCompany(year);
-
-    drawPlacementTrend(year);
-
-    drawPackageChart(year);
-
-    drawEligibilityChart(year);
-
+    drawPackageChart();
 }
 // ===============================
 // Year Filter
 // ===============================
 
-document.getElementById("yearFilter").addEventListener("change", function () {
-
-    if (this.value === "All Years") {
-        currentYear = "2026";
-    } else {
-        currentYear = this.value;
-    }
-
-    refreshDashboard(currentYear);
-
-});
-
-
 // ===============================
 // Initial Dashboard Load
 // ===============================
 
-refreshDashboard(currentYear);
+// Initial Dashboard Load
+loadPlacements();
+function populateCompanyFilter() {
+
+    const companyFilter = document.getElementById("companyFilter");
+
+    // Remove old options except "All Companies"
+    companyFilter.innerHTML = '<option>All Companies</option>';
+
+    const companies = [...new Set(
+        allPlacements
+            .map(p => p.companyName?.trim())
+            .filter(Boolean)
+    )].sort();
+
+    companies.forEach(company => {
+
+        const option = document.createElement("option");
+        option.value = company;
+        option.textContent = company;
+
+        companyFilter.appendChild(option);
+
+    });
+
+}
+
+document.getElementById("yearFilter").addEventListener("change", () => {
+    currentYear = document.getElementById("yearFilter").value;
+    refreshDashboard();
+});
+
+document.getElementById("companyFilter").addEventListener("change", () => {
+    refreshDashboard();
+});
+
+document.getElementById("branchFilter").addEventListener("change", () => {
+    refreshDashboard();
+});
+
+document.getElementById("subjectFilter")
+.addEventListener("change", refreshDashboard);
+
+document.getElementById("topicCompanyFilter")
+.addEventListener("change", refreshDashboard);

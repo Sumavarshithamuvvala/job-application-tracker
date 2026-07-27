@@ -29,5 +29,18 @@ async function loadDashboard() {
 document.getElementById("placementBtn").onclick = () => {
     window.location.href = "placements.html";
 };
-
 loadDashboard();
+
+document.querySelector(".logout-btn").addEventListener("click", () => {
+
+    const confirmLogout = confirm("Are you sure you want to log out?");
+
+    if (confirmLogout) {
+
+        localStorage.setItem("role", "admin");
+
+        window.location.href = "../auth.html";
+
+    }
+
+});

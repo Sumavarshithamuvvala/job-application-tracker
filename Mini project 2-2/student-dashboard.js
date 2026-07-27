@@ -1,6 +1,6 @@
-// ===============================
-// STUDENT DASHBOARD
-// ===============================
+// ============================================
+// FIREBASE IMPORTS
+// ============================================
 
 import { auth, db } from "./firebase.js";
 
@@ -11,17 +11,30 @@ import {
 
 import {
     doc,
-    getDoc
+    getDoc,
+    getDocs,
+    collection
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-// ===============================
+
+// ============================================
 // ELEMENTS
-// ===============================
+// ============================================
 
 const studentName = document.getElementById("studentName");
+const studentBranch = document.getElementById("studentBranch");
 const welcomeName = document.getElementById("welcomeName");
+
 const dashboardAvatar = document.getElementById("dashboardAvatar");
 const navAvatar = document.getElementById("navAvatar");
+
+const totalSeniors = document.getElementById("totalSeniors");
+const totalCompanies = document.getElementById("totalCompanies");
+const totalPlacements = document.getElementById("totalPlacements");
+const skillMatch = document.getElementById("skillMatch");
+
+const featuredProfiles = document.getElementById("featuredProfiles");
+const recentUpdates = document.getElementById("recentUpdates");
 
 const searchInput = document.getElementById("searchInput");
 
@@ -36,23 +49,35 @@ const dropdownLogout = document.getElementById("dropdownLogout");
 
 const dropdown = document.getElementById("profileDropdown");
 
-// ===============================
+
+// ============================================
+// GLOBAL DATA
+// ============================================
+
+let allPlacements = [];
+
+
+// ============================================
 // INITIALS
-// ===============================
+// ============================================
 
 function getInitials(name) {
 
+    if (!name) return "";
+
     return name
+        .trim()
         .split(" ")
-        .map(word => word.charAt(0))
+        .map(word => word[0])
         .join("")
         .toUpperCase();
 
 }
 
-// ===============================
+
+// ============================================
 // LOAD LOGGED IN STUDENT
-// ===============================
+// ============================================
 
 onAuthStateChanged(auth, async (user) => {
 
@@ -65,19 +90,21 @@ onAuthStateChanged(auth, async (user) => {
 
     try {
 
-        const docRef = doc(db, "students", user.uid);
+        const studentRef = doc(db, "students", user.uid);
 
-        const docSnap = await getDoc(docRef);
+        const studentSnap = await getDoc(studentRef);
 
-        if (docSnap.exists()) {
+        if (studentSnap.exists()) {
 
-            const data = docSnap.data();
+            const data = studentSnap.data();
 
-            studentName.textContent = data.fullName || "";
+            studentName.textContent = data.fullName || "Student";
 
-            welcomeName.textContent = data.fullName || "";
+            welcomeName.textContent = data.fullName || "Student";
 
-            const initials = getInitials(data.fullName || "");
+            studentBranch.textContent = data.branch || "";
+
+            const initials = getInitials(data.fullName);
 
             dashboardAvatar.textContent = initials;
 
@@ -85,49 +112,249 @@ onAuthStateChanged(auth, async (user) => {
 
         }
 
-    } catch (error) {
+        await loadDashboardStats();
 
-        console.log(error);
+    }
+
+    catch (error) {
+
+        console.error(error);
 
     }
 
 });
 
-// ===============================
-// SEARCH
-// ===============================
 
-searchInput.addEventListener("keyup", () => {
+// ============================================
+// LOAD DASHBOARD STATISTICS
+// ============================================
 
-    console.log("Searching:", searchInput.value);
+async function loadDashboardStats() {
 
-});
+    try {
 
-// ===============================
-// FILTER
-// ===============================
+        const snapshot = await getDocs(
+            collection(db, "placements")
+        );
 
-companyFilter.addEventListener("change", filterProfiles);
-roleFilter.addEventListener("change", filterProfiles);
-hiringFilter.addEventListener("change", filterProfiles);
+        const companies = new Set();
 
-function filterProfiles() {
+        allPlacements = [];
 
-    console.log(
+        snapshot.forEach(docSnap => {
 
-        companyFilter.value,
+            const data = docSnap.data();
 
-        roleFilter.value,
+            allPlacements.push({
 
-        hiringFilter.value
+                id: docSnap.id,
 
-    );
+                ...data
+
+            });
+
+            if (data.companyName) {
+
+                companies.add(data.companyName);
+
+            }
+
+        });
+
+        totalSeniors.textContent = allPlacements.length;
+
+        totalPlacements.textContent = allPlacements.length;
+
+        totalCompanies.textContent = companies.size;
+
+        // Will calculate later
+
+        skillMatch.textContent = "--";
+        loadFeaturedProfiles();
+loadActivityFeed();
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+
+    }
+
+}
+// ============================================
+// DISPLAY FEATURED SENIOR PROFILES
+// ============================================
+
+function displayFeaturedProfiles(list) {
+
+    featuredProfiles.innerHTML = "";
+
+    if (list.length === 0) {
+
+        featuredProfiles.innerHTML = `
+            <h3>No Senior Profiles Found</h3>
+        `;
+
+        return;
+
+    }
+
+    // Show only first 3 profiles
+    list.slice(0, 3).forEach(profile => {
+
+        const initials = getInitials(profile.studentName || "Student");
+
+        const card = document.createElement("div");
+
+        card.className = "profile-card";
+
+        card.innerHTML = `
+
+            <div class="profile-avatar">
+                ${initials}
+            </div>
+
+            <h3>${profile.studentName || ""}</h3>
+
+            <p>
+                <strong>Company:</strong>
+                ${profile.companyName || ""}
+            </p>
+
+            <p>
+                <strong>Role:</strong>
+                ${profile.roleOffered || ""}
+            </p>
+
+            <p>
+                <strong>Hiring:</strong>
+                ${profile.hiringType || ""}
+            </p>
+
+            <button class="viewProfileBtn">
+                View Profile
+            </button>
+
+        `;
+
+        card.querySelector(".viewProfileBtn").addEventListener("click", () => {
+
+            sessionStorage.setItem("placementId", profile.id);
+
+            window.location.href = "senior-details.html";
+
+        });
+
+        featuredProfiles.appendChild(card);
+
+    });
 
 }
 
-// ===============================
+
+// ============================================
+// LOAD FEATURED SENIORS
+// ============================================
+
+function loadFeaturedProfiles() {
+
+    displayFeaturedProfiles(allPlacements);
+
+}
+
+loadFeaturedProfiles();
+
+
+// ============================================
+// SEARCH + FILTER
+// ============================================
+
+function applyFilters() {
+
+    let filtered = [...allPlacements];
+
+    // Search
+
+    const searchValue = searchInput.value
+        .toLowerCase()
+        .trim();
+
+    if (searchValue !== "") {
+
+        filtered = filtered.filter(profile =>
+
+            profile.studentName?.toLowerCase().includes(searchValue)
+
+            ||
+
+            profile.companyName?.toLowerCase().includes(searchValue)
+
+            ||
+
+            profile.roleOffered?.toLowerCase().includes(searchValue)
+
+        );
+
+    }
+
+    // Company
+
+    if (companyFilter.value !== "All Companies") {
+
+        filtered = filtered.filter(profile =>
+
+            profile.companyName === companyFilter.value
+
+        );
+
+    }
+
+    // Role
+
+    if (roleFilter.value !== "All Roles") {
+
+        filtered = filtered.filter(profile =>
+
+            profile.roleOffered === roleFilter.value
+
+        );
+
+    }
+
+    // Hiring
+
+    if (hiringFilter.value !== "All Hiring") {
+
+        filtered = filtered.filter(profile =>
+
+            profile.hiringType === hiringFilter.value
+
+        );
+
+    }
+
+    displayFeaturedProfiles(filtered);
+
+}
+
+
+// ============================================
+// EVENTS
+// ============================================
+
+searchInput.addEventListener("keyup", applyFilters);
+
+companyFilter.addEventListener("change", applyFilters);
+
+roleFilter.addEventListener("change", applyFilters);
+
+hiringFilter.addEventListener("change", applyFilters);
+
+
+// ============================================
 // RESET FILTERS
-// ===============================
+// ============================================
 
 resetBtn.addEventListener("click", () => {
 
@@ -139,43 +366,65 @@ resetBtn.addEventListener("click", () => {
 
     hiringFilter.selectedIndex = 0;
 
-});
-
-// ===============================
-// VIEW PROFILE
-// ===============================
-
-const buttons = document.querySelectorAll(".profile-card button");
-
-buttons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        window.location.href = "senior-details.html";
-
-    });
+    displayFeaturedProfiles(allPlacements);
 
 });
+// ============================================
+// RECENT UPDATES
+// ============================================
 
-// ===============================
-// NAVBAR DROPDOWN
-// ===============================
+function loadRecentUpdates() {
 
-navAvatar.addEventListener("click", function () {
+    recentUpdates.innerHTML = "";
 
-    if (dropdown.style.display === "block") {
+    if (allPlacements.length === 0) {
 
-        dropdown.style.display = "none";
+        recentUpdates.innerHTML = `
+            <li>No recent updates available.</li>
+        `;
 
-    } else {
-
-        dropdown.style.display = "block";
+        return;
 
     }
 
+    allPlacements
+        .slice(0, 5)
+        .forEach(profile => {
+
+            const li = document.createElement("li");
+
+            li.innerHTML = `
+                🎉
+                <strong>${profile.companyName || "Company"}</strong>
+                added a new
+                <strong>${profile.roleOffered || "Role"}</strong>
+                profile by
+                <strong>${profile.studentName || "Student"}</strong>.
+            `;
+
+            recentUpdates.appendChild(li);
+
+        });
+
+}
+
+
+// ============================================
+// NAVBAR DROPDOWN
+// ============================================
+
+navAvatar.addEventListener("click", (e) => {
+
+    e.stopPropagation();
+
+    dropdown.style.display =
+        dropdown.style.display === "block"
+            ? "none"
+            : "block";
+
 });
 
-window.addEventListener("click", function (e) {
+window.addEventListener("click", (e) => {
 
     if (!e.target.closest(".profile-menu")) {
 
@@ -185,15 +434,18 @@ window.addEventListener("click", function (e) {
 
 });
 
-// ===============================
-// LOGOUT FUNCTION
-// ===============================
+
+// ============================================
+// LOGOUT
+// ============================================
 
 async function logoutUser(e) {
 
     e.preventDefault();
 
-    const confirmLogout = confirm("Are you sure you want to logout?");
+    const confirmLogout = confirm(
+        "Are you sure you want to logout?"
+    );
 
     if (!confirmLogout) return;
 
@@ -203,7 +455,9 @@ async function logoutUser(e) {
 
         window.location.href = "auth.html";
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         alert(error.message);
 
@@ -211,6 +465,77 @@ async function logoutUser(e) {
 
 }
 
-sidebarLogout.addEventListener("click", logoutUser);
+sidebarLogout.addEventListener(
+    "click",
+    logoutUser
+);
 
-dropdownLogout.addEventListener("click", logoutUser);
+dropdownLogout.addEventListener(
+    "click",
+    logoutUser
+);
+
+
+// ============================================
+// INITIALIZE DASHBOARD
+// ============================================
+
+window.addEventListener("load", () => {
+
+    dropdown.style.display = "none";
+
+});
+// ============================================
+// ACTIVITY FEED
+// ============================================
+
+// ============================================
+// ACTIVITY FEED
+// ============================================
+
+function loadActivityFeed() {
+
+    const activityFeed = document.getElementById("activityFeed");
+
+    activityFeed.innerHTML = "";
+
+    if (allPlacements.length === 0) {
+
+        activityFeed.innerHTML =
+            "<li>No recent activities available.</li>";
+
+        return;
+
+    }
+
+    // Sort by createdAt (latest first)
+    allPlacements.sort((a, b) => {
+
+        const timeA = a.createdAt?.seconds || 0;
+        const timeB = b.createdAt?.seconds || 0;
+
+        return timeB - timeA;
+
+    });
+
+    // Show only latest 5 activities
+    const latestActivities = allPlacements.slice(0, 5);
+
+    latestActivities.forEach(profile => {
+
+        const li = document.createElement("li");
+
+        li.innerHTML = `
+            🎉
+            <strong>${profile.studentName}</strong>
+            shared placement experience at
+            <strong>${profile.companyName}</strong>
+            as
+            <strong>${profile.roleOffered}</strong>.
+        `;
+
+        activityFeed.appendChild(li);
+
+    });
+
+}
