@@ -50,11 +50,6 @@
                 Analytics
             </a>
 
-            <a href="settings.html">
-                <i class="fa-solid fa-gear"></i>
-                Settings
-            </a>
-
 
     </div>
 
@@ -76,8 +71,7 @@
 
                 <i class="fa-solid fa-building"></i>
 
-                <h2>18</h2>
-
+               <h2 id="totalCompanies">0</h2>
                 <p>Total Companies</p>
 
             </div>
@@ -86,7 +80,7 @@
 
                 <i class="fa-solid fa-user-graduate"></i>
 
-                <h2>145</h2>
+               <h2 id="studentsPlaced">0</h2>
 
                 <p>Students Placed</p>
 
@@ -96,7 +90,7 @@
 
                 <i class="fa-solid fa-indian-rupee-sign"></i>
 
-                <h2>9.2 LPA</h2>
+                <h2 id="averagePackage">0</h2>
 
                 <p>Average Package</p>
 
@@ -106,7 +100,7 @@
 
                 <i class="fa-solid fa-trophy"></i>
 
-                <h2>32 LPA</h2>
+                <h2 id="highestPackage">0</h2>
 
                 <p>Highest Package</p>
 
@@ -114,182 +108,52 @@
 
         </div>
 
-        <!-- Charts Row 1 -->
+       <!-- Charts -->
 
-        <div class="chartRow">
+<div class="chartRow">
 
-            <div class="chartCard">
+    <div class="chartCard">
 
-                <h2>Placement by Company</h2>
+        <h2>Placement by Company</h2>
 
-                <canvas id="companyChart"></canvas>
+        <canvas id="companyChart"></canvas>
 
-            </div>
+    </div>
 
-            <div class="chartCard">
+    <div class="chartCard">
 
-                <h2>Role Distribution</h2>
+        <h2>Branch-wise Placements</h2>
 
-                <canvas id="roleChart"></canvas>
+        <canvas id="branchChart"></canvas>
 
-            </div>
+    </div>
 
-        </div>
+</div>
+      <!-- Summary -->
 
-        <!-- Charts Row 2 -->
+<div class="summary">
 
-        <div class="chartRow">
+    <h2>Placement Insights</h2>
 
-            <div class="chartCard">
+    <div class="summaryGrid">
 
-                <h2>Most Required Skills</h2>
+        <div>
 
-                <canvas id="skillChart"></canvas>
+            <h3>🏆 Top Hiring Company</h3>
 
-            </div>
-
-            <div class="chartCard">
-
-                <h2>Branch-wise Placements</h2>
-
-                <canvas id="branchChart"></canvas>
-
-            </div>
-
-        </div>
-
-        <!-- Summary -->
-
-        <div class="summary">
-
-            <h2>Placement Insights</h2>
-
-            <div class="summaryGrid">
-
-                <div>
-
-                    <h3>🏆 Top Hiring Company</h3>
-
-                    <p>Amazon</p>
-
-                </div>
-
-                <div>
-
-                    <h3>💼 Most Popular Role</h3>
-
-                    <p>Software Engineer</p>
-
-                </div>
-
-                <div>
-
-                    <h3>⭐ Most Required Skill</h3>
-
-                    <p>SQL</p>
-
-                </div>
-
-                <div>
-
-                    <h3>📈 Placement Rate</h3>
-
-                    <p>92%</p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- Recent Placements -->
-
-        <div class="tableCard">
-
-            <h2>Recent Placements</h2>
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>Student</th>
-
-                        <th>Company</th>
-
-                        <th>Role</th>
-
-                        <th>Package</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    <tr>
-
-                        <td>Rahul</td>
-
-                        <td>Amazon</td>
-
-                        <td>Software Engineer</td>
-
-                        <td>24 LPA</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Anjali</td>
-
-                        <td>Deloitte</td>
-
-                        <td>Data Analyst</td>
-
-                        <td>8 LPA</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Keerthi</td>
-
-                        <td>Cisco</td>
-
-                        <td>Intern</td>
-
-                        <td>50K/Month</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Sneha</td>
-
-                        <td>Infosys</td>
-
-                        <td>System Engineer</td>
-
-                        <td>6.5 LPA</td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
+            <p id="topHiringCompany">-</p>
 
         </div>
 
     </div>
 
+</div>
+
     <!-- Chart.js -->
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script src="analytics.js"></script>
-
+<script type="module" src="analytics.js"></script>
 </body>
 
 </html>
