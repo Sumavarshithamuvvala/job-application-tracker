@@ -1,10 +1,11 @@
-import { db } from "../firebase.js";
 
+import { db } from "../firebase.js";
 import {
     collection,
     addDoc,
     getDocs,
     deleteDoc,
+    updateDoc,
     doc,
     serverTimestamp,
     query,
@@ -121,6 +122,11 @@ const hiddenSkills =
 document.getElementById("technicalSkills");
 
 let selectedSkills = [];
+
+//let editingPlacementId = null;
+let editingPlacementId = null;
+let editingOriginalData = null;
+
 
 function updateHiddenSkills(){
 
@@ -262,144 +268,189 @@ placementForm.addEventListener("submit", async (e) => {
 
         const placementData = {
 
-    // =========================
-    // Basic Placement Details
-    // =========================
+            // =========================
+            // Basic Placement Details
+            // =========================
 
-    studentName: document.getElementById("studentName").value,
-    graduationYear: document.getElementById("graduationYear").value,
-    branch: document.getElementById("branch").value,
-    companyName: document.getElementById("companyName").value,
-    companyType: document.getElementById("companyType").value,
-    roleOffered: document.getElementById("roleOffered").value,
-    jobType: document.getElementById("jobType").value,
-    workMode: document.getElementById("workMode").value,
-    location: document.getElementById("location").value,
-    package: document.getElementById("package").value,
-    placementDate: document.getElementById("placementDate").value,
+            studentName: document.getElementById("studentName").value,
+            graduationYear: document.getElementById("graduationYear").value,
+            branch: document.getElementById("branch").value,
+            companyName: document.getElementById("companyName").value,
+            companyType: document.getElementById("companyType").value,
+            roleOffered: document.getElementById("roleOffered").value,
+            jobType: document.getElementById("jobType").value,
+            workMode: document.getElementById("workMode").value,
+            location: document.getElementById("location").value,
+            package: document.getElementById("package").value,
+            placementDate: document.getElementById("placementDate").value,
 
-    // =========================
-    // Academic Profile
-    // =========================
+            // =========================
+            // Academic Profile
+            // =========================
 
-    cgpa: document.getElementById("cgpa").value,
-    cgpaCutoff: document.getElementById("cgpaCutoff").value,
-    activeBacklogs: document.getElementById("activeBacklogs").value,
+            cgpa: document.getElementById("cgpa").value,
+            cgpaCutoff: document.getElementById("cgpaCutoff").value,
+            activeBacklogs: document.getElementById("activeBacklogs").value,
 
-    // =========================
-// Eligibility Criteria
-// =========================
+            // =========================
+            // Eligibility Criteria
+            // =========================
 
-minimumCGPA: document.getElementById("minimumCGPA").value,
-eligibleBranches: document.getElementById("eligibleBranches").value,
-onlineAssessment: document.getElementById("onlineAssessment").value,
-oaMandatory: document.getElementById("oaMandatory").value,
-interviewRounds: document.getElementById("interviewRounds").value,
-additionalCriteria: document.getElementById("additionalCriteria").value,
-eligibleInitially: document.getElementById("eligibleInitially").value,
-eligibilityImprovement: document.getElementById("eligibilityImprovement").value,
+            minimumCGPA: document.getElementById("minimumCGPA").value,
+            eligibleBranches: document.getElementById("eligibleBranches").value,
+            onlineAssessment: document.getElementById("onlineAssessment").value,
+            oaMandatory: document.getElementById("oaMandatory").value,
+            interviewRounds: document.getElementById("interviewRounds").value,
+            additionalCriteria: document.getElementById("additionalCriteria").value,
+            eligibleInitially: document.getElementById("eligibleInitially").value,
+            eligibilityImprovement: document.getElementById("eligibilityImprovement").value,
 
-// =========================
-// Skills Worked With
-// =========================
+            // =========================
+            // Skills
+            // =========================
 
-technicalSkills: selectedSkills,
+            technicalSkills: selectedSkills,
 
-// =========================
-// Coding Preparation
-// =========================
+            // =========================
+            // Coding Preparation
+            // =========================
 
-codingPlatform: document.getElementById("codingPlatform").value,
-problemsSolved: document.getElementById("problemsSolved").value,
-practiceFrequency: document.getElementById("practiceFrequency").value,
+            codingPlatform: document.getElementById("codingPlatform").value,
+            problemsSolved: document.getElementById("problemsSolved").value,
+            practiceFrequency: document.getElementById("practiceFrequency").value,
 
-// =========================
-// Projects
-// =========================
+            // =========================
+            // Projects
+            // =========================
 
-projectCount: document.getElementById("projectCount").value,
-projectName: document.getElementById("projectName").value,
-projectDomain: document.getElementById("projectDomain").value,
-projectTechnologies: document.getElementById("projectTechnologies").value,
-projectDescription: document.getElementById("projectDescription").value,
-projectDiscussed: document.getElementById("projectDiscussed").value,
-githubLink: document.getElementById("githubLink").value,
+            projectCount: document.getElementById("projectCount").value,
+            projectName: document.getElementById("projectName").value,
+            projectDomain: document.getElementById("projectDomain").value,
+            projectTechnologies: document.getElementById("projectTechnologies").value,
+            projectDescription: document.getElementById("projectDescription").value,
+            projectDiscussed: document.getElementById("projectDiscussed").value,
+            githubLink: document.getElementById("githubLink").value,
 
-// =========================
-// Interview Process & Experience
-// =========================
+            // =========================
+            // Interview
+            // =========================
 
-interviewDifficulty: document.getElementById("interviewDifficulty").value,
-codingDifficulty: document.getElementById("codingDifficulty").value,
-interviewExperience: document.getElementById("interviewExperience").value,
-preparationStrategy: document.getElementById("preparationStrategy").value,
-mistakesMade: document.getElementById("mistakesMade").value,
+            interviewDifficulty: document.getElementById("interviewDifficulty").value,
+            codingDifficulty: document.getElementById("codingDifficulty").value,
+            interviewExperience: document.getElementById("interviewExperience").value,
+            preparationStrategy: document.getElementById("preparationStrategy").value,
+            mistakesMade: document.getElementById("mistakesMade").value,
 
-roundsFaced: getCheckedValues("rounds"),
+            roundsFaced: getCheckedValues("rounds"),
 
-// =========================
-// Preparation Journey
-// =========================
+            // =========================
+            // Preparation Journey
+            // =========================
 
-preparationDuration: document.getElementById("preparationDuration").value,
-resourcesUsed: getCheckedValues("resource"),
+            preparationDuration: document.getElementById("preparationDuration").value,
+            resourcesUsed: getCheckedValues("resource"),
 
-// =========================
-// Advice
-// =========================
+            // =========================
+            // Advice
+            // =========================
 
-wishStartedEarlier: document.getElementById("wishStartedEarlier").value,
-roadmap: document.getElementById("roadmap").value,
+            wishStartedEarlier: document.getElementById("wishStartedEarlier").value,
+            roadmap: document.getElementById("roadmap").value,
 
-// =========================
-// Frequently Asked Topics
-// =========================
+            // =========================
+            // Frequently Asked Topics
+            // =========================
 
-programmingTopics: getCheckedTopics("Programming Languages"),
+            programmingTopics: getCheckedTopics("Programming Languages"),
+            dsaTopics: getCheckedTopics("DSA"),
+            sqlTopics: getCheckedTopics("SQL"),
+            dbmsTopics: getCheckedTopics("DBMS"),
+            osTopics: getCheckedTopics("Operating Systems"),
+            cnTopics: getCheckedTopics("Computer Networks"),
+            hrTopics: getCheckedTopics("HR Interview"),
 
-dsaTopics: getCheckedTopics("DSA"),
+            // =========================
+            // Contact Details
+            // =========================
 
-sqlTopics: getCheckedTopics("SQL"),
+            linkedin: document.getElementById("linkedin").value,
+            email: document.getElementById("email").value
 
-dbmsTopics: getCheckedTopics("DBMS"),
-
-osTopics: getCheckedTopics("Operating Systems"),
-
-cnTopics: getCheckedTopics("Computer Networks"),
-
-hrTopics: getCheckedTopics("HR Interview"),
-
-createdAt: serverTimestamp(),
-
-// =========================
-// Contact Details
-// =========================
-
-linkedin: document.getElementById("linkedin").value,
-
-email: document.getElementById("email").value,
-
-//phone: document.getElementById("phone").value
+        };
 
 
-};
-        console.log(placementData);
+        console.log("Saving placement:", placementData);
 
-        await addDoc(placementCollection, placementData);
 
-        alert("Placement Saved Successfully!");
+        // =========================
+        // EDIT EXISTING RECORD
+        // =========================
+
+       if (editingPlacementId) {
+
+    const updatedData = {
+        ...editingOriginalData,
+        ...placementData
+    };
+
+    // Keep original creation timestamp
+    if (editingOriginalData?.createdAt) {
+        updatedData.createdAt = editingOriginalData.createdAt;
+    }
+
+    await updateDoc(
+        doc(db, "placements", editingPlacementId),
+        updatedData
+    );
+
+    alert("Placement Updated Successfully!");
+
+    editingPlacementId = null;
+    editingOriginalData = null;
+}
+
+        // =========================
+        // ADD NEW RECORD
+        // =========================
+
+        else {
+
+            placementData.createdAt = serverTimestamp();
+
+            await addDoc(
+                placementCollection,
+                placementData
+            );
+
+            alert("Placement Saved Successfully!");
+
+        }
+
+
+       placementForm.reset();
+
+selectedSkills = [];
+
+renderSelectedSkills();
+
+editingPlacementId = null;
+editingOriginalData = null;
+
+modal.style.display = "none";
+
+await loadPlacements();
 
     }
-    catch(error){
 
-        console.error(error);
+    catch (error) {
+
+        console.error("Save Error:", error);
 
         alert(error.message);
 
     }
 
 });
-
 // ======================================
 // Load Placement Records
 // ======================================
@@ -415,7 +466,13 @@ async function loadPlacements() {
 
     const snapshot = await getDocs(q);
 
-    console.log(snapshot.docs.length);
+  //  console.log(snapshot.docs.length);
+    console.log("TOTAL DOCUMENTS:", snapshot.size);
+
+snapshot.forEach((doc) => {
+    console.log("ID:", doc.id);
+    console.log("DATA:", doc.data());
+});
 
     snapshot.forEach((doc) => {
 
@@ -458,5 +515,342 @@ tableBody.addEventListener("click", async (e) => {
     alert("Record deleted successfully!");
 
     loadPlacements();
+
+});
+
+// ======================================
+// Edit Placement Record
+// ======================================
+
+
+tableBody.addEventListener("click", async (e) => {
+
+    if (!e.target.classList.contains("editBtn")) return;
+
+    const id = e.target.dataset.id;
+
+    editingPlacementId = id;
+
+    try {
+
+        const snapshot = await getDocs(placementCollection);
+
+        const selectedDoc =
+            snapshot.docs.find(item => item.id === id);
+
+        if (!selectedDoc) {
+
+            alert("Placement record not found.");
+
+            return;
+
+        }
+
+        const data = selectedDoc.data();
+
+console.log("Editing record:", data);
+
+editingOriginalData = { ...data };
+
+        // =========================
+        // Basic Details
+        // =========================
+
+        document.getElementById("studentName").value =
+            data.studentName || "";
+
+        document.getElementById("graduationYear").value =
+            data.graduationYear || "";
+
+        document.getElementById("branch").value =
+            data.branch || "";
+
+        document.getElementById("companyName").value =
+            data.companyName || "";
+
+        document.getElementById("companyType").value =
+            data.companyType || "";
+
+        document.getElementById("roleOffered").value =
+            data.roleOffered || "";
+
+        document.getElementById("jobType").value =
+            data.jobType || "";
+
+        document.getElementById("workMode").value =
+            data.workMode || "";
+
+        document.getElementById("location").value =
+            data.location || "";
+
+        document.getElementById("package").value =
+            data.package || "";
+
+        document.getElementById("placementDate").value =
+            data.placementDate || "";
+
+
+        // =========================
+        // Academic Profile
+        // =========================
+
+        document.getElementById("cgpa").value =
+            data.cgpa || "";
+
+        document.getElementById("cgpaCutoff").value =
+            data.cgpaCutoff || "";
+
+        document.getElementById("activeBacklogs").value =
+            data.activeBacklogs || "";
+
+
+        // =========================
+        // Eligibility
+        // =========================
+
+        document.getElementById("minimumCGPA").value =
+            data.minimumCGPA || "";
+
+        document.getElementById("eligibleBranches").value =
+            data.eligibleBranches || "";
+
+        document.getElementById("onlineAssessment").value =
+            data.onlineAssessment || "";
+
+        document.getElementById("oaMandatory").value =
+            data.oaMandatory || "";
+
+        document.getElementById("interviewRounds").value =
+            data.interviewRounds || "";
+
+        document.getElementById("additionalCriteria").value =
+            data.additionalCriteria || "";
+
+        document.getElementById("eligibleInitially").value =
+            data.eligibleInitially || "";
+
+        document.getElementById("eligibilityImprovement").value =
+            data.eligibilityImprovement || "";
+
+
+        // =========================
+        // Technical Skills
+        // =========================
+
+        selectedSkills =
+            Array.isArray(data.technicalSkills)
+                ? [...data.technicalSkills]
+                : [];
+
+        renderSelectedSkills();
+
+
+        // =========================
+        // Coding Preparation
+        // =========================
+
+        document.getElementById("codingPlatform").value =
+            data.codingPlatform || "";
+
+        document.getElementById("problemsSolved").value =
+            data.problemsSolved || "";
+
+        document.getElementById("practiceFrequency").value =
+            data.practiceFrequency || "";
+
+
+        // =========================
+        // Projects
+        // =========================
+
+        document.getElementById("projectCount").value =
+            data.projectCount || "";
+
+        document.getElementById("projectName").value =
+            data.projectName || "";
+
+        document.getElementById("projectDomain").value =
+            data.projectDomain || "";
+
+        document.getElementById("projectTechnologies").value =
+            data.projectTechnologies || "";
+
+        document.getElementById("projectDescription").value =
+            data.projectDescription || "";
+
+        document.getElementById("projectDiscussed").value =
+            data.projectDiscussed || "";
+
+        document.getElementById("githubLink").value =
+            data.githubLink || "";
+
+
+        // =========================
+        // Interview
+        // =========================
+
+        document.getElementById("interviewDifficulty").value =
+            data.interviewDifficulty || "";
+
+        document.getElementById("codingDifficulty").value =
+            data.codingDifficulty || "";
+
+        document.getElementById("interviewExperience").value =
+            data.interviewExperience || "";
+
+        document.getElementById("preparationStrategy").value =
+            data.preparationStrategy || "";
+
+        document.getElementById("mistakesMade").value =
+            data.mistakesMade || "";
+
+
+        // =========================
+        // Preparation Journey
+        // =========================
+
+        document.getElementById("preparationDuration").value =
+            data.preparationDuration || "";
+
+
+        // =========================
+        // Advice
+        // =========================
+
+        document.getElementById("wishStartedEarlier").value =
+            data.wishStartedEarlier || "";
+
+        document.getElementById("roadmap").value =
+            data.roadmap || "";
+
+
+        // =========================
+        // Contact Details
+        // =========================
+
+        document.getElementById("linkedin").value =
+            data.linkedin || "";
+
+        document.getElementById("email").value =
+            data.email || "";
+
+
+        // =========================
+        // Restore Checkboxes
+        // =========================
+
+        function restoreCheckedValues(className, values) {
+
+            const selected =
+                Array.isArray(values) ? values : [];
+
+            document
+                .querySelectorAll("." + className)
+                .forEach(checkbox => {
+
+                    checkbox.checked =
+                        selected.includes(checkbox.value);
+
+                });
+
+        }
+
+
+        restoreCheckedValues(
+            "rounds",
+            data.roundsFaced
+        );
+
+
+        restoreCheckedValues(
+            "resource",
+            data.resourcesUsed
+        );
+
+
+        // =========================
+        // Restore Topic Checkboxes
+        // =========================
+
+        function restoreTopicValues(cardTitle, values) {
+
+            const selected =
+                Array.isArray(values) ? values : [];
+
+            const card =
+                [...document.querySelectorAll(".topic-card")]
+                    .find(c =>
+                        c.querySelector("h4")?.innerText === cardTitle
+                    );
+
+            if (!card) return;
+
+            card
+                .querySelectorAll("input[type='checkbox']")
+                .forEach(checkbox => {
+
+                    checkbox.checked =
+                        selected.includes(checkbox.value);
+
+                });
+
+        }
+
+
+        restoreTopicValues(
+            "Programming Languages",
+            data.programmingTopics
+        );
+
+        restoreTopicValues(
+            "DSA",
+            data.dsaTopics
+        );
+
+        restoreTopicValues(
+            "SQL",
+            data.sqlTopics
+        );
+
+        restoreTopicValues(
+            "DBMS",
+            data.dbmsTopics
+        );
+
+        restoreTopicValues(
+            "Operating Systems",
+            data.osTopics
+        );
+
+        restoreTopicValues(
+            "Computer Networks",
+            data.cnTopics
+        );
+
+        restoreTopicValues(
+            "HR Interview",
+            data.hrTopics
+        );
+
+
+        // =========================
+        // Open Modal
+        // =========================
+
+        modal.style.display = "flex";
+
+        alert(
+            "Edit mode opened. Modify the details and save."
+        );
+
+    }
+
+    catch (error) {
+
+        console.error("Edit Error:", error);
+
+        alert(error.message);
+
+    }
 
 });
