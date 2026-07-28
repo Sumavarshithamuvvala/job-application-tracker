@@ -176,7 +176,7 @@
 
             <div class="chart-card">
 
-                <h3>Hiring Process Distribution</h3>
+                <h3>Placement Type Distribution</h3>
 
                 <canvas id="hiringProcessChart"></canvas>
 
@@ -196,33 +196,23 @@
 
                         <select id="subjectFilter">
 
-                            <option>Java</option>
+    <option value="programmingTopics">Programming</option>
 
-                            <option>Python</option>
+    <option value="dsaTopics">DSA</option>
 
-                            <option>SQL</option>
+    <option value="sqlTopics">SQL</option>
 
-                            <option>DSA</option>
+    <option value="dbmsTopics">DBMS</option>
 
-                            <option>JavaScript</option>
+    <option value="osTopics">Operating Systems</option>
 
-                        </select>
+    <option value="cnTopics">Computer Networks</option>
 
-                        <select id="topicCompanyFilter">
+    <option value="hrTopics">HR</option>
 
-                            <option>All Companies</option>
+</select>
 
-                            <option>TCS</option>
-
-                            <option>Infosys</option>
-
-                            <option>Accenture</option>
-
-                            <option>Amazon</option>
-
-                            <option>Google</option>
-
-                        </select>
+                        
 
                     </div>
 
@@ -233,25 +223,12 @@
             </div>
                         <!-- Subject-wise Skill Analytics -->
 
-            <div class="chart-card">
-
-                <h3>Subject-wise Skill Analytics</h3>
-
-                <canvas id="skillChart"></canvas>
-
-            </div>
+            
 
 
 
             <!-- Company-wise Placement Analytics -->
 
-            <div class="chart-card">
-
-                <h3>Company-wise Placement Analytics</h3>
-
-                <canvas id="placementCompanyChart"></canvas>
-
-            </div>
 
 
 
@@ -281,13 +258,6 @@
 
             <!-- Company Eligibility Analytics -->
 
-            <div class="chart-card">
-
-                <h3>Company Eligibility Analytics</h3>
-
-                <canvas id="eligibilityChart"></canvas>
-
-            </div>
 
         </section>
 
@@ -298,16 +268,16 @@
     <!-- ==========================
          Chart.js Library
     =========================== -->
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <script type="module" src="analytics.js"></script>
 
 
     <!-- ==========================
          Analytics JavaScript
     =========================== -->
 
-    <script src="analytics.js"></script>
+   
 
 </body>
 
