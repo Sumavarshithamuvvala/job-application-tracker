@@ -29,7 +29,9 @@ body{
 
 .analytics-container{
 
-    margin-left:260px;
+    max-width:1400px;
+
+    margin:0 auto;
 
     padding:35px;
 
