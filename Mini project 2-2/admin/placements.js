@@ -8,12 +8,169 @@ import {
     doc,
     serverTimestamp,
     query,
-    orderBy
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    orderBy,
+    getDoc,
+    setDoc,
+    updateDoc,
+    arrayUnion
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 console.log("placements.js loaded");
 
 const placementCollection = collection(db, "placements");
+// ===================================
+// CREATE MASTER TOPICS (FIRST TIME)
+// ===================================
+
+async function initializeMasterTopics() {
+
+    const docRef = doc(db, "interviewTopics", "masterTopics");
+
+    const snap = await getDoc(docRef);
+
+    if (snap.exists()) return;
+
+    await setDoc(docRef, {
+
+        Programming: [
+            "Java",
+            "Python",
+            "C",
+            "C++",
+            "JavaScript"
+        ],
+
+        DSA: [
+            "Arrays",
+            "Strings",
+            "Linked List",
+            "Stack",
+            "Queue",
+            "Trees",
+            "Graphs",
+            "DP",
+            "Sliding Window",
+            "Binary Search",
+            "Recursion",
+            "HashMap"
+        ],
+
+        SQL: [
+            "Joins",
+            "GROUP BY",
+            "HAVING",
+            "Window Functions",
+            "CTE",
+            "Indexing"
+        ],
+
+        DBMS: [
+            "ACID",
+            "Transactions",
+            "Keys",
+            "Normalization"
+        ],
+
+        OS: [
+            "Deadlock",
+            "Scheduling",
+            "Process vs Thread",
+            "Memory Management"
+        ],
+
+        CN: [
+            "TCP/IP",
+            "OSI Model",
+            "HTTP",
+            "DNS"
+        ],
+
+       HR: [
+    "Tell Me About Yourself",
+    "Strengths",
+    "Weaknesses",
+    "Why Our Company?",
+    "Conflict Handling"
+],
+
+Resources: [
+    "Striver",
+    "Love Babbar",
+    "Apna College",
+    "LeetCode",
+    "GeeksforGeeks",
+    "NPTEL",
+    "Coursera",
+    "Udemy",
+    "YouTube",
+    "ChatGPT"
+]
+
+    });
+
+    console.log("Master Topics Created");
+
+   
+}
+async function loadTopics() {
+
+    const docRef = doc(db, "interviewTopics", "masterTopics");
+    const snap = await getDoc(docRef);
+
+    if (!snap.exists()) return;
+
+    const data = snap.data();
+    const mapping = {
+
+    Programming: "Programming Languages",
+    DSA: "DSA",
+    SQL: "SQL",
+    DBMS: "DBMS",
+    OS: "Operating Systems",
+    CN: "Computer Networks",
+    HR: "HR Interview"
+
+};
+for (const firestoreField in mapping) {
+
+    const title = mapping[firestoreField];
+
+    const card = [...document.querySelectorAll(".topic-card")]
+        .find(c => c.querySelector("h4").innerText === title);
+
+    if (!card) continue;
+
+    const grid = card.querySelector(".checkGrid");
+
+    const otherLabel = grid.querySelector("label:last-child");
+
+    grid.innerHTML = "";
+
+    data[firestoreField].forEach(topic => {
+
+        const label = document.createElement("label");
+
+        label.innerHTML = `
+            <input type="checkbox" value="${topic}">
+            ${topic}
+        `;
+
+        grid.appendChild(label);
+
+    });
+
+    grid.appendChild(otherLabel);
+
+}
+
+    console.log(data);
+
+}
+
+
+initializeMasterTopics();
+//loadResources();
 // =========================
 // ELEMENTS
 // =========================
@@ -253,6 +410,139 @@ function getCheckedTopics(cardTitle) {
         .map(cb => cb.value);
 
 }
+// ===================================
+// SAVE OTHER TOPICS TO MASTER LIST
+// ===================================
+
+// ===================================
+// SHOW / HIDE OTHER INPUT
+// ===================================
+// ===================================
+// SHOW / HIDE OTHER RESOURCE INPUT
+// ===================================
+
+document.addEventListener("change", function (e) {
+
+    if (!e.target.classList.contains("resourceOtherCheckbox")) return;
+
+    const otherInput = e.target.closest(".checkGrid").nextElementSibling;
+
+    if (!otherInput) return;
+
+    otherInput.style.display = e.target.checked ? "block" : "none";
+
+    if (!e.target.checked) {
+        otherInput.querySelector("input").value = "";
+    }
+
+});
+document.querySelectorAll(".otherCheckbox").forEach(checkbox => {
+
+    checkbox.addEventListener("change", function () {
+
+        const topicCard = this.closest(".topic-card");
+
+        if (!topicCard) return;
+
+        const otherInput = topicCard.querySelector(".otherInput");
+
+        if (!otherInput) return;
+
+        otherInput.style.display = this.checked ? "block" : "none";
+
+        if (!this.checked) {
+            otherInput.querySelector("input").value = "";
+        }
+
+    });
+
+});
+async function saveOtherTopics() {
+
+    const masterRef = doc(db, "interviewTopics", "masterTopics");
+
+    const cards = document.querySelectorAll(".topic-card");
+
+    for (const card of cards) {
+
+        const category = card.querySelector("h4").innerText;
+
+        const otherCheckbox = card.querySelector(".otherCheckbox");
+
+        const otherInput = card.querySelector(".otherInput input");
+
+        if (
+            otherCheckbox &&
+            otherCheckbox.checked &&
+            otherInput &&
+            otherInput.value.trim() !== ""
+        ) {
+
+            let firestoreField = "";
+
+            switch (category) {
+
+                case "Programming Languages":
+                    firestoreField = "Programming";
+                    break;
+
+                case "DSA":
+                    firestoreField = "DSA";
+                    break;
+
+                case "SQL":
+                    firestoreField = "SQL";
+                    break;
+
+                case "DBMS":
+                    firestoreField = "DBMS";
+                    break;
+
+                case "Operating Systems":
+                    firestoreField = "OS";
+                    break;
+
+                case "Computer Networks":
+                    firestoreField = "CN";
+                    break;
+
+                case "HR Interview":
+                    firestoreField = "HR";
+                    break;
+
+            }
+
+            if (firestoreField !== "") {
+
+                await updateDoc(masterRef, {
+                    [firestoreField]: arrayUnion(otherInput.value.trim())
+                });
+
+            }
+
+        }
+
+    }
+    // Save Other Resource
+
+const resourceOther = document.querySelector(".resourceOtherCheckbox");
+
+const resourceInput = document.querySelector(".otherInput input");
+
+if (
+    resourceOther &&
+    resourceOther.checked &&
+    resourceInput &&
+    resourceInput.value.trim() !== ""
+) {
+
+    await updateDoc(masterRef, {
+        Resources: arrayUnion(resourceInput.value.trim())
+    });
+
+}
+
+}
 
 placementForm.addEventListener("submit", async (e) => {
 
@@ -342,7 +632,13 @@ roundsFaced: getCheckedValues("rounds"),
 // =========================
 
 preparationDuration: document.getElementById("preparationDuration").value,
-resourcesUsed: getCheckedValues("resource"),
+resourcesUsed: [
+    ...getCheckedValues("resource"),
+    ...(document.querySelector(".resourceOtherCheckbox")?.checked &&
+       document.querySelector(".otherInput input")?.value.trim()
+        ? [document.querySelector(".otherInput input").value.trim()]
+        : [])
+],
 
 // =========================
 // Advice
@@ -384,6 +680,7 @@ email: document.getElementById("email").value,
 
 };
         console.log(placementData);
+        await saveOtherTopics();
 
         await addDoc(placementCollection, placementData);
 

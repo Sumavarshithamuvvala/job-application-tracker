@@ -1,165 +1,235 @@
 // ======================================
 // MY PROFILE
-// PART 1
 // ======================================
 
-// ---------- Form Sections ----------
 import { auth, db } from "./firebase.js";
 
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { onAuthStateChanged }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 import {
     doc,
     getDoc,
     setDoc
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-const editProfile = document.getElementById("editProfile");
-const viewProfile = document.getElementById("viewProfile");
-
-// ---------- Buttons ----------
-const saveBtn = document.getElementById("saveProfile");
-const editBtn = document.getElementById("editProfileBtn");
-const uploadBtn = document.querySelector(".upload-btn");
-
-// ---------- Input Fields ----------
-const fullName = document.getElementById("fullName");
-const email = document.getElementById("email");
-const phone = document.getElementById("phone");
-const roll = document.getElementById("roll");
-const college = document.getElementById("college");
-const branch = document.getElementById("branch");
-const year = document.getElementById("year");
-const cgpa = document.getElementById("cgpa");
-const semester = document.getElementById("semester");
-const graduation = document.getElementById("graduation");
-const careerGoal = document.getElementById("careerGoal");
-const dreamCompanies = document.getElementById("dreamCompanies");
-
-// ---------- Skills ----------
-const skillButtons = document.querySelectorAll(".skill");
-const selectedContainer = document.getElementById("selectedSkills");
-const customSkill = document.getElementById("customSkill");
-const addSkillBtn = document.getElementById("addSkill");
-
-// ---------- View Profile ----------
-const viewName = document.getElementById("viewName");
-const viewEmail = document.getElementById("viewEmail");
-const viewPhone = document.getElementById("viewPhone");
-const viewRoll = document.getElementById("viewRoll");
-const viewCollege = document.getElementById("viewCollege");
-const viewBranch = document.getElementById("viewBranch");
-const viewYear = document.getElementById("viewYear");
-const viewCgpa = document.getElementById("viewCgpa");
-const viewSemester = document.getElementById("viewSemester");
-const viewGraduation = document.getElementById("viewGraduation");
-const viewGoal = document.getElementById("viewGoal");
-const viewDreamCompanies = document.getElementById("viewDreamCompanies");
-const viewSkills = document.getElementById("viewSkills");
-
-// ---------- Selected Skills ----------
-let selectedSkills = [];
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 // ======================================
-// DISPLAY SKILLS
+// SECTIONS
 // ======================================
 
-function renderSelectedSkills() {
+const editProfile =
+document.getElementById("editProfile");
 
-    selectedContainer.innerHTML = "";
+const viewProfile =
+document.getElementById("viewProfile");
 
-    selectedSkills.forEach(skill => {
+// ======================================
+// BUTTONS
+// ======================================
 
-        const chip = document.createElement("span");
+const saveBtn =
+document.getElementById("saveProfile");
 
-        chip.className = "selected-skill";
+const editBtn =
+document.getElementById("editProfileBtn");
 
-        chip.textContent = skill;
+const uploadBtn =
+document.querySelector(".upload-btn");
 
-        selectedContainer.appendChild(chip);
+// ======================================
+// FORM FIELDS
+// ======================================
 
-    });
+const fullName =
+document.getElementById("fullName");
+
+const email =
+document.getElementById("email");
+
+const phone =
+document.getElementById("phone");
+
+const roll =
+document.getElementById("roll");
+
+const college =
+document.getElementById("college");
+
+const branch =
+document.getElementById("branch");
+
+const year =
+document.getElementById("year");
+
+const cgpa =
+document.getElementById("cgpa");
+
+const semester =
+document.getElementById("semester");
+
+const graduation =
+document.getElementById("graduation");
+
+const careerGoal =
+document.getElementById("careerGoal");
+
+const dreamCompanies =
+document.getElementById("dreamCompanies");
+
+// ======================================
+// VIEW PROFILE
+// ======================================
+
+const viewName =
+document.getElementById("viewName");
+
+const viewEmail =
+document.getElementById("viewEmail");
+
+const viewPhone =
+document.getElementById("viewPhone");
+
+const viewRoll =
+document.getElementById("viewRoll");
+
+const viewCollege =
+document.getElementById("viewCollege");
+
+const viewBranch =
+document.getElementById("viewBranch");
+
+const viewYear =
+document.getElementById("viewYear");
+
+const viewCgpa =
+document.getElementById("viewCgpa");
+
+const viewSemester =
+document.getElementById("viewSemester");
+
+const viewGraduation =
+document.getElementById("viewGraduation");
+
+const viewGoal =
+document.getElementById("viewGoal");
+
+const viewDreamCompanies =
+document.getElementById("viewDreamCompanies");
+
+const viewTechnicalProfile =
+document.getElementById("viewTechnicalProfile");
+
+// ======================================
+// TOPICS
+// ======================================
+
+const studentTopics = {
+
+    Programming:[],
+    DSA:[],
+    SQL:[],
+    DBMS:[],
+    OS:[],
+    CN:[],
+    HR:[]
+
+};
+
+// ======================================
+// LOAD MASTER TOPICS
+// ======================================
+
+async function loadMasterTopics(){
+
+    const snap = await getDoc(
+
+        doc(db,
+        "interviewTopics",
+        "masterTopics")
+
+    );
+
+    if(!snap.exists()) return;
+
+    const data = snap.data();
+
+    const mapping = {
+
+        Programming:"programmingTopics",
+
+        DSA:"dsaTopics",
+
+        SQL:"sqlTopics",
+
+        DBMS:"dbmsTopics",
+
+        OS:"osTopics",
+
+        CN:"cnTopics",
+
+        HR:"hrTopics"
+
+    };
+
+    for(const category in mapping){
+
+        const container =
+        document.getElementById(
+        mapping[category]);
+
+        if(!container) continue;
+
+        container.innerHTML="";
+
+        (data[category]||[]).forEach(topic=>{
+
+            const label =
+            document.createElement("label");
+
+            label.className="topic-option";
+
+            label.innerHTML=`
+
+            <input
+            type="checkbox"
+            class="studentTopic"
+            data-category="${category}"
+            value="${topic}">
+
+            ${topic}
+
+            `;
+
+            container.appendChild(label);
+
+        });
+
+    }
 
 }
 
 // ======================================
-// PREDEFINED SKILLS
+// VALIDATION
 // ======================================
 
-skillButtons.forEach(button => {
+document
+.querySelectorAll(
+"input,textarea,select"
+)
+.forEach(input=>{
 
-    button.addEventListener("click", () => {
+    input.addEventListener("blur",()=>{
 
-        const value = button.textContent;
+        if(input.value.trim()===""){
 
-        if (selectedSkills.includes(value)) {
-
-            selectedSkills = selectedSkills.filter(s => s !== value);
-
-            button.classList.remove("active");
-
-        } else {
-
-            selectedSkills.push(value);
-
-            button.classList.add("active");
+            input.style.borderColor="red";
 
         }
 
-        renderSelectedSkills();
+        else{
 
-    });
-
-});
-
-// ======================================
-// ADD CUSTOM SKILL
-// ======================================
-
-addSkillBtn.addEventListener("click", () => {
-
-    const value = customSkill.value.trim();
-
-    if (value === "") {
-
-        alert("Enter a skill.");
-
-        return;
-
-    }
-
-    if (selectedSkills.includes(value)) {
-
-        alert("Skill already added.");
-
-        return;
-
-    }
-
-    selectedSkills.push(value);
-
-    customSkill.value = "";
-
-    renderSelectedSkills();
-
-});
-
-// ======================================
-// INPUT VALIDATION
-// ======================================
-
-const allInputs = document.querySelectorAll("input, textarea, select");
-
-allInputs.forEach(input => {
-
-    input.addEventListener("blur", () => {
-
-        if (input.value.trim() === "") {
-
-            input.style.borderColor = "red";
-
-        } else {
-
-            input.style.borderColor = "#2563eb";
+            input.style.borderColor="#2563eb";
 
         }
 
@@ -167,48 +237,80 @@ allInputs.forEach(input => {
 
 });
 // ======================================
-// LOAD PROFILE FROM LOCAL STORAGE
+// LOAD PROFILE
 // ======================================
 
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
+
         window.location.href = "auth.html";
         return;
+
     }
+
+    await loadMasterTopics();
 
     try {
 
         const docRef = doc(db, "studentProfiles", user.uid);
+
         const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
+        if (!docSnap.exists()) return;
 
-            const profile = docSnap.data();
+        const profile = docSnap.data();
 
-            fullName.value = profile.fullName || "";
-            email.value = profile.email || "";
-            phone.value = profile.phone || "";
-            roll.value = profile.roll || "";
-            college.value = profile.college || "";
-            branch.value = profile.branch || "";
-            year.value = profile.year || "";
-            cgpa.value = profile.cgpa || "";
-            semester.value = profile.semester || "";
-            graduation.value = profile.graduation || "";
-            careerGoal.value = profile.careerGoal || "";
-            dreamCompanies.value = profile.dreamCompanies || "";
+        // ---------- Basic Details ----------
 
-            selectedSkills = profile.skills || [];
+        fullName.value = profile.fullName || "";
+        email.value = profile.email || "";
+        phone.value = profile.phone || "";
+        roll.value = profile.roll || "";
+        college.value = profile.college || "";
+        branch.value = profile.branch || "";
+        year.value = profile.year || "";
+        cgpa.value = profile.cgpa || "";
+        semester.value = profile.semester || "";
+        graduation.value = profile.graduation || "";
+        careerGoal.value = profile.careerGoal || "";
+        dreamCompanies.value = profile.dreamCompanies || "";
 
-            renderSelectedSkills();
+        // ---------- Load Selected Topics ----------
 
-            // THIS LINE IS THE IMPORTANT ONE
-            showProfile(profile);
+        const savedTopics = profile.topics || {};
 
-        }
+        Object.keys(studentTopics).forEach(category => {
 
-    } catch(error) {
+            studentTopics[category] =
+                savedTopics[category] || [];
+
+        });
+
+        document
+            .querySelectorAll(".studentTopic")
+            .forEach(check => {
+
+                const category =
+                    check.dataset.category;
+
+                if (
+                    studentTopics[category] &&
+                    studentTopics[category]
+                        .includes(check.value)
+                ) {
+
+                    check.checked = true;
+
+                }
+
+            });
+
+        showProfile(profile);
+
+    }
+
+    catch (error) {
 
         console.log(error);
 
@@ -232,45 +334,85 @@ saveBtn.addEventListener("click", async () => {
 
     }
 
+    // ---------- Clear Old Topics ----------
+
+    Object.keys(studentTopics).forEach(category => {
+
+        studentTopics[category] = [];
+
+    });
+
+    // ---------- Read Checked Topics ----------
+
+    document
+        .querySelectorAll(".studentTopic")
+        .forEach(check => {
+
+            if (check.checked) {
+
+                studentTopics[
+                    check.dataset.category
+                ].push(check.value);
+
+            }
+
+        });
+
     const profile = {
 
-        fullName: fullName.value,
-        email: email.value,
-        phone: phone.value,
-        roll: roll.value,
-        college: college.value,
-        branch: branch.value,
+        fullName: fullName.value.trim(),
+        email: email.value.trim(),
+        phone: phone.value.trim(),
+        roll: roll.value.trim(),
+        college: college.value.trim(),
+        branch: branch.value.trim(),
         year: year.value,
         cgpa: cgpa.value,
         semester: semester.value,
         graduation: graduation.value,
-        careerGoal: careerGoal.value,
-        dreamCompanies: dreamCompanies.value,
-        skills: selectedSkills
+        careerGoal: careerGoal.value.trim(),
+        dreamCompanies: dreamCompanies.value.trim(),
+
+        topics: studentTopics
 
     };
 
     try {
 
-        await setDoc(doc(db, "studentProfiles", user.uid), profile, { merge: true });
+        await setDoc(
+
+            doc(
+                db,
+                "studentProfiles",
+                user.uid
+            ),
+
+            profile,
+
+            {
+                merge: true
+            }
+
+        );
 
         alert("Profile Saved Successfully!");
 
         showProfile(profile);
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         alert(error.message);
 
     }
 
 });
-
 // ======================================
-// SHOW PROFESSIONAL PROFILE
+// SHOW PROFILE
 // ======================================
 
-function showProfile(profile){
+function showProfile(profile) {
 
     viewName.textContent = profile.fullName || "";
     viewEmail.textContent = profile.email || "";
@@ -285,50 +427,98 @@ function showProfile(profile){
     viewGoal.textContent = profile.careerGoal || "";
     viewDreamCompanies.textContent = profile.dreamCompanies || "";
 
-    viewSkills.innerHTML = "";
+    viewTechnicalProfile.innerHTML = "";
 
-    (profile.skills || []).forEach(skill => {
+    const titles = {
 
-        const chip = document.createElement("span");
+        Programming: "Programming Languages",
+        DSA: "Data Structures & Algorithms",
+        SQL: "SQL",
+        DBMS: "DBMS",
+        OS: "Operating Systems",
+        CN: "Computer Networks",
+        HR: "HR Interview"
 
-        chip.className = "selected-skill";
+    };
 
-        chip.textContent = skill;
+    const topics = profile.topics || {};
 
-        viewSkills.appendChild(chip);
+    Object.keys(titles).forEach(category => {
+
+        const card = document.createElement("div");
+
+        card.className = "profile-topic-card";
+
+        const heading = document.createElement("h3");
+
+        heading.textContent = titles[category];
+
+        card.appendChild(heading);
+
+        const values = topics[category] || [];
+
+        if (values.length === 0) {
+
+            const p = document.createElement("p");
+
+            p.textContent = "No topics selected";
+
+            card.appendChild(p);
+
+        }
+
+        else {
+
+            const chipContainer = document.createElement("div");
+
+            chipContainer.className = "skills-display";
+
+            values.forEach(topic => {
+
+                const chip = document.createElement("span");
+
+                chip.className = "selected-skill";
+
+                chip.textContent = topic;
+
+                chipContainer.appendChild(chip);
+
+            });
+
+            card.appendChild(chipContainer);
+
+        }
+
+        viewTechnicalProfile.appendChild(card);
 
     });
 
     editProfile.style.display = "none";
+
     viewProfile.style.display = "block";
 
 }
 
 // ======================================
-// SHOW PROFILE IF ALREADY SAVED
-// ======================================
-
-
-
-
-// ======================================
 // EDIT PROFILE
 // ======================================
 
-editBtn.addEventListener("click",()=>{
+editBtn.addEventListener("click", () => {
 
-    viewProfile.style.display="none";
+    viewProfile.style.display = "none";
 
-    editProfile.style.display="block";
+    editProfile.style.display = "block";
 
 });
 
 // ======================================
-// UPLOAD PHOTO
+// PROFILE PHOTO
 // ======================================
 
-uploadBtn.addEventListener("click",()=>{
+uploadBtn.addEventListener("click", () => {
 
-    alert("Profile photo upload will be connected to Firebase Storage.");
+    alert(
+        "Profile photo upload will be connected to Firebase Storage."
+    );
 
 });
