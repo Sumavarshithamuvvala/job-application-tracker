@@ -13,9 +13,11 @@ import {
     doc,
     getDoc,
     getDocs,
-    collection
+    collection,
+    query,
+    orderBy,
+    limit
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
 
 // ============================================
 // ELEMENTS
@@ -50,12 +52,53 @@ const dropdownLogout = document.getElementById("dropdownLogout");
 const dropdown = document.getElementById("profileDropdown");
 
 
+const todayGoals =
+document.getElementById("todayGoals");
+
+
 // ============================================
 // GLOBAL DATA
 // ============================================
 
 let allPlacements = [];
+const categories = [
 
+{
+student:"Programming",
+senior:"programmingTopics"
+},
+
+{
+student:"DSA",
+senior:"dsaTopics"
+},
+
+{
+student:"SQL",
+senior:"sqlTopics"
+},
+
+{
+student:"DBMS",
+senior:"dbmsTopics"
+},
+
+{
+student:"OS",
+senior:"osTopics"
+},
+
+{
+student:"CN",
+senior:"cnTopics"
+},
+
+{
+student:"HR",
+senior:"hrTopics"
+}
+
+];
 
 // ============================================
 // INITIALS
@@ -87,12 +130,22 @@ onAuthStateChanged(auth, async (user) => {
         return;
 
     }
+    console.log("Logged in UID:", user.uid);
+
+const studentRef = doc(db, "studentProfiles", user.uid);
+
+console.log("Document path:", studentRef.path);
 
     try {
 
-        const studentRef = doc(db, "students", user.uid);
+        const studentRef = doc(db, "studentProfiles", user.uid);
 
         const studentSnap = await getDoc(studentRef);
+        console.log("Document exists:", studentSnap.exists());
+
+if (studentSnap.exists()) {
+    console.log(studentSnap.data());
+}
 
         if (studentSnap.exists()) {
 
@@ -110,9 +163,11 @@ onAuthStateChanged(auth, async (user) => {
 
             navAvatar.textContent = initials;
 
-        }
+        
 
-        await loadDashboardStats();
+       await loadDashboardStats();
+
+calculateAverageSkillMatch(data);}
 
     }
 
@@ -153,11 +208,15 @@ async function loadDashboardStats() {
 
             });
 
-            if (data.companyName) {
+if (data.companyName) {
 
-                companies.add(data.companyName);
+    const company = data.companyName
+        .trim()
+        .toLowerCase();
 
-            }
+    companies.add(company);
+
+}
 
         });
 
@@ -169,9 +228,11 @@ async function loadDashboardStats() {
 
         // Will calculate later
 
-        skillMatch.textContent = "--";
+        
+        populateCompanyFilter();
         loadFeaturedProfiles();
 loadActivityFeed();
+
 
     }
 
@@ -264,6 +325,99 @@ function loadFeaturedProfiles() {
 }
 
 loadFeaturedProfiles();
+function calculateAverageSkillMatch(student){
+
+    let totalPercentage = 0;
+
+    const missingTopics = new Set();
+
+    allPlacements.forEach(senior=>{
+
+        let totalMatch = 0;
+
+        let totalTopics = 0;
+
+        categories.forEach(cat=>{
+
+            const studentTopics =
+            student.topics?.[cat.student] || [];
+
+            const seniorTopics =
+            senior[cat.senior] || [];
+
+            let matched = 0;
+
+            seniorTopics.forEach(topic=>{
+
+                if(studentTopics.includes(topic)){
+
+                    matched++;
+
+                }
+                else{
+
+                    missingTopics.add(topic);
+
+                }
+
+            });
+
+            totalMatch += matched;
+
+            totalTopics += seniorTopics.length;
+
+        });
+
+        senior.matchPercent =
+        totalTopics===0
+        ?0
+        :Math.round(totalMatch*100/totalTopics);
+
+        totalPercentage += senior.matchPercent;
+
+    });
+
+    const average =
+    allPlacements.length===0
+    ?0
+    :Math.round(totalPercentage/allPlacements.length);
+
+    skillMatch.textContent =
+    average + "%";
+
+    showTodayGoals([...missingTopics]);
+
+}
+
+function showTodayGoals(topics){
+
+    todayGoals.innerHTML="";
+
+    if(topics.length===0){
+
+        todayGoals.innerHTML =
+        "<p class='empty'>🎉 No pending topics.</p>";
+
+        return;
+
+    }
+
+    topics.sort();
+
+    topics.slice(0,3).forEach(topic=>{
+
+        const chip =
+        document.createElement("span");
+
+        chip.className="goal-chip";
+
+        chip.textContent=topic;
+
+        todayGoals.appendChild(chip);
+
+    });
+
+}
 
 
 // ============================================
@@ -372,39 +526,61 @@ resetBtn.addEventListener("click", () => {
 // ============================================
 // RECENT UPDATES
 // ============================================
+// ============================================
+// ACTIVITY FEED
+// ============================================
 
-function loadRecentUpdates() {
+async function loadActivityFeed() {
 
-    recentUpdates.innerHTML = "";
+    const activityFeed = document.getElementById("activityFeed");
 
-    if (allPlacements.length === 0) {
+    activityFeed.innerHTML = "";
 
-        recentUpdates.innerHTML = `
-            <li>No recent updates available.</li>
-        `;
+    try {
 
-        return;
+        const q = query(
+            collection(db, "placements"),
+            orderBy("createdAt", "desc"),
+            limit(5)
+        );
 
-    }
+        const snapshot = await getDocs(q);
 
-    allPlacements
-        .slice(0, 5)
-        .forEach(profile => {
+        if (snapshot.empty) {
+
+            activityFeed.innerHTML =
+                "<li>No recent activities available.</li>";
+
+            return;
+
+        }
+
+        snapshot.forEach(docSnap => {
+
+            const data = docSnap.data();
 
             const li = document.createElement("li");
 
             li.innerHTML = `
-                🎉
-                <strong>${profile.companyName || "Company"}</strong>
-                added a new
-                <strong>${profile.roleOffered || "Role"}</strong>
-                profile by
-                <strong>${profile.studentName || "Student"}</strong>.
+                
+                <strong>${data.studentName}</strong>
+                shared placement experience at
+                <strong>${data.companyName}</strong>
+                as
+                <strong>${data.roleOffered}</strong>.
             `;
 
-            recentUpdates.appendChild(li);
+            activityFeed.appendChild(li);
 
         });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
 
 }
 
@@ -493,48 +669,23 @@ window.addEventListener("load", () => {
 // ACTIVITY FEED
 // ============================================
 
-function loadActivityFeed() {
+function populateCompanyFilter() {
 
-    const activityFeed = document.getElementById("activityFeed");
+    companyFilter.innerHTML =
+        `<option value="All Companies">All Companies</option>`;
 
-    activityFeed.innerHTML = "";
+    const companies = [...new Set(
+    allPlacements
+        .map(profile => profile.companyName?.trim())
+        .filter(company => company)
+)];
 
-    if (allPlacements.length === 0) {
+    companies.sort();
 
-        activityFeed.innerHTML =
-            "<li>No recent activities available.</li>";
+    companies.forEach(company => {
 
-        return;
-
-    }
-
-    // Sort by createdAt (latest first)
-    allPlacements.sort((a, b) => {
-
-        const timeA = a.createdAt?.seconds || 0;
-        const timeB = b.createdAt?.seconds || 0;
-
-        return timeB - timeA;
-
-    });
-
-    // Show only latest 5 activities
-    const latestActivities = allPlacements.slice(0, 5);
-
-    latestActivities.forEach(profile => {
-
-        const li = document.createElement("li");
-
-        li.innerHTML = `
-            🎉
-            <strong>${profile.studentName}</strong>
-            shared placement experience at
-            <strong>${profile.companyName}</strong>
-            as
-            <strong>${profile.roleOffered}</strong>.
-        `;
-
-        activityFeed.appendChild(li);
+        companyFilter.innerHTML +=
+            `<option value="${company}">${company}</option>`;
 
     });
 

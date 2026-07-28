@@ -517,3 +517,62 @@ textarea{
     }
 
 }
+/* ===========================
+   TECHNICAL PROFILE
+=========================== */
+
+.section-note{
+    color:#64748b;
+    margin-bottom:20px;
+}
+
+#topicsContainer{
+    display:grid;
+    gap:20px;
+}
+
+.topic-card{
+    background:#f8fafc;
+    border:1px solid #dbe4ef;
+    border-radius:12px;
+    padding:20px;
+}
+
+.topic-card h3{
+    color:#2563eb;
+    margin-bottom:15px;
+}
+
+.checkGrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:10px;
+}
+
+.topic-option{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.topic-option:hover{
+    background:#eef4ff;
+}
+
+.topic-option input{
+    width:18px;
+    height:18px;
+}
+
+.profile-topic-card{
+    margin-bottom:25px;
+}
+
+.profile-topic-card h3{
+    color:#2563eb;
+    margin-bottom:12px;
+}

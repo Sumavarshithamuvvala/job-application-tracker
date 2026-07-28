@@ -460,9 +460,9 @@ header h1{
 ==================================================*/
 
 .profile-card{
-
-    animation:fadeUp .6s ease;
-
+    position: relative;
+    padding: 25px;
+    padding-bottom: 55px;
 }
 
 @keyframes fadeUp{

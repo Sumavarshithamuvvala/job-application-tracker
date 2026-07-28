@@ -2,153 +2,353 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Match | Job Preparation Tracker</title>
 
-    <title>Skill Match</title>
-
-    <link rel="stylesheet" href="skill-match.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="student-dashboard.css">
+<link rel="stylesheet" href="skill-match.css">
 
     <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
 
 <div class="container">
 
-    <h1>Skill Match Analysis</h1>
+    <!-- ================= Sidebar ================= -->
 
-    <p>
-        Compare your skills with successful seniors and identify your skill gap.
-    </p>
+    
+<aside class="sidebar">
 
-    <!-- Select Senior -->
+    <div class="profile">
 
-    <div class="select-box">
-
-        <label>Select Senior</label>
-
-        <select id="seniorSelect">
-
-            <option value="google">Rahul Sharma - Google</option>
-
-            <option value="microsoft">Priya Reddy - Microsoft</option>
-
-            <option value="amazon">Sai Kumar - Amazon</option>
-
-        </select>
-
-    </div>
-
-    <!-- Skill Comparison -->
-
-    <div class="comparison">
-
-        <!-- Student -->
-
-        <div class="card">
-
-            <h2>Your Skills</h2>
-
-            <div class="skills">
-
-                <span>Java</span>
-
-                <span>HTML</span>
-
-                <span>CSS</span>
-
-                <span>SQL</span>
-
-                <span>Python</span>
-
-            </div>
-
+        <div class="profile-avatar" id="dashboardAvatar">
+            ST
         </div>
 
-        <!-- Senior -->
+        <h3 id="studentName">
+            Loading...
+        </h3>
 
-        <div class="card">
-
-            <h2>Senior Skills</h2>
-
-            <div class="skills" id="seniorSkills">
-
-                <span>Java</span>
-
-                <span>DSA</span>
-
-                <span>System Design</span>
-
-                <span>SQL</span>
-
-                <span>Git</span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- Match -->
-
-    <div class="result">
-
-        <h2>Skill Match</h2>
-
-        <div class="circle">
-
-            <span id="percentage">70%</span>
-
-        </div>
-
-    </div>
-
-    <!-- Missing Skills -->
-
-    <div class="missing">
-
-        <h2>Recommended Skills</h2>
-
-        <div id="missingSkills">
-
-            <span>DSA</span>
-
-            <span>Git</span>
-
-            <span>System Design</span>
-
-        </div>
-
-    </div>
-
-    <!-- Recommendation -->
-
-    <div class="recommendation">
-
-        <h2>Recommendation</h2>
-
-        <p>
-
-            Learn DSA and Git first.
-
-            Then practice System Design.
-
-            Complete 100 LeetCode problems before applying.
-
+        <p id="studentBranch">
+            Loading...
         </p>
 
     </div>
 
+    <ul>
+
+        <li class="active">
+
+            <a href="student-dashboard.html">
+
+                <i class="fa-solid fa-house"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="senior-profiles.html">
+
+                <i class="fa-solid fa-users"></i>
+
+                <span>Senior Profiles</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="skill-match.html">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <span>Skill Match</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="analytics.html">
+
+                <i class="fa-solid fa-chart-pie"></i>
+
+                <span>Analytics</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="settings.html">
+
+                <i class="fa-solid fa-gear"></i>
+
+                <span>Settings</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="#" id="sidebarLogout">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</aside>
+
+    <!-- ================= Main ================= -->
+
+    <main class="main">
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>Skill Match</h1>
+
+                <p>
+                    Compare your skills with placed seniors and discover
+                    the topics you should learn next.
+                </p>
+
+            </div>
+
+            <button id="refreshBtn">
+
+                <i class="fa-solid fa-rotate"></i>
+
+                Refresh Match
+
+            </button>
+
+        </div>
+
+        <!-- ================= Overall Match ================= -->
+
+        <section class="overall-card">
+
+            <div class="overall-left">
+
+                <h2>Overall Skill Match</h2>
+
+                <div class="circle">
+
+                    <span id="overallPercent">0%</span>
+
+                </div>
+
+            </div>
+
+            <div class="overall-right">
+
+                <h3>Your Progress</h3>
+
+                <div class="progress">
+
+                    <div
+                        class="progress-fill"
+                        id="overallBar">
+                    </div>
+
+                </div>
+
+                <p id="overallMessage">
+
+                    Complete your profile to see your match.
+
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- ================= Subject Match ================= -->
+
+        <section class="subject-section">
+
+            <h2>Category Wise Match</h2>
+
+            <div class="subject-grid">
+
+                <div class="subject-card">
+
+                    <h3>Programming Languages</h3>
+
+                    <div class="progress">
+
+                        <div id="ProgrammingBar"
+                             class="progress-fill"></div>
+
+                    </div>
+
+                    <span id="ProgrammingPercent">0%</span>
+
+                </div>
+
+                <div class="subject-card">
+
+                    <h3>DSA</h3>
+
+                    <div class="progress">
+
+                        <div id="DSABar"
+                             class="progress-fill"></div>
+
+                    </div>
+
+                    <span id="DSAPercent">0%</span>
+
+                </div>
+
+                <div class="subject-card">
+
+                    <h3>SQL</h3>
+
+                    <div class="progress">
+
+                        <div id="SQLBar"
+                             class="progress-fill"></div>
+
+                    </div>
+
+                    <span id="SQLPercent">0%</span>
+
+                </div>
+
+                <div class="subject-card">
+
+                    <h3>DBMS</h3>
+
+                    <div class="progress">
+
+                        <div id="DBMSBar"
+                             class="progress-fill"></div>
+
+                    </div>
+
+                    <span id="DBMSPercent">0%</span>
+
+                </div>
+
+                <div class="subject-card">
+
+                    <h3>Operating Systems</h3>
+
+                    <div class="progress">
+
+                        <div id="OSBar"
+                             class="progress-fill"></div>
+
+                    </div>
+
+                    <span id="OSPercent">0%</span>
+
+                </div>
+
+                <div class="subject-card">
+
+                    <h3>Computer Networks</h3>
+
+                    <div class="progress">
+
+                        <div id="CNBar"
+                             class="progress-fill"></div>
+
+                    </div>
+
+                    <span id="CNPercent">0%</span>
+
+                </div>
+
+                <div class="subject-card">
+
+                    <h3>HR Interview</h3>
+
+                    <div class="progress">
+
+                        <div id="HRBar"
+                             class="progress-fill"></div>
+
+                    </div>
+
+                    <span id="HRPercent">0%</span>
+
+                </div>
+
+            </div>
+
+        </section>
+                <!-- ================= Missing Topics ================= -->
+
+        <section class="missing-section">
+
+            <h2>Topics You Should Learn</h2>
+
+            <p class="section-desc">
+                These are the important topics found in placed seniors'
+                profiles but not yet selected in your profile.
+            </p>
+
+            <div id="missingTopics" class="missing-topics">
+
+                <p class="empty">
+                    No recommendations yet.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- ================= Recommended Seniors ================= -->
+
+        <section class="recommend-section">
+
+            <div class="section-header">
+
+                <h2>Recommended Seniors</h2>
+
+                <p>
+                    Seniors with the highest skill match.
+                </p>
+
+            </div>
+
+            <div
+                id="recommendedSeniors"
+                class="senior-grid">
+
+            </div>
+
+        </section>
+
+        <!-- ================= Match Details ================= -->
+
+        
+    </main>
+
 </div>
 
-<script src="skill-match.js"></script>
+<script type="module" src="skill-match.js"></script>
 
 </body>
-
 </html>

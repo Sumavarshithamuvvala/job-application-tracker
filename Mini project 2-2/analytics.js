@@ -76,8 +76,8 @@ function updateCards() {
     const company = document.getElementById("companyFilter").value;
     if (company !== "All Companies") {
         filtered = filtered.filter(p =>
-            p.companyName === company
-        );
+    p.companyName?.trim() === company.trim()
+);
     }
 
     // Filter by Branch
@@ -138,7 +138,9 @@ function drawTopCompanies() {
     // Company Filter
     const company = document.getElementById("companyFilter").value;
     if (company !== "All Companies") {
-        filtered = filtered.filter(p => p.companyName === company);
+       filtered = filtered.filter(p =>
+    p.companyName?.trim() === company.trim()
+);
     }
 
     // Branch Filter
@@ -151,10 +153,12 @@ function drawTopCompanies() {
     const companyCount = {};
 
     filtered.forEach(p => {
-        if (!p.companyName) return;
+        const company = p.companyName?.trim();
 
-        companyCount[p.companyName] =
-            (companyCount[p.companyName] || 0) + 1;
+if (!company) return;
+
+companyCount[company] =
+    (companyCount[company] || 0) + 1;
     });
 
     const labels = Object.keys(companyCount);
@@ -209,8 +213,8 @@ function drawCompanyTrend() {
     const company = document.getElementById("companyFilter").value;
     if (company !== "All Companies") {
         filtered = filtered.filter(p =>
-            p.companyName === company
-        );
+    p.companyName?.trim() === company.trim()
+);
     }
 
     const branch = document.getElementById("branchFilter").value;

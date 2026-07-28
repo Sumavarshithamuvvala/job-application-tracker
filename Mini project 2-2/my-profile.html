@@ -198,66 +198,77 @@
 
         <!-- Technical Skills -->
 
-        <section class="info-card">
-
-            <h2>Technical Skills</h2>
-
-            <div class="skills-container">
-
-                <button type="button" class="skill">Java</button>
-                <button type="button" class="skill">Python</button>
-                <button type="button" class="skill">C</button>
-                <button type="button" class="skill">C++</button>
-                <button type="button" class="skill">HTML</button>
-                <button type="button" class="skill">CSS</button>
-                <button type="button" class="skill">JavaScript</button>
-                <button type="button" class="skill">React</button>
-                <button type="button" class="skill">Node.js</button>
-                <button type="button" class="skill">SQL</button>
-                <button type="button" class="skill">MongoDB</button>
-                <button type="button" class="skill">Firebase</button>
-                <button type="button" class="skill">Git</button>
-                <button type="button" class="skill">GitHub</button>
-                <button type="button" class="skill">DSA</button>
-
-            </div>
-
-            <div class="custom-skill">
-
-                <input
-                    type="text"
-                    id="customSkill"
-                    placeholder="Enter your skill">
-
-                <button
-                    type="button"
-                    id="addSkill">
-
-                    Add
-
-                </button>
-
-            </div>
-
-            <div
-                class="selected-skills"
-                id="selectedSkills">
-
-            </div>
-
-        </section>
                 <!-- Career Goal -->
 
-        <section class="info-card">
+        <!-- ========================================= -->
+<!-- Technical Profile -->
+<!-- ========================================= -->
 
-            <h2>Career Goal</h2>
+<!-- ========================================= -->
+<!-- Technical Profile -->
+<!-- ========================================= -->
 
-            <textarea
-                id="careerGoal"
-                rows="4"
-                placeholder="Write your career objective..."></textarea>
+<section class="info-card">
 
-        </section>
+    <h2>Technical Profile</h2>
+
+    <p class="section-note">
+
+        Select the topics you already know. These topics will be used to calculate your skill match with placed seniors.
+
+    </p>
+
+    <div id="topicsContainer">
+
+        <div class="topic-card">
+            <h3>Programming Languages</h3>
+            <div class="checkGrid" id="programmingTopics"></div>
+        </div>
+
+        <div class="topic-card">
+            <h3>Data Structures & Algorithms</h3>
+            <div class="checkGrid" id="dsaTopics"></div>
+        </div>
+
+        <div class="topic-card">
+            <h3>SQL</h3>
+            <div class="checkGrid" id="sqlTopics"></div>
+        </div>
+
+        <div class="topic-card">
+            <h3>DBMS</h3>
+            <div class="checkGrid" id="dbmsTopics"></div>
+        </div>
+
+        <div class="topic-card">
+            <h3>Operating Systems</h3>
+            <div class="checkGrid" id="osTopics"></div>
+        </div>
+
+        <div class="topic-card">
+            <h3>Computer Networks</h3>
+            <div class="checkGrid" id="cnTopics"></div>
+        </div>
+
+        <div class="topic-card">
+            <h3>HR Interview</h3>
+            <div class="checkGrid" id="hrTopics"></div>
+        </div>
+
+    </div>
+
+</section>
+<section class="info-card">
+
+    <h2>Career Goal</h2>
+
+    <textarea
+        id="careerGoal"
+        rows="4"
+        placeholder="Enter your career goal">
+    </textarea>
+
+</section>
 
         <!-- Dream Companies -->
 
@@ -382,17 +393,11 @@
 
             <!-- Skills -->
 
-            <div class="profile-section">
+            <h2>Technical Profile</h2>
 
-                <h2>Technical Skills</h2>
+<div id="viewTechnicalProfile">
 
-                <div
-                    id="viewSkills"
-                    class="skills-display">
-
-                </div>
-
-            </div>
+</div>
 
             <!-- Career Goal -->
 
