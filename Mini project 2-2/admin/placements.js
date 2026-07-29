@@ -12,7 +12,6 @@ import {
     orderBy,
     getDoc,
     setDoc,
-    updateDoc,
     arrayUnion
 }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
@@ -675,13 +674,10 @@ resourcesUsed: [
         };
 
 
-<<<<<<< HEAD
         console.log("Saving placement:", placementData);
-=======
-};
+
         console.log(placementData);
         await saveOtherTopics();
->>>>>>> 477f1ad9d06e44ad9f6baf5b820e8326490730de
 
 
         // =========================
