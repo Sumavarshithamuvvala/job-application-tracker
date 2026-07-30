@@ -89,9 +89,15 @@ function updateCards() {
     }
 
     // KPI Calculations
-    const totalCompanies = new Set(
-        filtered.map(p => p.companyName).filter(Boolean)
-    ).size;
+   const companies = new Set(
+    filtered
+        .map(p => p.companyName?.trim().toLowerCase())
+        .filter(Boolean)
+);
+
+console.log("Unique Companies:", [...companies]);
+
+const totalCompanies = companies.size;
 
     const studentsPlaced = filtered.length;
 

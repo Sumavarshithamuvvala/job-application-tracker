@@ -694,6 +694,9 @@ resourcesUsed: [
 
 
         console.log("Saving placement:", placementData);
+        
+console.log(placementData);
+await saveOtherTopics();
 
         await saveOtherTopics();
 
