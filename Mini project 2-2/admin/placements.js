@@ -12,10 +12,8 @@ import {
     orderBy,
     getDoc,
     setDoc,
-    updateDoc,
     arrayUnion
-}
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 console.log("placements.js loaded");
 
@@ -318,38 +316,45 @@ function renderSelectedSkills(){
 
 }
 
-skillInput.addEventListener("input", ()=>{
+skillInput.addEventListener("input", () => {
 
-    const value =
-    skillInput.value.toLowerCase();
+    const value = skillInput.value.trim().toLowerCase();
 
     suggestionBox.innerHTML = "";
 
-    if(value==="") return;
+    if (value === "") return;
 
-    const filtered =
-    allSkills.filter(skill=>
-
-        skill.toLowerCase().includes(value)
-
-        &&
-
+    const filtered = allSkills.filter(skill =>
+        skill.toLowerCase().includes(value) &&
         !selectedSkills.includes(skill)
-
     );
 
-    filtered.forEach(skill=>{
+    filtered.forEach(skill => {
 
-        const item =
-        document.createElement("div");
+        const item = document.createElement("div");
 
-        item.className="suggestion-item";
+        item.className = "suggestion-item";
 
-        item.innerText=skill;
+        item.innerText = skill;
 
         suggestionBox.appendChild(item);
 
     });
+
+    // If no matching skill exists, show Add option
+    if (filtered.length === 0) {
+
+        const addItem = document.createElement("div");
+
+        addItem.className = "suggestion-item add-new";
+
+        addItem.innerText = `➕ Add "${skillInput.value.trim()}"`;
+
+        addItem.dataset.newSkill = skillInput.value.trim();
+
+        suggestionBox.appendChild(addItem);
+
+    }
 
 });
 // ===================================
@@ -360,12 +365,25 @@ suggestionBox.addEventListener("click", (e) => {
 
     if (!e.target.classList.contains("suggestion-item")) return;
 
-    const skill = e.target.innerText;
+    let skill;
+
+    if (e.target.dataset.newSkill) {
+
+        skill = e.target.dataset.newSkill;
+
+        // Add to master skill list
+        if (!allSkills.includes(skill)) {
+            allSkills.push(skill);
+        }
+
+    } else {
+
+        skill = e.target.innerText;
+
+    }
 
     if (!selectedSkills.includes(skill)) {
-
         selectedSkills.push(skill);
-
     }
 
     renderSelectedSkills();
@@ -675,14 +693,9 @@ resourcesUsed: [
         };
 
 
-<<<<<<< HEAD
         console.log("Saving placement:", placementData);
-=======
-};
-        console.log(placementData);
-        await saveOtherTopics();
->>>>>>> 477f1ad9d06e44ad9f6baf5b820e8326490730de
 
+        await saveOtherTopics();
 
         // =========================
         // EDIT EXISTING RECORD
