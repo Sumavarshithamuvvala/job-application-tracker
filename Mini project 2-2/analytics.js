@@ -45,10 +45,11 @@ async function loadPlacements() {
         });
 
         console.log("Placements:", allPlacements);
-        populateCompanyFilter();
+       populateCompanyFilter();
+populateBranchFilter();
+populateYearFilter();
 
 refreshDashboard();
-
 } catch (error) {
 
     console.error(error);
@@ -76,7 +77,8 @@ function updateCards() {
     const company = document.getElementById("companyFilter").value;
     if (company !== "All Companies") {
         filtered = filtered.filter(p =>
-    p.companyName?.trim() === company.trim()
+   p.companyName?.trim().toLowerCase() ===
+company.trim().toLowerCase()
 );
     }
 
@@ -84,7 +86,8 @@ function updateCards() {
     const branch = document.getElementById("branchFilter").value;
     if (branch !== "All Branches") {
         filtered = filtered.filter(p =>
-            p.branch === branch
+           p.branch?.trim().toLowerCase() ===
+branch.trim().toLowerCase()
         );
     }
 
@@ -146,7 +149,10 @@ function drawTopCompanies() {
     // Branch Filter
     const branch = document.getElementById("branchFilter").value;
     if (branch !== "All Branches") {
-        filtered = filtered.filter(p => p.branch === branch);
+       filtered = filtered.filter(p =>
+    p.branch?.trim().toLowerCase() ===
+    branch.trim().toLowerCase()
+);
     }
 
     // Count students per company
@@ -213,15 +219,17 @@ function drawCompanyTrend() {
     const company = document.getElementById("companyFilter").value;
     if (company !== "All Companies") {
         filtered = filtered.filter(p =>
-    p.companyName?.trim() === company.trim()
+            p.companyName?.trim().toLowerCase() ===
+company.trim().toLowerCase()
 );
     }
 
     const branch = document.getElementById("branchFilter").value;
     if (branch !== "All Branches") {
-        filtered = filtered.filter(p =>
-            p.branch === branch
-        );
+filtered = filtered.filter(p =>
+    p.branch?.trim().toLowerCase() ===
+    branch.trim().toLowerCase()
+);;
     }
 
     const monthCount = {
@@ -358,7 +366,9 @@ function drawInterviewTopics() {
     const company = document.getElementById("companyFilter").value;
     if (company !== "All Companies") {
         filtered = filtered.filter(p =>
-            p.companyName.trim() === company.trim()
+            p.companyName?.trim().toLowerCase() ===
+company.trim().toLowerCase()
+            
         );
     }
 
@@ -366,7 +376,8 @@ function drawInterviewTopics() {
     const branch = document.getElementById("branchFilter").value;
     if (branch !== "All Branches") {
         filtered = filtered.filter(p =>
-            p.branch === branch
+            p.branch?.trim().toLowerCase() ===
+branch.trim().toLowerCase()
         );
     }
 
@@ -445,7 +456,8 @@ function drawPlacementTrend() {
     const company = document.getElementById("companyFilter").value;
     if (company !== "All Companies") {
         filtered = filtered.filter(p =>
-            p.companyName.trim() === company.trim()
+           p.companyName?.trim().toLowerCase() ===
+company.trim().toLowerCase()
         );
     }
 
@@ -453,7 +465,8 @@ function drawPlacementTrend() {
     const branch = document.getElementById("branchFilter").value;
     if (branch !== "All Branches") {
         filtered = filtered.filter(p =>
-            p.branch === branch
+        p.branch?.trim().toLowerCase() ===
+branch.trim().toLowerCase()
         );
     }
 
@@ -484,8 +497,16 @@ function drawPlacementTrend() {
                 }]
             },
             options: {
-                responsive: true
+    responsive: true,
+    scales: {
+        y: {
+            beginAtZero: true,
+            ticks: {
+                stepSize: 5
             }
+        }
+    }
+}
         }
     );
 }
@@ -510,7 +531,8 @@ function drawPackageChart() {
     const company = document.getElementById("companyFilter").value;
     if (company !== "All Companies") {
         filtered = filtered.filter(p =>
-            p.companyName.trim() === company.trim()
+           p.companyName?.trim().toLowerCase() ===
+company.trim().toLowerCase()
         );
     }
 
@@ -518,7 +540,8 @@ function drawPackageChart() {
     const branch = document.getElementById("branchFilter").value;
     if (branch !== "All Branches") {
         filtered = filtered.filter(p =>
-            p.branch === branch
+          p.branch?.trim().toLowerCase() ===
+branch.trim().toLowerCase()
         );
     }
 
@@ -648,5 +671,58 @@ document.getElementById("branchFilter").addEventListener("change", () => {
 document.getElementById("subjectFilter")
 .addEventListener("change", refreshDashboard);
 
-document.getElementById("topicCompanyFilter")
-.addEventListener("change", refreshDashboard);
+
+function populateBranchFilter() {
+
+    const branchFilter = document.getElementById("branchFilter");
+
+    branchFilter.innerHTML =
+        '<option>All Branches</option>';
+
+    const branches = [...new Set(
+        allPlacements
+            .map(p => p.branch?.trim())
+            .filter(Boolean)
+    )].sort();
+
+    branches.forEach(branch => {
+
+        const option = document.createElement("option");
+
+        option.value = branch;
+
+        option.textContent = branch;
+
+        branchFilter.appendChild(option);
+
+    });
+
+}
+function populateYearFilter() {
+
+    const yearFilter = document.getElementById("yearFilter");
+
+    yearFilter.innerHTML =
+        '<option>All Years</option>';
+
+    const years = [...new Set(
+        allPlacements
+            .map(p => p.graduationYear?.toString())
+            .filter(Boolean)
+    )]
+    .sort()
+    .reverse();
+
+    years.forEach(year => {
+
+        const option = document.createElement("option");
+
+        option.value = year;
+
+        option.textContent = year;
+
+        yearFilter.appendChild(option);
+
+    });
+
+}

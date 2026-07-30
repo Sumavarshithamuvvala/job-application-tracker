@@ -207,6 +207,12 @@ async function loadDashboardStats() {
                 ...data
 
             });
+            console.log({
+    company: data.companyName,
+    role: data.roleOffered,
+    jobType: data.jobType,
+    hiringType: data.hiringType
+});
 
 if (data.companyName) {
 
@@ -230,7 +236,10 @@ if (data.companyName) {
 
         
         populateCompanyFilter();
-        loadFeaturedProfiles();
+populateRoleFilter();
+populateHiringFilter();
+
+loadFeaturedProfiles();
 loadActivityFeed();
 
 
@@ -289,8 +298,8 @@ function displayFeaturedProfiles(list) {
             </p>
 
             <p>
-                <strong>Hiring:</strong>
-                ${profile.hiringType || ""}
+               <strong>Hiring:</strong>
+${profile.jobType || ""}
             </p>
 
             <button class="viewProfileBtn">
@@ -425,7 +434,11 @@ function showTodayGoals(topics){
 // ============================================
 
 function applyFilters() {
-
+console.log(
+    companyFilter.value,
+    roleFilter.value,
+    hiringFilter.value
+);
     let filtered = [...allPlacements];
 
     // Search
@@ -454,39 +467,41 @@ function applyFilters() {
 
     // Company
 
-    if (companyFilter.value !== "All Companies") {
+   if (companyFilter.value !== "All Companies") {
 
-        filtered = filtered.filter(profile =>
+    filtered = filtered.filter(profile =>
 
-            profile.companyName === companyFilter.value
+        profile.companyName?.trim().toLowerCase() ===
+        companyFilter.value.trim().toLowerCase()
 
-        );
+    );
 
-    }
-
+}
     // Role
 
-    if (roleFilter.value !== "All Roles") {
+        if (roleFilter.value !== "All Roles") {
 
-        filtered = filtered.filter(profile =>
+    filtered = filtered.filter(profile =>
 
-            profile.roleOffered === roleFilter.value
+        profile.roleOffered?.trim().toLowerCase() ===
+        roleFilter.value.trim().toLowerCase()
 
-        );
+    );
 
-    }
+}
 
     // Hiring
 
     if (hiringFilter.value !== "All Hiring") {
 
-        filtered = filtered.filter(profile =>
+    filtered = filtered.filter(profile =>
 
-            profile.hiringType === hiringFilter.value
+        profile.jobType?.trim().toLowerCase() ===
+        hiringFilter.value.trim().toLowerCase()
 
-        );
+    );
 
-    }
+}
 
     displayFeaturedProfiles(filtered);
 
@@ -686,6 +701,48 @@ function populateCompanyFilter() {
 
         companyFilter.innerHTML +=
             `<option value="${company}">${company}</option>`;
+
+    });
+
+}
+function populateRoleFilter() {
+
+    roleFilter.innerHTML =
+        `<option value="All Roles">All Roles</option>`;
+
+    const roles = [...new Set(
+        allPlacements
+            .map(profile => profile.roleOffered?.trim())
+            .filter(role => role)
+    )];
+
+    roles.sort();
+
+    roles.forEach(role => {
+
+        roleFilter.innerHTML +=
+            `<option value="${role}">${role}</option>`;
+
+    });
+
+}
+function populateHiringFilter() {
+
+    hiringFilter.innerHTML =
+        `<option value="All Hiring">All Hiring</option>`;
+
+    const types = [...new Set(
+        allPlacements
+            .map(profile => profile.jobType?.trim())
+            .filter(type => type)
+    )];
+
+    types.sort();
+
+    types.forEach(type => {
+
+        hiringFilter.innerHTML +=
+            `<option value="${type}">${type}</option>`;
 
     });
 

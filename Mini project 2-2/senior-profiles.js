@@ -74,7 +74,12 @@ async function loadProfiles() {
 
         console.log("Placements:", placements);
 
-        displayProfiles(placements);
+populateCompanyFilter();
+populateRoleFilter();
+populateBranchFilter();
+populateBatchFilter();
+
+displayProfiles(placements);
 
     }
 
@@ -233,8 +238,8 @@ function applyFilters() {
 
         filtered = filtered.filter(profile =>
 
-            profile.companyName === companyFilter.value
-
+           profile.companyName?.trim().toLowerCase() ===
+companyFilter.value.trim().toLowerCase()
         );
 
     }
@@ -245,23 +250,24 @@ function applyFilters() {
 
         filtered = filtered.filter(profile =>
 
-            profile.roleOffered === roleFilter.value
+           profile.roleOffered?.trim().toLowerCase() ===
+roleFilter.value.trim().toLowerCase()
 
         );
 
     }
 
     // Branch
+if (branchFilter.value !== "All Branches") {
 
-    if (branchFilter.value !== "All Branches") {
+    filtered = filtered.filter(profile =>
 
-        filtered = filtered.filter(profile =>
+        profile.branch?.trim().toLowerCase() ===
+        branchFilter.value.trim().toLowerCase()
 
-            profile.branch === branchFilter.value
+    );
 
-        );
-
-    }
+}
 
     // Batch
 
@@ -269,8 +275,8 @@ function applyFilters() {
 
         filtered = filtered.filter(profile =>
 
-            profile.graduationYear === batchFilter.value
-
+            profile.graduationYear?.toString().trim() ===
+batchFilter.value.trim()
         );
 
     }
@@ -340,6 +346,94 @@ resetFilters.addEventListener("click", () => {
 
     sortFilter.selectedIndex = 0;
 
-    displayProfiles(placements);
+    populateCompanyFilter();
+populateRoleFilter();
+populateBranchFilter();
+populateBatchFilter();
 
+displayProfiles(placements);
 });
+function populateCompanyFilter() {
+
+    companyFilter.innerHTML =
+        `<option value="All Companies">All Companies</option>`;
+
+    const companies = [...new Set(
+        placements
+            .map(profile => profile.companyName?.trim())
+            .filter(Boolean)
+    )];
+
+    companies.sort();
+
+    companies.forEach(company => {
+
+        companyFilter.innerHTML +=
+            `<option value="${company}">${company}</option>`;
+
+    });
+
+}
+function populateRoleFilter() {
+
+    roleFilter.innerHTML =
+        `<option value="All Roles">All Roles</option>`;
+
+    const roles = [...new Set(
+        placements
+            .map(profile => profile.roleOffered?.trim())
+            .filter(Boolean)
+    )];
+
+    roles.sort();
+
+    roles.forEach(role => {
+
+        roleFilter.innerHTML +=
+            `<option value="${role}">${role}</option>`;
+
+    });
+
+}
+function populateBatchFilter() {
+
+    batchFilter.innerHTML =
+        `<option value="All Batches">All Batches</option>`;
+
+    const batches = [...new Set(
+        placements
+            .map(profile => profile.graduationYear?.toString().trim())
+            .filter(Boolean)
+    )];
+
+    batches.sort().reverse();
+
+    batches.forEach(batch => {
+
+        batchFilter.innerHTML +=
+            `<option value="${batch}">${batch}</option>`;
+
+    });
+
+}
+function populateBranchFilter() {
+
+    branchFilter.innerHTML =
+        `<option value="All Branches">All Branches</option>`;
+
+    const branches = [...new Set(
+        placements
+            .map(profile => profile.branch?.trim())
+            .filter(Boolean)
+    )];
+
+    branches.sort();
+
+    branches.forEach(branch => {
+
+        branchFilter.innerHTML +=
+            `<option value="${branch}">${branch}</option>`;
+
+    });
+
+}

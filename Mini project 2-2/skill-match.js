@@ -344,8 +344,9 @@ function showRecommendedSeniors(seniors){
     recommendedSeniors.innerHTML="";
 
     seniors.sort((a,b)=>b.matchPercent-a.matchPercent);
+    const topSeniors = seniors.slice(0, 3);
 
-    seniors.forEach(senior=>{
+    topSeniors.forEach(senior=>{
 
         const card=document.createElement("div");
 
