@@ -424,15 +424,34 @@ function getCheckedValues(className) {
 function getCheckedTopics(cardTitle) {
 
     const card = [...document.querySelectorAll(".topic-card")]
-
         .find(c => c.querySelector("h4").innerText === cardTitle);
 
     if (!card) return [];
 
-    return [...card.querySelectorAll("input[type='checkbox']:checked")]
+    let topics = [];
 
-        .map(cb => cb.value);
+    card.querySelectorAll("input[type='checkbox']:checked")
+        .forEach(cb => {
 
+            if (cb.value !== "Other") {
+                topics.push(cb.value);
+            }
+
+        });
+
+    const otherCheckbox = card.querySelector(".otherCheckbox");
+    const otherInput = card.querySelector(".otherInput input");
+
+    if (
+        otherCheckbox &&
+        otherCheckbox.checked &&
+        otherInput &&
+        otherInput.value.trim() !== ""
+    ) {
+        topics.push(otherInput.value.trim());
+    }
+
+    return topics;
 }
 // ===================================
 // SAVE OTHER TOPICS TO MASTER LIST
@@ -1068,6 +1087,43 @@ editingOriginalData = { ...data };
 
                     checkbox.checked =
                         selected.includes(checkbox.value);
+                        function restoreTopicValues(cardTitle, values) {
+
+    const selected = Array.isArray(values) ? values : [];
+
+    const card = [...document.querySelectorAll(".topic-card")]
+        .find(c => c.querySelector("h4")?.innerText === cardTitle);
+
+    if (!card) return;
+
+    const knownTopics = [];
+
+    card.querySelectorAll("input[type='checkbox']").forEach(cb => {
+
+        knownTopics.push(cb.value);
+
+        cb.checked = selected.includes(cb.value);
+
+    });
+
+    const otherCheckbox = card.querySelector(".otherCheckbox");
+    const otherInputDiv = card.querySelector(".otherInput");
+    const otherInput = otherInputDiv?.querySelector("input");
+
+    const customTopics = selected.filter(topic =>
+        !knownTopics.includes(topic)
+    );
+
+    if (customTopics.length > 0) {
+
+        otherCheckbox.checked = true;
+
+        otherInputDiv.style.display = "block";
+
+        otherInput.value = customTopics.join(", ");
+
+    }
+}
 
                 });
 
@@ -1092,27 +1148,54 @@ editingOriginalData = { ...data };
 
         function restoreTopicValues(cardTitle, values) {
 
-            const selected =
-                Array.isArray(values) ? values : [];
+    const selected =
+        Array.isArray(values) ? values : [];
 
-            const card =
-                [...document.querySelectorAll(".topic-card")]
-                    .find(c =>
-                        c.querySelector("h4")?.innerText === cardTitle
-                    );
+    const card =
+        [...document.querySelectorAll(".topic-card")]
+        .find(c => c.querySelector("h4")?.innerText === cardTitle);
 
-            if (!card) return;
+    if (!card) return;
 
-            card
-                .querySelectorAll("input[type='checkbox']")
-                .forEach(checkbox => {
+    const checkboxes =
+        card.querySelectorAll("input[type='checkbox']");
 
-                    checkbox.checked =
-                        selected.includes(checkbox.value);
+    const predefinedTopics = [];
 
-                });
+    checkboxes.forEach(checkbox => {
+
+        predefinedTopics.push(checkbox.value);
+
+        checkbox.checked =
+            selected.includes(checkbox.value);
+
+    });
+
+    // Find custom topic (not one of the predefined ones)
+    const customTopic =
+        selected.find(topic => !predefinedTopics.includes(topic));
+
+    if (customTopic) {
+
+        const otherCheckbox =
+            card.querySelector(".otherCheckbox");
+
+        const otherInput =
+            card.querySelector(".otherInput");
+
+        if (otherCheckbox && otherInput) {
+
+            otherCheckbox.checked = true;
+
+            otherInput.style.display = "block";
+
+            otherInput.querySelector("input").value = customTopic;
 
         }
+
+    }
+
+}
 
 
         restoreTopicValues(
