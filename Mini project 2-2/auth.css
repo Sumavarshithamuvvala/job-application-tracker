@@ -730,3 +730,85 @@ font-size:14px;
     color:white;
 
 }
+
+.login-illustration{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-top:40px;
+
+}
+
+.illustration-circle{
+
+    width:190px;
+
+    height:190px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#2563eb,#4f46e5);
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    box-shadow:0 15px 40px rgba(37,99,235,.25);
+
+}
+
+.student .fa-chart-line{
+
+    position:absolute;
+
+    top:28px;
+
+    right:28px;
+
+    font-size:90px;
+
+    color:rgba(255,255,255,.18);
+
+}
+
+.student .person{
+
+    position:absolute;
+
+    bottom:28px;
+
+    font-size:65px;
+
+    color:white;
+
+}
+
+.admin .fa-user-tie{
+
+    font-size:65px;
+
+    color:white;
+
+}
+
+.admin .badge{
+
+    position:absolute;
+
+    right:28px;
+
+    bottom:28px;
+
+    color:#ffd54f;
+
+    font-size:34px;
+
+}

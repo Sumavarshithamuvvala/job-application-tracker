@@ -196,11 +196,41 @@ function fillTopicCards(data) {
 
         if (!Array.isArray(selectedTopics)) return;
 
+        const knownTopics = [];
+
+        // Restore normal checkboxes
         card.querySelectorAll('input[type="checkbox"]').forEach(box => {
+
+            knownTopics.push(box.value);
 
             box.checked = selectedTopics.includes(box.value);
 
         });
+
+        // Restore custom "Other" topic
+        const otherCheckbox = card.querySelector(".otherCheckbox");
+        const otherInputDiv = card.querySelector(".otherInput");
+        const otherInput = otherInputDiv?.querySelector("input");
+
+        const customTopics = selectedTopics.filter(topic =>
+            !knownTopics.includes(topic)
+        );
+
+        if (
+            customTopics.length > 0 &&
+            otherCheckbox &&
+            otherInput
+        ) {
+
+            otherCheckbox.checked = true;
+
+            if (otherInputDiv) {
+                otherInputDiv.style.display = "block";
+            }
+
+            otherInput.value = customTopics.join(", ");
+
+        }
 
     });
 

@@ -30,6 +30,7 @@ console.log("Selected Role:", role);
 
 const welcomeTitle = document.getElementById("welcomeTitle");
 const welcomeText = document.getElementById("welcomeText");
+const loginIllustration = document.getElementById("loginIllustration");
 
 const loginHeading = document.getElementById("loginHeading");
 const signupHeading = document.getElementById("signupHeading");
@@ -67,6 +68,15 @@ if (role === "admin") {
     signupHeading.textContent = "Admin Registration";
 
     roleField.placeholder = "Admin ID";
+    loginIllustration.innerHTML = `
+<div class="illustration-circle admin">
+
+    <i class="fa-solid fa-user-tie"></i>
+
+    <i class="fa-solid fa-clipboard-check badge"></i>
+
+</div>
+`;
 
 } else {
 
@@ -80,6 +90,15 @@ if (role === "admin") {
     signupHeading.textContent = "Student Registration";
 
     roleField.placeholder = "Roll Number";
+    loginIllustration.innerHTML = `
+<div class="illustration-circle student">
+
+    <i class="fa-solid fa-chart-line"></i>
+
+    <i class="fa-solid fa-user-graduate person"></i>
+
+</div>
+`;
 
 }
 

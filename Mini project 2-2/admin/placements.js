@@ -1,20 +1,19 @@
-import { db } from "../firebase.js";
 
+import { db } from "../firebase.js";
 import {
     collection,
     addDoc,
     getDocs,
     deleteDoc,
+    updateDoc,
     doc,
     serverTimestamp,
     query,
     orderBy,
     getDoc,
     setDoc,
-    updateDoc,
     arrayUnion
-}
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 console.log("placements.js loaded");
 
@@ -279,6 +278,11 @@ document.getElementById("technicalSkills");
 
 let selectedSkills = [];
 
+//let editingPlacementId = null;
+let editingPlacementId = null;
+let editingOriginalData = null;
+
+
 function updateHiddenSkills(){
 
     hiddenSkills.value =
@@ -312,38 +316,45 @@ function renderSelectedSkills(){
 
 }
 
-skillInput.addEventListener("input", ()=>{
+skillInput.addEventListener("input", () => {
 
-    const value =
-    skillInput.value.toLowerCase();
+    const value = skillInput.value.trim().toLowerCase();
 
     suggestionBox.innerHTML = "";
 
-    if(value==="") return;
+    if (value === "") return;
 
-    const filtered =
-    allSkills.filter(skill=>
-
-        skill.toLowerCase().includes(value)
-
-        &&
-
+    const filtered = allSkills.filter(skill =>
+        skill.toLowerCase().includes(value) &&
         !selectedSkills.includes(skill)
-
     );
 
-    filtered.forEach(skill=>{
+    filtered.forEach(skill => {
 
-        const item =
-        document.createElement("div");
+        const item = document.createElement("div");
 
-        item.className="suggestion-item";
+        item.className = "suggestion-item";
 
-        item.innerText=skill;
+        item.innerText = skill;
 
         suggestionBox.appendChild(item);
 
     });
+
+    // If no matching skill exists, show Add option
+    if (filtered.length === 0) {
+
+        const addItem = document.createElement("div");
+
+        addItem.className = "suggestion-item add-new";
+
+        addItem.innerText = `➕ Add "${skillInput.value.trim()}"`;
+
+        addItem.dataset.newSkill = skillInput.value.trim();
+
+        suggestionBox.appendChild(addItem);
+
+    }
 
 });
 // ===================================
@@ -354,12 +365,25 @@ suggestionBox.addEventListener("click", (e) => {
 
     if (!e.target.classList.contains("suggestion-item")) return;
 
-    const skill = e.target.innerText;
+    let skill;
+
+    if (e.target.dataset.newSkill) {
+
+        skill = e.target.dataset.newSkill;
+
+        // Add to master skill list
+        if (!allSkills.includes(skill)) {
+            allSkills.push(skill);
+        }
+
+    } else {
+
+        skill = e.target.innerText;
+
+    }
 
     if (!selectedSkills.includes(skill)) {
-
         selectedSkills.push(skill);
-
     }
 
     renderSelectedSkills();
@@ -400,15 +424,34 @@ function getCheckedValues(className) {
 function getCheckedTopics(cardTitle) {
 
     const card = [...document.querySelectorAll(".topic-card")]
-
         .find(c => c.querySelector("h4").innerText === cardTitle);
 
     if (!card) return [];
 
-    return [...card.querySelectorAll("input[type='checkbox']:checked")]
+    let topics = [];
 
-        .map(cb => cb.value);
+    card.querySelectorAll("input[type='checkbox']:checked")
+        .forEach(cb => {
 
+            if (cb.value !== "Other") {
+                topics.push(cb.value);
+            }
+
+        });
+
+    const otherCheckbox = card.querySelector(".otherCheckbox");
+    const otherInput = card.querySelector(".otherInput input");
+
+    if (
+        otherCheckbox &&
+        otherCheckbox.checked &&
+        otherInput &&
+        otherInput.value.trim() !== ""
+    ) {
+        topics.push(otherInput.value.trim());
+    }
+
+    return topics;
 }
 // ===================================
 // SAVE OTHER TOPICS TO MASTER LIST
@@ -552,84 +595,84 @@ placementForm.addEventListener("submit", async (e) => {
 
         const placementData = {
 
-    // =========================
-    // Basic Placement Details
-    // =========================
+            // =========================
+            // Basic Placement Details
+            // =========================
 
-    studentName: document.getElementById("studentName").value,
-    graduationYear: document.getElementById("graduationYear").value,
-    branch: document.getElementById("branch").value,
-    companyName: document.getElementById("companyName").value,
-    companyType: document.getElementById("companyType").value,
-    roleOffered: document.getElementById("roleOffered").value,
-    jobType: document.getElementById("jobType").value,
-    workMode: document.getElementById("workMode").value,
-    location: document.getElementById("location").value,
-    package: document.getElementById("package").value,
-    placementDate: document.getElementById("placementDate").value,
+            studentName: document.getElementById("studentName").value,
+            graduationYear: document.getElementById("graduationYear").value,
+            branch: document.getElementById("branch").value,
+            companyName: document.getElementById("companyName").value,
+            companyType: document.getElementById("companyType").value,
+            roleOffered: document.getElementById("roleOffered").value,
+            jobType: document.getElementById("jobType").value,
+            workMode: document.getElementById("workMode").value,
+            location: document.getElementById("location").value,
+            package: document.getElementById("package").value,
+            placementDate: document.getElementById("placementDate").value,
 
-    // =========================
-    // Academic Profile
-    // =========================
+            // =========================
+            // Academic Profile
+            // =========================
 
-    cgpa: document.getElementById("cgpa").value,
-    cgpaCutoff: document.getElementById("cgpaCutoff").value,
-    activeBacklogs: document.getElementById("activeBacklogs").value,
+            cgpa: document.getElementById("cgpa").value,
+            cgpaCutoff: document.getElementById("cgpaCutoff").value,
+            activeBacklogs: document.getElementById("activeBacklogs").value,
 
-    // =========================
-// Eligibility Criteria
-// =========================
+            // =========================
+            // Eligibility Criteria
+            // =========================
 
-minimumCGPA: document.getElementById("minimumCGPA").value,
-eligibleBranches: document.getElementById("eligibleBranches").value,
-onlineAssessment: document.getElementById("onlineAssessment").value,
-oaMandatory: document.getElementById("oaMandatory").value,
-interviewRounds: document.getElementById("interviewRounds").value,
-additionalCriteria: document.getElementById("additionalCriteria").value,
-eligibleInitially: document.getElementById("eligibleInitially").value,
-eligibilityImprovement: document.getElementById("eligibilityImprovement").value,
+            minimumCGPA: document.getElementById("minimumCGPA").value,
+            eligibleBranches: document.getElementById("eligibleBranches").value,
+            onlineAssessment: document.getElementById("onlineAssessment").value,
+            oaMandatory: document.getElementById("oaMandatory").value,
+            interviewRounds: document.getElementById("interviewRounds").value,
+            additionalCriteria: document.getElementById("additionalCriteria").value,
+            eligibleInitially: document.getElementById("eligibleInitially").value,
+            eligibilityImprovement: document.getElementById("eligibilityImprovement").value,
 
-// =========================
-// Skills Worked With
-// =========================
+            // =========================
+            // Skills
+            // =========================
 
-technicalSkills: selectedSkills,
+            technicalSkills: selectedSkills,
 
-// =========================
-// Coding Preparation
-// =========================
+            // =========================
+            // Coding Preparation
+            // =========================
 
-codingPlatform: document.getElementById("codingPlatform").value,
-problemsSolved: document.getElementById("problemsSolved").value,
-practiceFrequency: document.getElementById("practiceFrequency").value,
+            codingPlatform: document.getElementById("codingPlatform").value,
+            problemsSolved: document.getElementById("problemsSolved").value,
+            practiceFrequency: document.getElementById("practiceFrequency").value,
 
-// =========================
-// Projects
-// =========================
+            // =========================
+            // Projects
+            // =========================
 
-projectCount: document.getElementById("projectCount").value,
-projectName: document.getElementById("projectName").value,
-projectDomain: document.getElementById("projectDomain").value,
-projectTechnologies: document.getElementById("projectTechnologies").value,
-projectDescription: document.getElementById("projectDescription").value,
-projectDiscussed: document.getElementById("projectDiscussed").value,
-githubLink: document.getElementById("githubLink").value,
+            projectCount: document.getElementById("projectCount").value,
+            projectName: document.getElementById("projectName").value,
+            projectDomain: document.getElementById("projectDomain").value,
+            projectTechnologies: document.getElementById("projectTechnologies").value,
+            projectDescription: document.getElementById("projectDescription").value,
+            projectDiscussed: document.getElementById("projectDiscussed").value,
+            githubLink: document.getElementById("githubLink").value,
 
-// =========================
-// Interview Process & Experience
-// =========================
+            // =========================
+            // Interview
+            // =========================
 
-interviewDifficulty: document.getElementById("interviewDifficulty").value,
-codingDifficulty: document.getElementById("codingDifficulty").value,
-interviewExperience: document.getElementById("interviewExperience").value,
-preparationStrategy: document.getElementById("preparationStrategy").value,
-mistakesMade: document.getElementById("mistakesMade").value,
+            interviewDifficulty: document.getElementById("interviewDifficulty").value,
+            codingDifficulty: document.getElementById("codingDifficulty").value,
+            interviewExperience: document.getElementById("interviewExperience").value,
+            preparationStrategy: document.getElementById("preparationStrategy").value,
+            mistakesMade: document.getElementById("mistakesMade").value,
 
-roundsFaced: getCheckedValues("rounds"),
+            roundsFaced: getCheckedValues("rounds"),
 
-// =========================
-// Preparation Journey
-// =========================
+            // =========================
+            // Preparation Journey
+            // =========================
 
 preparationDuration: document.getElementById("preparationDuration").value,
 resourcesUsed: [
@@ -640,63 +683,111 @@ resourcesUsed: [
         : [])
 ],
 
-// =========================
-// Advice
-// =========================
+            // =========================
+            // Advice
+            // =========================
 
-wishStartedEarlier: document.getElementById("wishStartedEarlier").value,
-roadmap: document.getElementById("roadmap").value,
+            wishStartedEarlier: document.getElementById("wishStartedEarlier").value,
+            roadmap: document.getElementById("roadmap").value,
 
-// =========================
-// Frequently Asked Topics
-// =========================
+            // =========================
+            // Frequently Asked Topics
+            // =========================
 
-programmingTopics: getCheckedTopics("Programming Languages"),
+            programmingTopics: getCheckedTopics("Programming Languages"),
+            dsaTopics: getCheckedTopics("DSA"),
+            sqlTopics: getCheckedTopics("SQL"),
+            dbmsTopics: getCheckedTopics("DBMS"),
+            osTopics: getCheckedTopics("Operating Systems"),
+            cnTopics: getCheckedTopics("Computer Networks"),
+            hrTopics: getCheckedTopics("HR Interview"),
 
-dsaTopics: getCheckedTopics("DSA"),
+            // =========================
+            // Contact Details
+            // =========================
 
-sqlTopics: getCheckedTopics("SQL"),
+            linkedin: document.getElementById("linkedin").value,
+            email: document.getElementById("email").value
 
-dbmsTopics: getCheckedTopics("DBMS"),
-
-osTopics: getCheckedTopics("Operating Systems"),
-
-cnTopics: getCheckedTopics("Computer Networks"),
-
-hrTopics: getCheckedTopics("HR Interview"),
-
-createdAt: serverTimestamp(),
-
-// =========================
-// Contact Details
-// =========================
-
-linkedin: document.getElementById("linkedin").value,
-
-email: document.getElementById("email").value,
-
-//phone: document.getElementById("phone").value
+        };
 
 
-};
-        console.log(placementData);
+        console.log("Saving placement:", placementData);
+        
+console.log(placementData);
+await saveOtherTopics();
+
         await saveOtherTopics();
 
-        await addDoc(placementCollection, placementData);
+        // =========================
+        // EDIT EXISTING RECORD
+        // =========================
 
-        alert("Placement Saved Successfully!");
+       if (editingPlacementId) {
+
+    const updatedData = {
+        ...editingOriginalData,
+        ...placementData
+    };
+
+    // Keep original creation timestamp
+    if (editingOriginalData?.createdAt) {
+        updatedData.createdAt = editingOriginalData.createdAt;
+    }
+
+    await updateDoc(
+        doc(db, "placements", editingPlacementId),
+        updatedData
+    );
+
+    alert("Placement Updated Successfully!");
+
+    editingPlacementId = null;
+    editingOriginalData = null;
+}
+
+        // =========================
+        // ADD NEW RECORD
+        // =========================
+
+        else {
+
+            placementData.createdAt = serverTimestamp();
+
+            await addDoc(
+                placementCollection,
+                placementData
+            );
+
+            alert("Placement Saved Successfully!");
+
+        }
+
+
+       placementForm.reset();
+
+selectedSkills = [];
+
+renderSelectedSkills();
+
+editingPlacementId = null;
+editingOriginalData = null;
+
+modal.style.display = "none";
+
+await loadPlacements();
 
     }
-    catch(error){
 
-        console.error(error);
+    catch (error) {
+
+        console.error("Save Error:", error);
 
         alert(error.message);
 
     }
 
 });
-
 // ======================================
 // Load Placement Records
 // ======================================
@@ -712,7 +803,13 @@ async function loadPlacements() {
 
     const snapshot = await getDocs(q);
 
-    console.log(snapshot.docs.length);
+  //  console.log(snapshot.docs.length);
+    console.log("TOTAL DOCUMENTS:", snapshot.size);
+
+snapshot.forEach((doc) => {
+    console.log("ID:", doc.id);
+    console.log("DATA:", doc.data());
+});
 
     snapshot.forEach((doc) => {
 
@@ -755,5 +852,406 @@ tableBody.addEventListener("click", async (e) => {
     alert("Record deleted successfully!");
 
     loadPlacements();
+
+});
+
+// ======================================
+// Edit Placement Record
+// ======================================
+
+
+tableBody.addEventListener("click", async (e) => {
+
+    if (!e.target.classList.contains("editBtn")) return;
+
+    const id = e.target.dataset.id;
+
+    editingPlacementId = id;
+
+    try {
+
+        const snapshot = await getDocs(placementCollection);
+
+        const selectedDoc =
+            snapshot.docs.find(item => item.id === id);
+
+        if (!selectedDoc) {
+
+            alert("Placement record not found.");
+
+            return;
+
+        }
+
+        const data = selectedDoc.data();
+
+console.log("Editing record:", data);
+
+editingOriginalData = { ...data };
+
+        // =========================
+        // Basic Details
+        // =========================
+
+        document.getElementById("studentName").value =
+            data.studentName || "";
+
+        document.getElementById("graduationYear").value =
+            data.graduationYear || "";
+
+        document.getElementById("branch").value =
+            data.branch || "";
+
+        document.getElementById("companyName").value =
+            data.companyName || "";
+
+        document.getElementById("companyType").value =
+            data.companyType || "";
+
+        document.getElementById("roleOffered").value =
+            data.roleOffered || "";
+
+        document.getElementById("jobType").value =
+            data.jobType || "";
+
+        document.getElementById("workMode").value =
+            data.workMode || "";
+
+        document.getElementById("location").value =
+            data.location || "";
+
+        document.getElementById("package").value =
+            data.package || "";
+
+        document.getElementById("placementDate").value =
+            data.placementDate || "";
+
+
+        // =========================
+        // Academic Profile
+        // =========================
+
+        document.getElementById("cgpa").value =
+            data.cgpa || "";
+
+        document.getElementById("cgpaCutoff").value =
+            data.cgpaCutoff || "";
+
+        document.getElementById("activeBacklogs").value =
+            data.activeBacklogs || "";
+
+
+        // =========================
+        // Eligibility
+        // =========================
+
+        document.getElementById("minimumCGPA").value =
+            data.minimumCGPA || "";
+
+        document.getElementById("eligibleBranches").value =
+            data.eligibleBranches || "";
+
+        document.getElementById("onlineAssessment").value =
+            data.onlineAssessment || "";
+
+        document.getElementById("oaMandatory").value =
+            data.oaMandatory || "";
+
+        document.getElementById("interviewRounds").value =
+            data.interviewRounds || "";
+
+        document.getElementById("additionalCriteria").value =
+            data.additionalCriteria || "";
+
+        document.getElementById("eligibleInitially").value =
+            data.eligibleInitially || "";
+
+        document.getElementById("eligibilityImprovement").value =
+            data.eligibilityImprovement || "";
+
+
+        // =========================
+        // Technical Skills
+        // =========================
+
+        selectedSkills =
+            Array.isArray(data.technicalSkills)
+                ? [...data.technicalSkills]
+                : [];
+
+        renderSelectedSkills();
+
+
+        // =========================
+        // Coding Preparation
+        // =========================
+
+        document.getElementById("codingPlatform").value =
+            data.codingPlatform || "";
+
+        document.getElementById("problemsSolved").value =
+            data.problemsSolved || "";
+
+        document.getElementById("practiceFrequency").value =
+            data.practiceFrequency || "";
+
+
+        // =========================
+        // Projects
+        // =========================
+
+        document.getElementById("projectCount").value =
+            data.projectCount || "";
+
+        document.getElementById("projectName").value =
+            data.projectName || "";
+
+        document.getElementById("projectDomain").value =
+            data.projectDomain || "";
+
+        document.getElementById("projectTechnologies").value =
+            data.projectTechnologies || "";
+
+        document.getElementById("projectDescription").value =
+            data.projectDescription || "";
+
+        document.getElementById("projectDiscussed").value =
+            data.projectDiscussed || "";
+
+        document.getElementById("githubLink").value =
+            data.githubLink || "";
+
+
+        // =========================
+        // Interview
+        // =========================
+
+        document.getElementById("interviewDifficulty").value =
+            data.interviewDifficulty || "";
+
+        document.getElementById("codingDifficulty").value =
+            data.codingDifficulty || "";
+
+        document.getElementById("interviewExperience").value =
+            data.interviewExperience || "";
+
+        document.getElementById("preparationStrategy").value =
+            data.preparationStrategy || "";
+
+        document.getElementById("mistakesMade").value =
+            data.mistakesMade || "";
+
+
+        // =========================
+        // Preparation Journey
+        // =========================
+
+        document.getElementById("preparationDuration").value =
+            data.preparationDuration || "";
+
+
+        // =========================
+        // Advice
+        // =========================
+
+        document.getElementById("wishStartedEarlier").value =
+            data.wishStartedEarlier || "";
+
+        document.getElementById("roadmap").value =
+            data.roadmap || "";
+
+
+        // =========================
+        // Contact Details
+        // =========================
+
+        document.getElementById("linkedin").value =
+            data.linkedin || "";
+
+        document.getElementById("email").value =
+            data.email || "";
+
+
+        // =========================
+        // Restore Checkboxes
+        // =========================
+
+        function restoreCheckedValues(className, values) {
+
+            const selected =
+                Array.isArray(values) ? values : [];
+
+            document
+                .querySelectorAll("." + className)
+                .forEach(checkbox => {
+
+                    checkbox.checked =
+                        selected.includes(checkbox.value);
+                        function restoreTopicValues(cardTitle, values) {
+
+    const selected = Array.isArray(values) ? values : [];
+
+    const card = [...document.querySelectorAll(".topic-card")]
+        .find(c => c.querySelector("h4")?.innerText === cardTitle);
+
+    if (!card) return;
+
+    const knownTopics = [];
+
+    card.querySelectorAll("input[type='checkbox']").forEach(cb => {
+
+        knownTopics.push(cb.value);
+
+        cb.checked = selected.includes(cb.value);
+
+    });
+
+    const otherCheckbox = card.querySelector(".otherCheckbox");
+    const otherInputDiv = card.querySelector(".otherInput");
+    const otherInput = otherInputDiv?.querySelector("input");
+
+    const customTopics = selected.filter(topic =>
+        !knownTopics.includes(topic)
+    );
+
+    if (customTopics.length > 0) {
+
+        otherCheckbox.checked = true;
+
+        otherInputDiv.style.display = "block";
+
+        otherInput.value = customTopics.join(", ");
+
+    }
+}
+
+                });
+
+        }
+
+
+        restoreCheckedValues(
+            "rounds",
+            data.roundsFaced
+        );
+
+
+        restoreCheckedValues(
+            "resource",
+            data.resourcesUsed
+        );
+
+
+        // =========================
+        // Restore Topic Checkboxes
+        // =========================
+
+        function restoreTopicValues(cardTitle, values) {
+
+    const selected =
+        Array.isArray(values) ? values : [];
+
+    const card =
+        [...document.querySelectorAll(".topic-card")]
+        .find(c => c.querySelector("h4")?.innerText === cardTitle);
+
+    if (!card) return;
+
+    const checkboxes =
+        card.querySelectorAll("input[type='checkbox']");
+
+    const predefinedTopics = [];
+
+    checkboxes.forEach(checkbox => {
+
+        predefinedTopics.push(checkbox.value);
+
+        checkbox.checked =
+            selected.includes(checkbox.value);
+
+    });
+
+    // Find custom topic (not one of the predefined ones)
+    const customTopic =
+        selected.find(topic => !predefinedTopics.includes(topic));
+
+    if (customTopic) {
+
+        const otherCheckbox =
+            card.querySelector(".otherCheckbox");
+
+        const otherInput =
+            card.querySelector(".otherInput");
+
+        if (otherCheckbox && otherInput) {
+
+            otherCheckbox.checked = true;
+
+            otherInput.style.display = "block";
+
+            otherInput.querySelector("input").value = customTopic;
+
+        }
+
+    }
+
+}
+
+
+        restoreTopicValues(
+            "Programming Languages",
+            data.programmingTopics
+        );
+
+        restoreTopicValues(
+            "DSA",
+            data.dsaTopics
+        );
+
+        restoreTopicValues(
+            "SQL",
+            data.sqlTopics
+        );
+
+        restoreTopicValues(
+            "DBMS",
+            data.dbmsTopics
+        );
+
+        restoreTopicValues(
+            "Operating Systems",
+            data.osTopics
+        );
+
+        restoreTopicValues(
+            "Computer Networks",
+            data.cnTopics
+        );
+
+        restoreTopicValues(
+            "HR Interview",
+            data.hrTopics
+        );
+
+
+        // =========================
+        // Open Modal
+        // =========================
+
+        modal.style.display = "flex";
+
+        alert(
+            "Edit mode opened. Modify the details and save."
+        );
+
+    }
+
+    catch (error) {
+
+        console.error("Edit Error:", error);
+
+        alert(error.message);
+
+    }
 
 });
