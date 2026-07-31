@@ -168,7 +168,7 @@ async function loadMasterTopics(){
 
         CN:"cnTopics",
 
-        HR:"hrTopics"
+      //  HR:"hrTopics"
 
     };
 
@@ -437,7 +437,7 @@ function showProfile(profile) {
         DBMS: "DBMS",
         OS: "Operating Systems",
         CN: "Computer Networks",
-        HR: "HR Interview"
+       // HR: "HR Interview"
 
     };
 
