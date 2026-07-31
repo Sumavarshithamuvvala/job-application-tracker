@@ -262,34 +262,31 @@ filtered = filtered.filter(p =>
         companyTrendChart.destroy();
 
     companyTrendChart = new Chart(
-
-        document.getElementById("companyTrendChart"),
-
-        {
-
-            type:"line",
-
-            data:{
-
-                labels:Object.keys(monthCount),
-
-                datasets:[{
-
-                    label:"Placements",
-
-                    data:Object.values(monthCount),
-
-                    tension:0.4,
-
-                    fill:false
-
-                }]
-
+    document.getElementById("companyTrendChart"),
+    {
+        type: "line",
+        data: {
+            labels: Object.keys(monthCount),
+            datasets: [{
+                label: "Placements",
+                data: Object.values(monthCount),
+                tension: 0.4,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
             }
-
         }
-
-    );
+    }
+);
 
 }
 
