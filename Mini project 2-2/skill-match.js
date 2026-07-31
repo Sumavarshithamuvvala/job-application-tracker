@@ -90,15 +90,8 @@ const categories = [
     bar:"CNBar",
     percent:"CNPercent",
     title:"Computer Networks"
-},
-
-{
-    student:"HR",
-    senior:"hrTopics",
-    bar:"HRBar",
-    percent:"HRPercent",
-    title:"HR Interview"
 }
+
 
 ];
 
